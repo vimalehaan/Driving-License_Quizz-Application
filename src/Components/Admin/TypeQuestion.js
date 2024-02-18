@@ -31,7 +31,7 @@ import {
 } from '../../Mui'
 
 import { makeStyles } from '@mui/styles';
-import { Item, ItemOne, SmallButton } from './StyledComponents';
+import { Item, ItemOne, SmallButton } from '../StyledComponents';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
 
@@ -87,8 +87,8 @@ export const useStylesOne = makeStyles((theme) => ({
 }));
 
 export const switchCompo = (activeButton) => {
-
-    if (activeButton['addQuestions']) {
+    if (activeButton
+    ['addQuestions']) {
         return (
 
             <AddQA index='addQuestions' />
@@ -96,9 +96,7 @@ export const switchCompo = (activeButton) => {
         );
     } else if (activeButton['addAnswers']) {
         return (
-
             <AddQA index='addAnswers' />
-
         );
     }
     return (<img src="./Images/Sentiment analysis-rafiki 1.png" />);
@@ -127,6 +125,7 @@ function AddQA({ index }) {
 
                             <Stack direction={'row'} spacing={'10px'} sx={{ width: '500px', marginTop: '25px', marginLeft: '25px' }}>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['1']}
                                     onClick={() => enableButton('1')}
@@ -134,6 +133,7 @@ function AddQA({ index }) {
                                     <FormatBoldIcon />
                                 </SmallButton>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['2']}
                                     onClick={() => enableButton('2')}
@@ -141,12 +141,14 @@ function AddQA({ index }) {
                                     <Typography variant='h9' fontSize={20} fontWeight={30}>/</Typography>
                                 </SmallButton>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['3']}
                                     onClick={() => enableButton('3')}
                                 >
                                     <FormatUnderlinedIcon fontSize='small' />
                                 </SmallButton>
+
                             </Stack >
                             <Stack sx={{ marginTop: '25px', marginLeft: '-10px' }}>
                                 <IconButton disableElevation sx={{ color: '#9196B2', width: '120px', border: '0px', }} className={classes.textButton} disableTouchRipple disableFocusRipple>

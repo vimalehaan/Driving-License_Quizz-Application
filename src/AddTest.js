@@ -1,7 +1,7 @@
 import useStyle from "./AddTestStyle";
 import { useState } from "react";
 import AddQA from "./Components/Admin/TypeQuestion";
-import { CusButton, Item } from "./Components/Admin/StyledComponents";
+import { CusButton, Item } from "./Components/StyledComponents";
 import { switchCompo } from "./Components/Admin/TypeQuestion";
 
 import {
@@ -58,7 +58,7 @@ function AddTest() {
       >
         <Grid container spacing='20px' sx={{ marginTop: '30px' }}>
           <Grid item lg='12' sx={{ marginBottom: '45px' }}>
-            <ButtonGroup variant="text" sx={{ display: 'flex', justifyContent: 'left', width: '750px', borderRadius: '20px', backgroundColor: '#F0F2F7' }} >
+            <ButtonGroup  sx={{ display: 'flex', justifyContent: 'left', width: '750px', borderRadius: '20px', backgroundColor: '#F0F2F7' }} >
               <CusButton sx={{ height: '40px', width: '250px' }}>hello</CusButton>
               <CusButton sx={{ height: '40px', width: '250px' }}>hello</CusButton>
               <CusButton sx={{ height: '40px', width: '250px' }}>hello</CusButton>
@@ -68,15 +68,15 @@ function AddTest() {
           <Grid item lg='3.8' xs='0'>
             <Item elevation={0} sx={{ height: '270px', marginBottom: '23px' }}>
               <Stack direction={"column"} spacing={3}>
-                <CusButton variant="outlined" disableTouchRipple
+                <CusButton variant="outlined" disableTouchRipple sx={{width: '300px', height: '50px',}}
                   clicked={activeButton['addQuestions']}
                   onClick={() => handleButtonClick('addQuestions')}
                   startIcon={<AddCircleOutlinedIcon />}>Questions</CusButton>
-                <CusButton variant="outlined" disableTouchRipple
+                <CusButton variant="outlined" disableTouchRipple sx={{width: '300px', height: '50px',}}
                   clicked={activeButton['addAnswers']}
                   onClick={() => handleButtonClick('addAnswers')}
                   startIcon={<AddCircleOutlinedIcon />}>Answers</CusButton>
-                <CusButton variant="outlined" disableTouchRipple
+                <CusButton variant="outlined" disableTouchRipple sx={{width: '300px', height: '50px',}}
                   clicked={activeButton['correctAnswer']}
                   onClick={() => handleButtonClick('correctAnswer')}
                   startIcon={<AddCircleOutlinedIcon />}>Correct Answer</CusButton>
@@ -85,11 +85,11 @@ function AddTest() {
 
             <Item elevation={0} sx={{ height: '200px' }}>
               <Stack direction={"column"} spacing={3}>
-                <CusButton variant="outlined"
+                <CusButton variant="outlined" sx={{width: '300px', height: '50px',}}
                   clicked={activeButton['timeSetting']}
                   onClick={() => handleButtonClick('timeSetting')}
                   disableTouchRipple startIcon={<AddCircleOutlinedIcon />}>Time Setting</CusButton>
-                <CusButton variant="outlined"
+                <CusButton variant="outlined" sx={{width: '300px', height: '50px',}}
                   clicked={activeButton['removeTest']}
                   onClick={() => handleButtonClick('removeTest')}
                   disableTouchRipple startIcon={<AddCircleOutlinedIcon />}>Remove Test</CusButton>
