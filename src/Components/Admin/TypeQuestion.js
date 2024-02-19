@@ -34,6 +34,7 @@ import { makeStyles } from '@mui/styles';
 import { Item, ItemOne, SmallButton } from '../StyledComponents';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
+import TestIdComponent from './TestIDContainer';
 
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
@@ -86,17 +87,22 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
-export const switchCompo = (activeButton) => {
+export const switchCompo = (activeButton, id) => {             //id value is passed from "AddTest.js"... 
     if (activeButton
     ['addQuestions']) {
         return (
-
-            <AddQA index='addQuestions' />
+            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>     
+                <TestIdComponent testid={id}/>      
+                <AddQA index='addQuestions' />
+            </Stack>
 
         );
     } else if (activeButton['addAnswers']) {
         return (
-            <AddQA index='addAnswers' />
+            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                <TestIdComponent testid={id}/>
+                <AddQA index='addAnswers' />
+            </Stack>
         );
     }
     return (<img src="./Images/Sentiment analysis-rafiki 1.png" />);

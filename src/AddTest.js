@@ -3,7 +3,7 @@ import { useState } from "react";
 import AddQA from "./Components/Admin/TypeQuestion";
 import { CusButton, Item } from "./Components/StyledComponents";
 import { switchCompo } from "./Components/Admin/TypeQuestion";
-
+import TestIdComponent from "./Components/Admin/TestIDContainer";
 import {
   React,
   Grid,
@@ -99,10 +99,12 @@ function AddTest() {
 
           <Grid item lg='8' xs='12'>
             <Item elevation={0} sx={{ height: '493px' }}>
-              <Stack direction={'column'}>
-                <Item elevation={0} sx={{ height: '493px' }}>
+              <Stack direction={'column'} spacing={1} sx={{marginTop: '-35px'}}>
+                
+                {/* <Item elevation={0} sx={{ height: '493px' }}>
                   {switchCompo(activeButton)}
-                </Item>
+                </Item> */}
+                {switchCompo(activeButton, "CEG_023")}
 
               </Stack>
             </Item>
