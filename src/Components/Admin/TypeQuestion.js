@@ -30,6 +30,9 @@ import {
     Chip
 } from '../../Mui'
 
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { makeStyles } from '@mui/styles';
 import { Item, ItemOne, SmallButton } from '../StyledComponents';
 import AnswerTextField from './AnswerTextField';
@@ -87,12 +90,14 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
-export const switchCompo = (activeButton, id) => {             //id value is passed from "AddTest.js"... 
+export const switchCompo = (activeButton, id) => {
+    //id value is passed from "AddTest.js"... 
+
     if (activeButton
     ['addQuestions']) {
         return (
-            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>     
-                <TestIdComponent testid={id}/>      
+            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                <TestIdComponent testid={id} />
                 <AddQA index='addQuestions' />
             </Stack>
 
@@ -100,7 +105,7 @@ export const switchCompo = (activeButton, id) => {             //id value is pas
     } else if (activeButton['addAnswers']) {
         return (
             <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                <TestIdComponent testid={id}/>
+                <TestIdComponent testid={id} />
                 <AddQA index='addAnswers' />
             </Stack>
         );
@@ -109,6 +114,7 @@ export const switchCompo = (activeButton, id) => {             //id value is pas
 }
 
 function AddQA({ index }) {
+
 
     const [activeButton, setActiveButton] = useState({});
 
@@ -123,8 +129,8 @@ function AddQA({ index }) {
 
 
     return (
-        <Grid containe sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Grid item lg={12}>
+        <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid item xs={12} lg={12}>
                 <ItemOne elevation={0} sx={{ height: '350px', }}>
                     <form>
                         <Stack direction={'row'} sx={{ height: '50px', marginBottom: '20px' }}>

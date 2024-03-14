@@ -59,7 +59,7 @@ export const SideButton = styled(Button)(({ theme, clicked }) => ({
 export const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
   backgroundColor: '#F0F2F7',
   ...theme.typography.body2,
   padding: theme.spacing(0),
