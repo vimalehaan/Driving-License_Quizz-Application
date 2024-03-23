@@ -3,6 +3,7 @@ import Login from './Login';
 import AddTest from './AddTest';
 import Payment from './Payment';
 import QuestionTextField from './Components/Admin/QuestionTextField';
+import TestIdComponent from './Components/Admin/TestIDContainer';
 
 function App() {
   return (

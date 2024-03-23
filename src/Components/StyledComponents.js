@@ -30,7 +30,7 @@ import {
   Chip
 } from '../Mui'
 
-export const CusButton = styled(Button)(({ theme, clicked }) => ({
+export const CusButton = styled(Button)(({ clicked }) => ({
   borderRadius: '20px',
   borderColor: clicked ? '#6070D4' : '#9196B2',
   //Set Inline Height and Width into "sx = {{}}"..
@@ -59,7 +59,7 @@ export const SideButton = styled(Button)(({ theme, clicked }) => ({
 export const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
   backgroundColor: '#F0F2F7',
   ...theme.typography.body2,
   padding: theme.spacing(0),
