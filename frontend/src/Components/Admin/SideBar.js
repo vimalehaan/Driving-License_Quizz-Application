@@ -31,19 +31,22 @@ import {
 
 import CusButton from "../../AddTestStyle"
 import { makeStyles } from '@mui/styles';
-
 import { useState } from 'react';
+import { SideButton } from '../StyledComponents';
+
 const useStyles = makeStyles((theme, clicked) => ({
     drawer: {
         marginLeft: '-10px',
         width: '250px',
         flexShrink: 0,
+        
         '& .MuiDrawer-paper': {
-            marginLeft: '-19px',
+            // marginLeft: '-19px',
             marginTop: '150px',
-            width: '215px',
+            width: '200px',
             height: '595px',
             backgroundColor: '#F0F2F7',
+            borderRadius: '0 15px 15px 0'
         },
     },
     editImage: {
@@ -60,26 +63,23 @@ const useStyles = makeStyles((theme, clicked) => ({
             backgroundColor: 'transparent',
         }
     },
-    textButton: {
-        "&:hover": {
-            color: '#6070D4',
-            border: '0px solid #6070D4',
-            backgroundColor: 'transparent ! important',
-            
-        },
-        color: '#fdfsfs',
-    },
+
+    NameTypo: {
+        
+    }
 
 }));
+
+
 
 function SideBar() {
 
     const buttonsData = [
-        { name: 'Dashboard', num: 'a', icon: <GridViewOutlinedIcon sx={{ fontSize: '18px', marginRight: '5px' }} /> },
-        { name: 'Add Test', num: 'b', icon: <AddCircleOutlinedIcon sx={{ fontSize: '18px', marginRight: '5px' }} /> },
-        { name: 'Result', num: 'c', icon: <CreditScoreOutlinedIcon sx={{ fontSize: '18px', marginRight: '5px' }} /> },
-        { name: 'User Register', num: 'd', icon: <PersonOutlinedIcon sx={{ fontSize: '18px', marginRight: '5px' }} /> },
-    
+        { name: 'Dashboard', num: 'a', icon: <GridViewOutlinedIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> },
+        { name: 'Add Test', num: 'b', icon: <AddCircleOutlinedIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> },
+        { name: 'Result', num: 'c', icon: <CreditScoreOutlinedIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> },
+        { name: 'User Register', num: 'd', icon: <PersonOutlinedIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> },
+
     ];
     const [activeButton, setActiveButton] = useState({ a: false, b: false, c: false, d: false });
 
@@ -94,35 +94,39 @@ function SideBar() {
         <Drawer className={classes.drawer}
             variant="permanent"
             anchor="left"
-            PaperProps={{ elevation: '5', square: 'false', sx: { borderRadius: '15px' } }}
+            PaperProps={{ elevation: '5',}}
         >
-            <Toolbar />
+            {/* <Toolbar /> */}
+            <Grid container marginTop={6} marginLeft={-2}>
             <Stack direction={"row"} marginLeft={5.5} >
-                <Avatar sx={{ bgcolor: '#6070D4' }}>L</Avatar>
-                <Typography variant="h9" height={40} paddingTop={1.2} marginLeft={1.5}>Lehaan</Typography>
+                <Avatar sx={{ bgcolor: '#323A6E' }}>L</Avatar>
+                <Typography className={classes.NameTypo} color= '#323A6E' variant="p" height={40} paddingTop={1.2} marginLeft={1.5}>Lehaan</Typography>
             </Stack>
 
             <List sx={{ marginTop: '20px' }}>
                 {buttonsData.map((button, index) => (
                     <ListItem disablePadding sx={{ marginLeft: '35px' }} >
-                        <IconButton disableElevation sx={{  border: '0px', marginBottom: '25px', }} className={classes.textButton} disableTouchRipple disableFocusRipple
-                            
+                        <SideButton disableElevation disableTouchRipple disableFocusRipple
+                            clicked={activeButton[button.num]}
+                            onClick={() => handleButtonClick(button.num)}
                         >
                             <>{button.icon}</>
-                            <Typography variant='h9' fontSize={18} fontWeight={30}>{button.name}</Typography>
-                        </IconButton>
+                            <Typography variant='h9' fontSize={15} fontWeight={600}>{button.name}</Typography>
+                        </SideButton>
                     </ListItem>
                 ))}
                 <ListItem disablePadding >
-                    <ListItemButton sx={{ marginTop: '180px' }} disableTouchRipple>
-
-                        <ListItemIcon sx={{ marginRight: '-10px', marginLeft: '35px' }}>
+                    
+                    <SideButton sx={{ marginTop: '140px',marginLeft: '35px' }} disableElevation disableTouchRipple disableFocusRipple
+                            
+                        >
                             <LogoutOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Logout" primaryTypographyProps={{ fontSize: '15px', marginLeft: '-10px' }} />
-                    </ListItemButton>
+                            <Typography variant='h9' fontSize={15} fontWeight={600}>Logout</Typography>
+                        </SideButton>
                 </ListItem>
             </List>
+            </Grid>
+            
 
         </Drawer>
     )

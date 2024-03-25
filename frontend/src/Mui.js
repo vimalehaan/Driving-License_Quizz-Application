@@ -34,6 +34,8 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
 
 export {
@@ -69,5 +71,7 @@ export {
     FormControlLabel,
     Pagination,
     Chip,
-    IconButton
+    IconButton,
+    Menu,
+    MenuItem
   }; 

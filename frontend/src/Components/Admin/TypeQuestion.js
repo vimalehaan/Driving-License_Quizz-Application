@@ -30,10 +30,14 @@ import {
     Chip
 } from '../../Mui'
 
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { makeStyles } from '@mui/styles';
-import { Item, ItemOne, SmallButton } from './StyledComponents';
+import { Item, ItemOne, SmallButton } from '../StyledComponents';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
+import TestIdComponent from './TestIDContainer';
 
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
@@ -86,25 +90,31 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
-export const switchCompo = (activeButton) => {
+export const switchCompo = (activeButton, id) => {
+    //id value is passed from "AddTest.js"... 
 
-    if (activeButton['addQuestions']) {
+    if (activeButton
+    ['addQuestions']) {
         return (
-
-            <AddQA index='addQuestions' />
+            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                <TestIdComponent testid={id} />
+                <AddQA index='addQuestions' />
+            </Stack>
 
         );
     } else if (activeButton['addAnswers']) {
         return (
-
-            <AddQA index='addAnswers' />
-
+            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                <TestIdComponent testid={id} />
+                <AddQA index='addAnswers' />
+            </Stack>
         );
     }
     return (<img src="./Images/Sentiment analysis-rafiki 1.png" />);
 }
 
 function AddQA({ index }) {
+
 
     const [activeButton, setActiveButton] = useState({});
 
@@ -119,14 +129,15 @@ function AddQA({ index }) {
 
 
     return (
-        <Grid containe sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Grid item lg={12}>
+        <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Grid item xs={12} lg={12}>
                 <ItemOne elevation={0} sx={{ height: '350px', }}>
                     <form>
                         <Stack direction={'row'} sx={{ height: '50px', marginBottom: '20px' }}>
 
                             <Stack direction={'row'} spacing={'10px'} sx={{ width: '500px', marginTop: '25px', marginLeft: '25px' }}>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['1']}
                                     onClick={() => enableButton('1')}
@@ -134,6 +145,7 @@ function AddQA({ index }) {
                                     <FormatBoldIcon />
                                 </SmallButton>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['2']}
                                     onClick={() => enableButton('2')}
@@ -141,12 +153,14 @@ function AddQA({ index }) {
                                     <Typography variant='h9' fontSize={20} fontWeight={30}>/</Typography>
                                 </SmallButton>
                                 <SmallButton
+                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['3']}
                                     onClick={() => enableButton('3')}
                                 >
                                     <FormatUnderlinedIcon fontSize='small' />
                                 </SmallButton>
+
                             </Stack >
                             <Stack sx={{ marginTop: '25px', marginLeft: '-10px' }}>
                                 <IconButton disableElevation sx={{ color: '#9196B2', width: '120px', border: '0px', }} className={classes.textButton} disableTouchRipple disableFocusRipple>

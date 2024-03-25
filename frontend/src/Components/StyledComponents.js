@@ -28,13 +28,12 @@ import {
   LogoutOutlinedIcon,
   Pagination,
   Chip
-} from '../../Mui'
+} from '../Mui'
 
-export const CusButton = styled(Button)(({ theme, clicked }) => ({
+export const CusButton = styled(Button)(({ clicked }) => ({
   borderRadius: '20px',
   borderColor: clicked ? '#6070D4' : '#9196B2',
-  width: '300px',
-  height: '50px',
+  //Set Inline Height and Width into "sx = {{}}"..
   color: clicked ? '#F0F2F7' : '#9196B2',
   backgroundColor: clicked ? '#6070D4' : null,
   "&:hover": {
@@ -44,10 +43,23 @@ export const CusButton = styled(Button)(({ theme, clicked }) => ({
   },
 }));
 
+export const SideButton = styled(Button)(({ theme, clicked }) => ({
+  border: '0px',
+  color: '#9196B2',
+  marginBottom: '25px',
+  "&:hover": {
+      color: '#6070D4',
+      border: '0px solid #6070D4',
+      backgroundColor: 'transparent ! important',
+  },
+  color: clicked ? '#6070D4' : '#9196B2',
+  transition: '10ms',
+}));
+
 export const Item = styled(Paper)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  // justifyContent: 'center',
   backgroundColor: '#F0F2F7',
   ...theme.typography.body2,
   padding: theme.spacing(0),
@@ -70,8 +82,7 @@ export const ItemOne = styled(Paper)(({ theme }) => ({
 
 export const SmallButton = styled(Button)(({ theme, clicked }) => ({
   border: clicked ? '1px solid #6070D4' : '1px solid #9196B2',
-  width: '27px',
-  height: '27px',
+  //Set Inline Height and Width into "sx = {{}}"..
   minWidth: '0',
   borderRadius: '7px',
   color: clicked ? '#fff' : '#9196B2',
@@ -81,5 +92,4 @@ export const SmallButton = styled(Button)(({ theme, clicked }) => ({
     border: '1px solid #6070D4',
     backgroundColor: clicked ? '#6070D4' : 'transparent !important'
   },
-
 }));
