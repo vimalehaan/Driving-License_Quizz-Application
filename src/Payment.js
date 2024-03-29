@@ -32,6 +32,7 @@ import {
 } from './Mui'
 
 import useStyle from './PaymentStyle';
+import { Appbar } from './Components/Loginpg/Appbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function Payment() {
@@ -52,6 +53,11 @@ function Payment() {
     const classes = useStyle();
     return (
         <Grid container lg={12} >
+             
+            <Grid item lg ={12}>
+            <br></br> <br></br> <br></br> <br></br>
+                        <Appbar/>
+            </Grid>
             <Grid container lg={12} sx={{
                 margin: "100px 100px 0px 100px",
                 // width: '200px',
@@ -85,23 +91,23 @@ function Payment() {
                     }}>
                         <ThemeProvider theme={outerTheme}>
                             <Stack direction={'column'} spacing={0} sx={{ display: 'flex', justifyContent: 'center' }}>
-                                <Typography variant='h6' fontWeight={'1000'} display={'flex'} alignItems={'start'} marginBottom={'30px'} >Pay with Card</Typography>
-                                <Typography variant='h9' display={'flex'} alignItems={'start'} >Card Number</Typography>
+                                <Typography variant='h6' fontWeight={'1000'} display={'flex'} alignItems={'start'} marginBottom={'30px'} sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '26.14px',fontWeight:"bold" ,fontFamily: 'Inter, sans-serif'}}>Pay with Card</Typography>
+                                <Typography variant='h9' display={'flex'} alignItems={'start'}  sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '20.11px',fontFamily: 'Inter, sans-serif'}}>Card Number</Typography>
                                 <TextField sx={{ marginBottom: '20px' }}></TextField>
-                                <Typography variant='h9' display={'flex'} alignItems={'start'}>Name on Card</Typography>
+                                <Typography variant='h9' display={'flex'} alignItems={'start'}  sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '20.11px',fontFamily: 'Inter, sans-serif'}}>Name on Card</Typography>
                                 <TextField sx={{ marginBottom: '20px' }}></TextField>
                                 <Stack direction={'row'} spacing={5}>
                                     <Stack direction={'column'}>
-                                        <Typography variant='h9' display={'flex'} alignItems={'start'}>Exp (MM/YY)</Typography>
+                                        <Typography variant='h9' display={'flex'} alignItems={'start'}  sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '20.11px',fontFamily: 'Inter, sans-serif'}}>Exp (MM/YY)</Typography>
                                         <TextField sx={{ marginBottom: '20px', width: '200px' }}> </TextField>
                                     </Stack>
                                     <Stack direction={'column'} >
-                                        <Typography variant='h9' display={'flex'} alignItems={'start'}>CVV</Typography>
+                                        <Typography variant='h9' display={'flex'} alignItems={'start'}  sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '20.11px',fontFamily: 'Inter, sans-serif'}}>CVV</Typography>
                                         <TextField sx={{ marginBottom: '20px', width: '100px' }}> </TextField>
                                     </Stack>
                                 </Stack>
-                                <FormControlLabel required control={<Checkbox />} label="I accept the terms and conditions " />
-                                <Button sx={{ borderRadius: '20px' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
+                                <FormControlLabel required control={<Checkbox />}  sx={{ textTransform: 'none',  color: '#323A6E', fontSize: '20.11px',fontWeight:"bold" ,fontFamily: 'Inter, sans-serif'}}label="I accept the terms and conditions " /><br></br>
+                                <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20.11px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'>Subscribe</Button>
 
                             </Stack>
                         </ThemeProvider>
