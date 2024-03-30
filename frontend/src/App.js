@@ -4,15 +4,17 @@ import AddTest from './AddTest';
 import Payment from './Payment';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
+import CarExamDashboard from './CarExamDashboard';
 
 function App() {
   return (
     <div className="App">
       
       {/* <Login /> */}
-      <AddTest />
+      {/* <AddTest /> */}
       {/* <QuestionTextField /> */}
       {/* <Payment /> */}
+      <CarExamDashboard />
     </div>
   );
 }
