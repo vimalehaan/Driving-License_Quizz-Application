@@ -10,9 +10,9 @@ function App() {
     <div className="App">
       
       {/* <Login /> */}
-      <AddTest />
+      {/* <AddTest /> */}
       {/* <QuestionTextField /> */}
-      {/* <Payment /> */}
+      <Payment />
     </div>
   );
 }
