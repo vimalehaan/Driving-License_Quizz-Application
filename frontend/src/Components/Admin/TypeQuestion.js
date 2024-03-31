@@ -28,13 +28,13 @@ import {
     LogoutOutlinedIcon,
     TextField,
     Chip
-} from '../../Mui'
+} from '../Utils/Mui'
 
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { makeStyles } from '@mui/styles';
-import { Item, ItemOne, SmallButton } from '../StyledComponents';
+import { Item, ItemOne, SmallButton } from '../Utils/StyledComponents';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
 import TestIdComponent from './TestIDContainer';

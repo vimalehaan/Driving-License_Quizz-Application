@@ -1,22 +1,22 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { AppBar, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import useStyle from "./Lstyle.jsx";
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-
-
+import { Appbar } from '../../Components/UserLog/AppBar.js';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import useStyle from "/Users/lehaan/Desktop/ProjectF/frontend/src/Components/UserLog/LogStyle.jsx";
+import '../../Components/UserLog/Login.css';
 
-function Login() {
+function Loginpg1() {
 
     const classes = useStyle();
 
@@ -41,7 +41,11 @@ function Login() {
     return (
 
         <div className='loginPage'>
+            
             <Grid container className={classes.gridContainer} >
+               <Grid item lg ={12}>
+                        <Appbar/>
+                </Grid>
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
                 </Grid>
@@ -53,17 +57,17 @@ function Login() {
                                 <Stack direction="column" >
                                     <TextField className={classes.textField}
                                         required
-                                        label="User Name"
+                                        label="Email "
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
                                     <TextField className={classes.textField}
-                                        type='password'
+                                        required
                                         label="Password"
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
-                                    <Button sx={{ borderRadius: '20px' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
+                                    <Button sx={{ borderRadius: '20px' , textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
@@ -86,4 +90,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Loginpg1;

@@ -28,9 +28,9 @@ import {
     LogoutOutlinedIcon,
     Pagination,
     Chip
-} from '../../Mui'
+} from '../Utils/Mui'
 
-import { CusButton, Item } from '../StyledComponents'
+import { CusButton, Item } from '../Utils/StyledComponents'
 
 const IdBox = styled(Box)({
 

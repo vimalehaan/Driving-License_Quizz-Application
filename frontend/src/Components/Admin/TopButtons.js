@@ -32,8 +32,8 @@ import {
     Chip,
     Menu,
     MenuItem
-} from '../../Mui';
-import { CusButton } from '../StyledComponents';
+} from '../Utils/Mui';
+import { CusButton } from '../Utils/StyledComponents';
 
 
 const CusMenuButton = styled(MenuItem)({

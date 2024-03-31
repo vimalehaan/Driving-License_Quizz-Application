@@ -2,12 +2,12 @@
 // import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from "react";
 import { makeStyles } from '@mui/styles';
-import AddQA from "./Components/Admin/TypeQuestion";
-import { CusButton, Item } from "./Components/StyledComponents";
+import AddQA from "../../Components/Admin/TypeQuestion";
+import { CusButton, Item } from "../../Components/Utils/StyledComponents";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { switchCompo } from "./Components/Admin/TypeQuestion";
-import TestIdComponent from "./Components/Admin/TestIDContainer";
+import { switchCompo } from "../../Components/Admin/TypeQuestion";
+
 import {
   React,
   Grid,
@@ -38,9 +38,9 @@ import {
   LogoutOutlinedIcon,
   Pagination, 
   Chip
-} from './Mui'
-import SideBar from "./Components/Admin/SideBar";
-import { TopButtons } from "./Components/Admin/TopButtons";
+} from '../../Components/Utils/Mui'
+import SideBar from "../../Components/Admin/SideBar";
+import { TopButtons } from "../../Components/Admin/TopButtons";
 
 
 
