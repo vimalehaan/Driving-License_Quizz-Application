@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import IntroductionSection1 from './Components/ExamDashboard/intro1';
-import IntroductionSection2 from './Components/ExamDashboard/intro2';
-import NavBarBottom from './Components/ExamDashboard/NavBarBottom';
-import ExamListE from './Components/ExamDashboard/ExamListEasy';
-import ExamListH1 from './Components/ExamDashboard/ExamListHard';
-import ExamListH2 from './Components/ExamDashboard/ExamListHardest';
-import IntroductionSection3 from './Components/ExamDashboard/intro3';
-import SimuE from './Components/ExamDashboard/simuEasy';
-import SimuH1 from './Components/ExamDashboard/simuHard';
-import SimuH2 from './Components/ExamDashboard/simuHardest';
-import './Components/ExamDashboard/ContainerStyles.css'
+import IntroductionSection1 from '../../Components/QuizzDashboard/intro1';
+import IntroductionSection2 from '../../Components/QuizzDashboard/intro2';
+import NavBarBottom from '../../Components/QuizzDashboard/NavBarBottom';
+import ExamListE from '../../Components/QuizzDashboard/ExamListEasy';
+import ExamListH1 from '../../Components/QuizzDashboard/ExamListHard';
+import ExamListH2 from '../../Components/QuizzDashboard/ExamListHardest';
+import IntroductionSection3 from '../../Components/QuizzDashboard/intro3';
+import SimuE from '../../Components/QuizzDashboard/simuEasy';
+import SimuH1 from '../../Components/QuizzDashboard/simuHard';
+import SimuH2 from '../../Components/QuizzDashboard/simuHardest';
+import '../../Components/QuizzDashboard/ContainerStyles.css'
 
 function CarExamDashboard() {
     const [exams, setExams] = useState([]);

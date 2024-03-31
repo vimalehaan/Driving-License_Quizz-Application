@@ -28,7 +28,7 @@ import {
     LogoutOutlinedIcon,
     TextField,
     Chip
-} from '../../Mui'
+} from '../Utils/Mui'
 
 import { useStylesOne } from './TypeQuestion';
 

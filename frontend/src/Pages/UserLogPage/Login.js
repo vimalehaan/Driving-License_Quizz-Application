@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import useStyle from "./Lstyle.jsx";
+import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import GoogleIcon from '@mui/icons-material/Google';

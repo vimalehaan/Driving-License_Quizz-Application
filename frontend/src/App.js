@@ -1,10 +1,10 @@
 import './App.css';
-import Login from './Login';
-import AddTest from './AddTest';
-import Payment from './Payment';
+import Login from './Pages/UserLogPage/Login';
+import AddTest from './Pages/AdminPage/AddTest';
+import Payment from './Pages/PaymentPage/Payment';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
-import CarExamDashboard from './CarExamDashboard';
+import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
 
 function App() {
   return (
@@ -12,7 +12,6 @@ function App() {
       
       {/* <Login /> */}
       {/* <AddTest /> */}
-      {/* <QuestionTextField /> */}
       {/* <Payment /> */}
       <CarExamDashboard />
     </div>

@@ -29,9 +29,9 @@ import {
     TextField,
     Checkbox,
     FormControlLabel
-} from './Mui'
+} from '../../Components/Utils/Mui'
 
-import useStyle from './PaymentStyle';
+import useStyle from '../../Components/Payment/PaymentStyle';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 function Payment() {

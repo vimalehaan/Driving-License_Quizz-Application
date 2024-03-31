@@ -27,12 +27,12 @@ import {
     PersonOutlinedIcon,
     LogoutOutlinedIcon,
     IconButton
-} from '../../Mui'
+} from '../Utils/Mui'
 
-import CusButton from "../../AddTestStyle"
+// import CusButton from "../../AddTestStyle"
 import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
-import { SideButton } from '../StyledComponents';
+import { SideButton } from '../Utils/StyledComponents';
 
 const useStyles = makeStyles((theme, clicked) => ({
     drawer: {

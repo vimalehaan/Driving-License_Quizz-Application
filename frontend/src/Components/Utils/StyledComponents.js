@@ -28,7 +28,7 @@ import {
   LogoutOutlinedIcon,
   Pagination,
   Chip
-} from '../Mui'
+} from './Mui'
 
 export const CusButton = styled(Button)(({ clicked }) => ({
   borderRadius: '20px',
