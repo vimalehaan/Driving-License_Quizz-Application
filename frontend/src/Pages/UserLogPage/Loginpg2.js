@@ -13,7 +13,7 @@ import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import { Appbar } from '../../Components/UserLog/AppBar.js';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import useStyle from "/Users/lehaan/Desktop/ProjectF/frontend/src/Components/UserLog/LogStyle.jsx";
+import useStyle from "../../Components/UserLog/LogStyle.jsx";
 
 
 
