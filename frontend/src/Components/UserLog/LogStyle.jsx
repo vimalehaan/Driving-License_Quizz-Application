@@ -1,6 +1,8 @@
 import { makeStyles } from "@mui/styles";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import './Login.css';
+
 const useStyle = makeStyles((theme) => ({
   
     gridContainer: {
@@ -18,16 +20,18 @@ const useStyle = makeStyles((theme) => ({
         
     }, 
     textField: {
-        
+        textDecorationColor: 'white',
         width: '45vh',
         height: '9vh',
         marginBottom: '0px',
         "& .MuiInputLabel-root": {
             color: '#fff' // Styles the label
+            
         },
         "& .MuiOutlinedInput-root": {
             "& fieldset": {
-                borderColor: "#fff" // Styles the input border
+                borderColor: "#fff",
+                // Styles the input border
             },
             "&:hover fieldset": {
                 
@@ -45,7 +49,10 @@ const useStyle = makeStyles((theme) => ({
         height: '6vh',
         marginBottom: '0vh',
         borderRadius: '20px',
+        
     },
+
+   
     divider: {
         display: "flex",
         justifyContent: "center",
@@ -66,7 +73,7 @@ const useStyle = makeStyles((theme) => ({
           },
     },
     typo: {
-        fontSize:'13.6px',
+        fontSize:'17px',
         color: '#fff'
     }
 }));
