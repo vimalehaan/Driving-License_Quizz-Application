@@ -45,9 +45,10 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
 
+
+
 export const useStylesOne = makeStyles((theme) => ({
     bigTextField: {
-
         "& .MuiOutlinedInput-root": {
             "& fieldset": {
                 border: "0px solid black", // Styles the input border
@@ -60,11 +61,10 @@ export const useStylesOne = makeStyles((theme) => ({
             },
         },
         "& .MuiInputBase-root": {
-            color: 'black'
+            color: 'black',
         }
     },
     SmallTextField: {
-
         "& .MuiOutlinedInput-root": {
             borderRadius: '20px',
             "& fieldset": {
@@ -92,12 +92,12 @@ export const useStylesOne = makeStyles((theme) => ({
 
 export const switchCompo = (activeButton, id) => {
     //id value is passed from "AddTest.js"... 
-
+    //This function is to switch the AddQustion and AddAnswer Text fields...
     if (activeButton
     ['addQuestions']) {
         return (
             <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                <TestIdComponent testid={id} />
+                <TestIdComponent testid={id}/>
                 <AddQA index='addQuestions' />
             </Stack>
 
@@ -127,7 +127,6 @@ function AddQA({ index }) {
 
     const classes = useStylesOne();
 
-
     return (
         <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Grid item xs={12} lg={12}>
@@ -137,7 +136,7 @@ function AddQA({ index }) {
 
                             <Stack direction={'row'} spacing={'10px'} sx={{ width: '500px', marginTop: '25px', marginLeft: '25px' }}>
                                 <SmallButton
-                                    sx={{ width: '27px', height: '27px', }}
+                                    sx={{ width: '27px', height: '27px' }}
                                     disableTouchRipple
                                     clicked={activeButton['1']}
                                     onClick={() => enableButton('1')}

@@ -1,5 +1,4 @@
-// import useStyle from "./AddTestStyle";
-// import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { useState } from "react";
 import { makeStyles } from '@mui/styles';
 import AddQA from "../../Components/Admin/TypeQuestion";
@@ -7,6 +6,7 @@ import { CusButton, Item } from "../../Components/Utils/StyledComponents";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { switchCompo } from "../../Components/Admin/TypeQuestion";
+import { Container } from "@mui/material";
 
 import {
   React,
@@ -39,15 +39,11 @@ import {
   Pagination, 
   Chip
 } from '../../Components/Utils/Mui'
+
 import SideBar from "../../Components/Admin/SideBar";
 import { TopButtons } from "../../Components/Admin/TopButtons";
 
-
-
-
-
 function AddTest() {
-
 
   const [activeButton, setActiveButton] = useState({ addQuestions: false, addAnswers: false, correctAnswer: false, timeSetting: false, removeTest: false });
 
@@ -112,13 +108,8 @@ function AddTest() {
 
           <Grid item lg='8' xs='12'>
             <Item elevation={0} sx={{ height: '493px', justifyContent: 'center' }}>
-              <Stack direction={'column'} spacing={1} sx={{ marginTop: '-35px' }}>
-
-                {/* <Item elevation={0} sx={{ height: '493px' }}>
-                  {switchCompo(activeButton)}
-                </Item> */}
+              <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-35px' }}>
                 {switchCompo(activeButton, "CEG_023")}
-
               </Stack>
             </Item>
           </Grid>

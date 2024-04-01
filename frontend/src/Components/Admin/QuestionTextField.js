@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     React,
     Grid,
@@ -34,7 +35,7 @@ import { useStylesOne } from './TypeQuestion';
 
 export default function QuestionTextField() {
     const classes = useStylesOne();
-
+   
     return (
         <div>
             <TextField className={classes.bigTextField}
@@ -42,8 +43,8 @@ export default function QuestionTextField() {
                 maxRows={6}
                 placeholder={"Type your question here..."}
                 multiline
-                sx={{ marginTop: '20px', marginLeft: '25px', width: '600px' }}
-                InputProps={{ sx: { borderRadius: '20px' } }}
+                sx={{ marginTop: '20px', marginLeft: '25px', width: '600px'}}
+                InputProps={{ sx: { borderRadius: '20px'} }}
                 
             />
         </div>
