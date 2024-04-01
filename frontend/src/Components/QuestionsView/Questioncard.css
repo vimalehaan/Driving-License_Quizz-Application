@@ -1,0 +1,42 @@
+.full-box
+{
+    margin-top: -500px;
+   
+}
+
+.questions
+{
+    margin-left: 20px;
+    margin-top: 30px;
+}
+
+.custom-box-1
+{
+
+    background-color:#F0F2F7;
+   
+    width: 80vh;
+    margin-left: -800px;
+    margin-top: -150px;
+   border-top-left-radius: 13px;
+   border-top-right-radius: 13px;
+   
+}
+
+.custom-box-2
+{
+    background-color:#F0F2F7;
+    height: 45vh;
+    width: 80vh;
+    margin-left: -800px;
+    margin-top: -15px;
+    border-bottom-left-radius: 13px;
+    border-bottom-right-radius: 13px ;
+
+}
+
+.answers
+{
+    margin-left: 40px;
+    margin-top: 30px;
+}

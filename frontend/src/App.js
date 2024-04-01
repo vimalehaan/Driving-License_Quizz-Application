@@ -6,6 +6,8 @@ import TestIdComponent from './Components/Admin/TestIDContainer';
 import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
 import Loginpg1 from './Pages/UserLogPage/Loginpg1';
 import Loginpg2 from './Pages/UserLogPage/Loginpg2';
+import Questionview from './Pages/Questionview/Questionview'
+
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
       {/* <AddTest /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
+
+     <Questionview/>
+
       
     </div>
   );
