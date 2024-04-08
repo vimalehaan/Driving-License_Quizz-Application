@@ -1,63 +1,84 @@
-import {
-    React,
-    Grid,
-    styled,
-    Paper,
-    Avatar,
-    ButtonGroup,
-    Box,
-    Button,
-    BottomNavigation,
-    BottomNavigationAction,
-    Drawer,
-    CssBaseline,
-    AppBar,
-    Toolbar,
-    Stack,
-    List,
-    Typography,
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    GridViewOutlinedIcon,
-    AddCircleOutlinedIcon,
-    CreditScoreOutlinedIcon,
-    PersonOutlinedIcon,
-    LogoutOutlinedIcon,
-    TextField,
-    Chip
-} from '../Utils/Mui'
+import React from 'react';
+import { useContext } from 'react';
 
-import { useStylesOne } from './TypeQuestion';
-import { useState } from 'react';
+import TextField from "@mui/material/TextField";
+import Checkbox from '@mui/material/Checkbox';
+import Stack from "@mui/material/Stack";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-export default function AnswerTextField({ answers, onAnswerChange }) {
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
+import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
+
+import { useStylesOne } from './Q&A_Container';
+
+import { AnswerContext } from './Switch_Component';
+
+export default function AnswerTextField() {
     const classes = useStylesOne();
-    // const numbers = [1, 2, 3, 4];
+
+    const { answers, setAnswers} = useContext(AnswerContext);
+
+    const handleCheckboxChange = (event, index) => {
+        const isChecked = event.target.checked;
+        setAnswers(prevAnswers => {
+          return prevAnswers.map((answer, i) => {
+            if (i === index) {
+              return { ...answer, isCorrect: isChecked };
+            } else {
+              return answer;
+            }
+          });
+        });
+      };
+
+    const handleTextFieldChange = (event, index) => {
+        const newText = event.target.value;
+        setAnswers(prevAnswers => {
+          return prevAnswers.map((answer, i) => {
+            if (i === index) {
+              return { ...answer, text: newText };
+            } else {
+              return answer;
+            }
+          });
+        });
+      };
+      
     
 
-    const handleChange = (event, index) => {
-        const value = event.target.value;
-        const newAnswers = [...answers];
-        newAnswers[index] = value;
-        onAnswerChange(newAnswers);
-    };
+    const outerTheme = createTheme({
+        palette: {
+            primary: {
+                main: '#6070D4',
+            },
+        },
+    });
 
     return (
         <div>
             {answers.map((answer, index) => (
-                <TextField key={index} className={classes.SmallTextField}
-                    id="`answer-${index}`"
-                    maxRows={2}
-                    placeholder={`Answer ${index + 1}`}
-                    value={answer}
-                    inputProps={{ color: 'blue' }}
-                    sx={{ marginTop: '5px', marginLeft: '0px', width: '600px' }}
-                    InputProps={{ sx: { borderRadius: '20px' } }}
-                    onChange={(event) => handleChange(event, index)}
-                />
+                <Stack direction={'row'} sx={{ display: 'flex', justifyContent: 'center' }} key={index}>
+                    <ThemeProvider theme={outerTheme}>
+                        <Checkbox
+                            icon={<RadioButtonUncheckedOutlinedIcon />}
+                            checkedIcon={<TaskAltOutlinedIcon />}
+                            sx={{ height: '100%', marginTop: '12px' }}
+                            checked={answer.isCorrect}
+                            onChange={(event) => handleCheckboxChange(event, index)}
+                        />
+                        <TextField
+                            className={classes.SmallTextField}
+                            id={`answer-${index}`}
+                            maxRows={2}
+                            placeholder={`Answer ${index + 1}`}
+                            value={answer.text}
+                            inputProps={{ color: 'blue' }}
+                            sx={{ marginTop: '5px', marginLeft: '0px', width: '550px' }}
+                            InputProps={{ sx: { borderRadius: '20px' } }}
+                            onChange={(event) => handleTextFieldChange(event, index)}
+                        />
+                    </ThemeProvider>
+                </Stack>
             ))}
         </div>
     )

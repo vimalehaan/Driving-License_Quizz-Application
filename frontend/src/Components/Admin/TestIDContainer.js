@@ -1,35 +1,9 @@
-import {
-    React,
-    Grid,
-    styled,
-    Paper,
-    Avatar,
-    ButtonGroup,
-    Box,
-    Button,
-    BottomNavigation,
-    BottomNavigationAction,
-    Drawer,
-    CssBaseline,
-    AppBar,
-    Toolbar,
-    Stack,
-    List,
-    Typography,
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    GridViewOutlinedIcon,
-    AddCircleOutlinedIcon,
-    CreditScoreOutlinedIcon,
-    PersonOutlinedIcon,
-    LogoutOutlinedIcon,
-    Pagination,
-    Chip
-} from '../Utils/Mui'
+import React from 'react';
 
+import Box from '@mui/material/Box';
+import { Grid } from "@mui/material";
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 
 const IdBox = styled(Box)({
     borderRadius: '20px',

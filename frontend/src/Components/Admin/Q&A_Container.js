@@ -1,55 +1,21 @@
-import {
-    React,
-    Grid,
-    styled,
-    Paper,
-    Avatar,
-    ButtonGroup,
-    Box,
-    Button,
-    BottomNavigation,
-    BottomNavigationAction,
-    Drawer,
-    CssBaseline,
-    AppBar,
-    Toolbar,
-    Stack,
-    List,
-    Typography,
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    GridViewOutlinedIcon,
-    AddCircleOutlinedIcon,
-    CreditScoreOutlinedIcon,
-    PersonOutlinedIcon,
-    LogoutOutlinedIcon,
-    TextField,
-    Chip
-} from '../Utils/Mui'
-import Container from '@mui/material/Container';
+import React from 'react';
+import { useState, useContext } from 'react';
 
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-
+import { Grid } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
-import { CusButton, CusButtonPurp, Item, ItemOne, SmallButton } from '../Utils/StyledComponents';
-import { handleButtonClick } from './Switch_Q&AField';
+import { IconButton } from '@mui/material';
+
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+
+import { ItemOne, SmallButton } from '../Utils/StyledComponents';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
-import TestIdComponent from './TestIDContainer';
 
-import FormatBoldIcon from '@mui/icons-material/FormatBold';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
-import CheckIcon from '@mui/icons-material/Check';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IconButton } from '@mui/material';
-import { useState } from 'react';
-
+import { QuestionContext } from './Switch_Component';
 
 
 export const useStylesOne = makeStyles((theme) => ({
@@ -95,54 +61,12 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
-export const switchCompo = (activeButton, id, setActiveButton) => {
-    //id value is passed from "AddTest.js"... 
-    //This function is to switch the AddQustion and AddAnswer Text fields...
-
-    if (activeButton['addQuestions']) {
-        return (
-            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                <TestIdComponent testid={id} />
-                <AddQA index='addQuestions' />
-                <div style={{ display: 'flex', justifyContent: 'end' }}>
-                    <CusButtonPurp onClick={() => handleButtonClick('addAnswers', setActiveButton)} sx={{ width: '120px', fontWeight: '40px', }}>
-                        <Typography fontSize={16} sx={{ margin: '-2px -6px 0px 0px' }}>Answers</Typography>
-                        <NavigateNextIcon sx={{ marginRight: '-8px' }} />
-                    </CusButtonPurp>
-                </div>
-            </Stack>
-
-        );
-    } else if (activeButton['addAnswers']) {
-        return (
-            <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                <TestIdComponent testid={id} />
-                <AddQA index='addAnswers' />
-                <Stack direction={'row'} justifyContent={'space-between'}>
-                    <CusButtonPurp onClick={() => handleButtonClick('addQuestions', setActiveButton)} sx={{ width: '120px', fontWeight: '40px', }}>
-                        <NavigateBeforeIcon sx={{ margin: '0px 0 0 -10px' }} />
-                        <Typography fontSize={16} sx={{ margin: '0px 0px 0px -4px' }}>Question</Typography>
-                    </CusButtonPurp>
-
-                    <CusButtonPurp sx={{ width: '100px', fontWeight: '40px', }}>
-                        <CheckIcon sx={{ fontSize: '20px', margin: '-2px 0 0 -4px' }} />
-                        <Typography fontSize={16} sx={{ margin: '-1px 0px 0px 3px' }}>Save</Typography>
-                    </CusButtonPurp>
-                </Stack>
-
-            </Stack>
-        );
-    }
-    return (<img src="./Images/Sentiment analysis-rafiki 1.png" />);
-}
-
 function AddQA({ index }) {
+
+    const { questionText, setQuestionText } = useContext(QuestionContext);
 
 
     const [activeButton, setActiveButton] = useState({});
-    const [questionText, setQuestionText] = useState('');
-    const [answers, setAnswers] = useState(['', '', '', '']);
-
 
     const enableButton = (id) => {            //set buttons active and deactive..
         setActiveButton((prevState) => ({
@@ -154,6 +78,7 @@ function AddQA({ index }) {
     const classes = useStylesOne();
 
     return (
+
         <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Grid item xs={12} lg={12}>
                 <ItemOne elevation={0} sx={{ height: '350px', }}>
@@ -199,16 +124,14 @@ function AddQA({ index }) {
                         <Stack sx={{ height: '250px' }}>
                             {/* <QuestionTextField /> */}
                             {index === 'addQuestions' ? <QuestionTextField initialValue={questionText} onChange={setQuestionText} />
-                                : index === 'addAnswers' ? <AnswerTextField answers={answers} onAnswerChange={setAnswers} />
+                                : index === 'addAnswers' ? <AnswerTextField  />
                                     : null}
-
                         </Stack>
-
                     </form>
                 </ItemOne>
             </Grid>
+        </Grid >
 
-        </Grid>
 
     );
 };

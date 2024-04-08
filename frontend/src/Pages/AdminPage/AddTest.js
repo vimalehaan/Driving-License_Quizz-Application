@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { Item, CusBigButton } from "../../Components/Utils/StyledComponents";
-import { switchCompo } from "../../Components/Admin/TypeQuestion";
+import { SwitchCompo } from "../../Components/Admin/Switch_Component";
 import { handleButtonClick } from "../../Components/Admin/Switch_Q&AField";
 import { TopButtons } from "../../Components/Admin/TopButtons";
 import SideBar from "../../Components/Admin/SideBar";
@@ -111,7 +111,7 @@ function AddTest() {
 
               </Item>
 
-              
+
 
               <Item elevation={0}
                 sx={{
@@ -153,7 +153,7 @@ function AddTest() {
 
               <Item elevation={0} sx={{ height: '493px', justifyContent: 'center' }}>
                 <Stack direction={'column'} spacing={1.5} sx={{ marginTop: 'px' }}>
-                  {switchCompo(activeButton, "CEG_023", setActiveButton)}
+                  {SwitchCompo(activeButton, "CEG_023", setActiveButton)}
                 </Stack>
               </Item>
 
