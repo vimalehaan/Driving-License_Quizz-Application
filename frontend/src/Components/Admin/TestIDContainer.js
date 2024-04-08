@@ -30,10 +30,8 @@ import {
     Chip
 } from '../Utils/Mui'
 
-import { CusButton, Item } from '../Utils/StyledComponents'
 
 const IdBox = styled(Box)({
-
     borderRadius: '20px',
     display: 'flex',
     justifyContent: 'center',
@@ -59,7 +57,6 @@ export default function TestIdComponent({ testid }) {
                         marginLeft: '0px'
                     }}>
                     <Typography sx={{
-                        // fontSize: '18px',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -94,5 +91,4 @@ export default function TestIdComponent({ testid }) {
         </IdBox>
 
     )
-    // <CusButton />
 };

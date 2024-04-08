@@ -29,6 +29,7 @@ import {
   Pagination,
   Chip
 } from './Mui'
+import { IconButton } from '@mui/material';
 
 export const CusButton = styled(Button)(({ clicked }) => ({
   borderRadius: '20px',
@@ -40,6 +41,30 @@ export const CusButton = styled(Button)(({ clicked }) => ({
     color: clicked ? '#F0F2F7' : '#6070D4',
     borderColor: "#6070D4",
     backgroundColor: clicked ? '#6070D4' : null,
+  },
+}));
+
+export const CusBigButton = styled(Button)(({ clicked }) => ({
+  width: '280px',
+  height: '50px',
+  borderRadius: '20px',
+  borderColor: clicked ? '#6070D4' : '#9196B2',
+  color: clicked ? '#F0F2F7' : '#9196B2',
+  backgroundColor: clicked ? '#6070D4' : null,
+  "&:hover": {
+    color: clicked ? '#F0F2F7' : '#6070D4',
+    borderColor: "#6070D4",
+    backgroundColor: clicked ? '#6070D4' : null,
+  },
+}));
+
+export const CusButtonPurp = styled(IconButton)(({ clicked }) => ({
+  borderRadius: '20px',
+  height: '35px',
+  color: '#F0F2F7',
+  backgroundColor: '#6070D4' ,
+  "&:hover": {
+    backgroundColor:'#5c6bc0',
   },
 }));
 

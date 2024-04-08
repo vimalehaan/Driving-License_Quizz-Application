@@ -56,14 +56,14 @@ const CusMenu = styled(Menu)({
     
 })
 export const TopButtons = ({buttons}) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchor, setAnchor] = React.useState(null);
     const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
-    const open = Boolean(anchorEl);
+    const open = Boolean(anchor);
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        setAnchor(event.currentTarget);
     };
     const handleClose = () => {
-        setAnchorEl(null);
+        setAnchor(null);
     };
     const handleMenuItemClick = (itemName) => {
         setSelectedMenuItem(itemName);
@@ -73,33 +73,21 @@ export const TopButtons = ({buttons}) => {
     return (
         <div>
             <CusButton
-                // variant= 'outlined'
                 sx={{width: '250px'}}
-                
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
                 {selectedMenuItem || buttons[0]}
             </CusButton>
             <CusMenu
-            
                 id="basic-menu"
                 sx={{ width: '300px',height: '1600px', borderRadius: '0px',  '& .MuiMenu-paper': {
                     height: `${((buttons.length-1) * 35) + (buttons.length-1)*5 +10}px`}, }}
-                anchorEl={anchorEl}
+                anchorEl={anchor}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-
             >
                 {buttons.slice(1).map((button, index) => (
                     <CusButton
-                        key={index}
                         variant="outlined"
                         sx={{ marginBottom: '5px', height: '35px', marginLeft: '30px', width: '200px', marginTop: '0px' }}
                         onClick={() => handleMenuItemClick(button)}
@@ -107,7 +95,6 @@ export const TopButtons = ({buttons}) => {
                         {button}
                     </CusButton>
                 ))}
-                   
             </CusMenu>
         </div>
     )

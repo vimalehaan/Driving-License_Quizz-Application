@@ -29,18 +29,23 @@ import {
     TextField,
     Chip
 } from '../Utils/Mui'
+import Container from '@mui/material/Container';
 
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { makeStyles } from '@mui/styles';
-import { Item, ItemOne, SmallButton } from '../Utils/StyledComponents';
+import { CusButton, CusButtonPurp, Item, ItemOne, SmallButton } from '../Utils/StyledComponents';
+import { handleButtonClick } from './Switch_Q&AField';
 import AnswerTextField from './AnswerTextField';
 import QuestionTextField from './QuestionTextField';
 import TestIdComponent from './TestIDContainer';
 
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
+import CheckIcon from '@mui/icons-material/Check';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
@@ -90,15 +95,21 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
-export const switchCompo = (activeButton, id) => {
+export const switchCompo = (activeButton, id, setActiveButton) => {
     //id value is passed from "AddTest.js"... 
     //This function is to switch the AddQustion and AddAnswer Text fields...
-    if (activeButton
-    ['addQuestions']) {
+
+    if (activeButton['addQuestions']) {
         return (
             <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                <TestIdComponent testid={id}/>
+                <TestIdComponent testid={id} />
                 <AddQA index='addQuestions' />
+                <div style={{ display: 'flex', justifyContent: 'end' }}>
+                    <CusButtonPurp onClick={() => handleButtonClick('addAnswers', setActiveButton)} sx={{ width: '120px', fontWeight: '40px', }}>
+                        <Typography fontSize={16} sx={{ margin: '-2px -6px 0px 0px' }}>Answers</Typography>
+                        <NavigateNextIcon sx={{ marginRight: '-8px' }} />
+                    </CusButtonPurp>
+                </div>
             </Stack>
 
         );
@@ -107,6 +118,18 @@ export const switchCompo = (activeButton, id) => {
             <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
                 <TestIdComponent testid={id} />
                 <AddQA index='addAnswers' />
+                <Stack direction={'row'} justifyContent={'space-between'}>
+                    <CusButtonPurp onClick={() => handleButtonClick('addQuestions', setActiveButton)} sx={{ width: '120px', fontWeight: '40px', }}>
+                        <NavigateBeforeIcon sx={{ margin: '0px 0 0 -10px' }} />
+                        <Typography fontSize={16} sx={{ margin: '0px 0px 0px -4px' }}>Question</Typography>
+                    </CusButtonPurp>
+
+                    <CusButtonPurp sx={{ width: '100px', fontWeight: '40px', }}>
+                        <CheckIcon sx={{ fontSize: '20px', margin: '-2px 0 0 -4px' }} />
+                        <Typography fontSize={16} sx={{ margin: '-1px 0px 0px 3px' }}>Save</Typography>
+                    </CusButtonPurp>
+                </Stack>
+
             </Stack>
         );
     }
@@ -117,6 +140,9 @@ function AddQA({ index }) {
 
 
     const [activeButton, setActiveButton] = useState({});
+    const [questionText, setQuestionText] = useState('');
+    const [answers, setAnswers] = useState(['', '', '', '']);
+
 
     const enableButton = (id) => {            //set buttons active and deactive..
         setActiveButton((prevState) => ({
@@ -172,15 +198,11 @@ function AddQA({ index }) {
 
                         <Stack sx={{ height: '250px' }}>
                             {/* <QuestionTextField /> */}
-                            {index === 'addQuestions' ? <QuestionTextField /> : index === 'addAnswers' ? <AnswerTextField /> : null}
+                            {index === 'addQuestions' ? <QuestionTextField initialValue={questionText} onChange={setQuestionText} />
+                                : index === 'addAnswers' ? <AnswerTextField answers={answers} onAnswerChange={setAnswers} />
+                                    : null}
 
                         </Stack>
-                        {/* <Stack sx={{ marginBottom: '-150px', marginLeft: '8px' }}>
-                            <IconButton disableElevation sx={{ color: '#9196B2', width: '120px', border: '0px', }} className={classes.textButton} disableTouchRipple disableFocusRipple>
-                                <CloudUploadIcon sx={{ fontSize: '17px', marginRight: '5px' }} />
-                                <Typography variant='h9' fontSize={14} fontWeight={30}>Upload</Typography>
-                            </IconButton>
-                        </Stack> */}
 
                     </form>
                 </ItemOne>
