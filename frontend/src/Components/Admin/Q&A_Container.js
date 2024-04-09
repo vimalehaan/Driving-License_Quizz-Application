@@ -18,6 +18,9 @@ import QuestionTextField from './QuestionTextField';
 import { QuestionContext } from './Switch_Component';
 
 
+
+
+
 export const useStylesOne = makeStyles((theme) => ({
     bigTextField: {
         "& .MuiOutlinedInput-root": {
@@ -61,10 +64,11 @@ export const useStylesOne = makeStyles((theme) => ({
     },
 }));
 
+
+
 function AddQA({ index }) {
 
     const { questionText, setQuestionText } = useContext(QuestionContext);
-
 
     const [activeButton, setActiveButton] = useState({});
 
@@ -79,31 +83,45 @@ function AddQA({ index }) {
 
     return (
 
-        <Grid container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Grid container
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+
             <Grid item xs={12} lg={12}>
                 <ItemOne elevation={0} sx={{ height: '350px', }}>
                     <form>
-                        <Stack direction={'row'} sx={{ height: '50px', marginBottom: '20px' }}>
+                        <Stack direction={'row'}
+                            sx={{
+                                height: '50px',
+                                marginBottom: '20px'
+                            }}>
 
-                            <Stack direction={'row'} spacing={'10px'} sx={{ width: '500px', marginTop: '25px', marginLeft: '25px' }}>
+                            <Stack direction={'row'} spacing={'10px'}
+                                sx={{
+                                    width: '500px',
+                                    marginTop: '25px',
+                                    marginLeft: '25px'
+                                }}>
                                 <SmallButton
-                                    sx={{ width: '27px', height: '27px' }}
                                     disableTouchRipple
                                     clicked={activeButton['1']}
                                     onClick={() => enableButton('1')}
                                 >
                                     <FormatBoldIcon />
                                 </SmallButton>
+
                                 <SmallButton
-                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['2']}
                                     onClick={() => enableButton('2')}
                                 >
                                     <Typography variant='h9' fontSize={20} fontWeight={30}>/</Typography>
                                 </SmallButton>
+
                                 <SmallButton
-                                    sx={{ width: '27px', height: '27px', }}
                                     disableTouchRipple
                                     clicked={activeButton['3']}
                                     onClick={() => enableButton('3')}
@@ -113,7 +131,15 @@ function AddQA({ index }) {
 
                             </Stack >
                             <Stack sx={{ marginTop: '25px', marginLeft: '-10px' }}>
-                                <IconButton disableElevation sx={{ color: '#9196B2', width: '120px', border: '0px', }} className={classes.textButton} disableTouchRipple disableFocusRipple>
+                                <IconButton disableElevation
+                                    sx={{
+                                        color: '#9196B2',
+                                        width: '120px',
+                                        border: '0px',
+                                    }}
+                                    className={classes.textButton}
+                                    disableTouchRipple
+                                    disableFocusRipple>
                                     <AddCircleOutlinedIcon sx={{ fontSize: '17px', marginRight: '5px' }} />
                                     <Typography variant='h9' fontSize={14} fontWeight={30}>Add Image</Typography>
                                 </IconButton>
@@ -122,9 +148,8 @@ function AddQA({ index }) {
                         </Stack>
 
                         <Stack sx={{ height: '250px' }}>
-                            {/* <QuestionTextField /> */}
                             {index === 'addQuestions' ? <QuestionTextField initialValue={questionText} onChange={setQuestionText} />
-                                : index === 'addAnswers' ? <AnswerTextField  />
+                                : index === 'addAnswers' ? <AnswerTextField />
                                     : null}
                         </Stack>
                     </form>

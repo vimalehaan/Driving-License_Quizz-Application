@@ -1,38 +1,9 @@
-import MouseEvent from 'react';
+import React from "react";
 
-import {
-    React,
-    Grid,
-    styled,
-    Paper,
-    Avatar,
-    ButtonGroup,
-    Box,
-    Button,
-    BottomNavigation,
-    BottomNavigationAction,
-    Drawer,
-    CssBaseline,
-    AppBar,
-    Toolbar,
-    Stack,
-    List,
-    Typography,
-    Divider,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    GridViewOutlinedIcon,
-    AddCircleOutlinedIcon,
-    CreditScoreOutlinedIcon,
-    PersonOutlinedIcon,
-    LogoutOutlinedIcon,
-    Pagination,
-    Chip,
-    Menu,
-    MenuItem
-} from '../Utils/Mui';
+import { styled } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 import { CusButton } from '../Utils/StyledComponents';
 
 
@@ -59,6 +30,7 @@ export const TopButtons = ({buttons}) => {
     const [anchor, setAnchor] = React.useState(null);
     const [selectedMenuItem, setSelectedMenuItem] = React.useState('');
     const open = Boolean(anchor);
+
     const handleClick = (event) => {
         setAnchor(event.currentTarget);
     };
@@ -70,6 +42,7 @@ export const TopButtons = ({buttons}) => {
         handleClose();
     };
 
+    
     return (
         <div>
             <CusButton
