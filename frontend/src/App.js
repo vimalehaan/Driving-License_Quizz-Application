@@ -6,14 +6,16 @@ import TestIdComponent from './Components/Admin/TestIDContainer';
 import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
 import Loginpg1 from './Pages/UserLogPage/Loginpg1';
 import Loginpg2 from './Pages/UserLogPage/Loginpg2';
+import CustomizedDialogs from './Components/Admin/SaveDialog';
 
 function App() {
   return (
     <div className="App">
       
       {/* <Loginpg1 /> */}
-      <Loginpg2 />
-      {/* <AddTest /> */}
+      {/* <Loginpg2 /> */}
+      <AddTest />
+      {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
       
