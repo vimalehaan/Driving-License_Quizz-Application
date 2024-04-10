@@ -67,6 +67,18 @@ export const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+export const WhitePaper = styled(Paper)(({ theme }) => ({
+  // display: 'flex',
+  boxShadow: '0px 4px 9px rgba(0, 0, 0, 0.1)',
+  // alignItems: 'center',
+  // backgroundColor: '#F0F2F7',
+  // ...theme.typography.body2,
+  padding: '20px',
+  borderRadius: '20px',
+  textAlign: 'center',
+  // color: theme.palette.text.secondary,
+}));
+
 export const ItemOne = styled(Paper)(({ theme }) => ({
   display: 'flex',
   width: '670px',
