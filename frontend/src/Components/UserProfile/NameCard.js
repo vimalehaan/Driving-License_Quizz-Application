@@ -19,7 +19,7 @@ import DiamondIcon from '@mui/icons-material/Diamond';
 export default function ImgMediaCard() {
     return (
 
-        <Card sx={{ width:'1000px', borderRadius: '20px', boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.1)',}}>
+        <Card sx={{  borderRadius: '20px', boxShadow: '0px 3px 9px rgba(0, 0, 0, 0.1)',}}>
             <CardMedia
                 component="img"
                 alt="green iguana"

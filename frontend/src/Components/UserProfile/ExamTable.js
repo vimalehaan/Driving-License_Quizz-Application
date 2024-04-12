@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useContext } from 'react';
+
 import Chip from '@mui/material/Chip';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,10 +14,10 @@ import { styled } from '@mui/material/styles';
 
 import { WhitePaper } from '../Utils/StyledComponents';
 
-
+import { ExamViewContext } from '../../Pages/UserProfile';
 
 export const CusChip = styled(Chip)(({ result }) => ({
-    
+
     backgroundColor: result === 'Fail' ? '#ea8f8f' : '#bedd9a',
     "&:hover": {
         backgroundColor: result === 'Fail' ? '#e57373' : '#aed581',
@@ -76,6 +78,12 @@ export default function ExamTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+    const {setShowExamView} = useContext(ExamViewContext);
+
+    const handleViewButtonClick = () => {
+        setShowExamView(true);
+    };
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -88,13 +96,13 @@ export default function ExamTable() {
     const getRowColor = (difficulty) => {
         switch (difficulty) {
             case 'Easy':
-                return 'rgba(9, 188, 224, 0.1)'; // Light green color for 'Easy'
+                return 'rgba(9, 188, 224, 0.1)'; 
             case 'Hard':
-                return 'rgba(159, 105, 213, 0.05)'; // Light orange color for 'Hard'
+                return 'rgba(159, 105, 213, 0.05)'; 
             case 'Hardest':
-                return 'rgba(96, 112, 212, 0.1)'; // Light red color for 'Hardest'
+                return 'rgba(96, 112, 212, 0.1)'; 
             default:
-                return '#FFFFFF'; // Default color for other cases
+                return '#FFFFFF'; 
         }
     };
 
@@ -121,7 +129,7 @@ export default function ExamTable() {
                     <TableBody>
 
                         {rows.map((row) => (
-                            
+
 
                             <TableRow
                                 key={row.name}
@@ -137,7 +145,7 @@ export default function ExamTable() {
                                         result={row.result}
                                         clickable
                                         label={row.result === 'pass' ? 'View' : 'Retry'}
-                                        
+                                        onClick={handleViewButtonClick}
                                     />
                                 </TableCell>
 
