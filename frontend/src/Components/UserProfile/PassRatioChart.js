@@ -3,13 +3,21 @@ import { useContext } from 'react';
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
-import { RatioChartContext } from '../../Pages/UserProfile';
+import { ChartDataContext } from '../../Pages/UserProfile';
 
 
 
 function PassRatioChart({ difficulty }) {
 
-  const { easyValue, hardValue, hardestValue, easyPassValue, hardPassValue, hardestPassValue } = useContext(RatioChartContext);
+  const { QuizData } = useContext(ChartDataContext);
+  const easyValue = QuizData.filter(data => data.difficulty === 'Easy').length;
+  const hardValue = QuizData.filter(data => data.difficulty === 'Hard').length;
+  const hardestValue = QuizData.filter(data => data.difficulty === 'Hardest').length;
+
+  const easyPassValue = QuizData.filter(data => data.difficulty === 'Easy' && data.result).length;
+  const hardPassValue = QuizData.filter(data => data.difficulty === 'Hard'  && data.result).length;
+  const hardestPassValue = QuizData.filter(data => data.difficulty === 'Hardest'  && data.result).length;
+
   const value = {
     'easy': easyPassValue,
     'hard': hardPassValue,

@@ -58,23 +58,24 @@ const columns = [
     },
 ];
 
-function createData(quiz, difficulty, date, score, result, fresult) {
+export function createData(quiz, difficulty, date, score, result, type) {
 
-    return { quiz, difficulty, date, score, result, fresult };
+    return { quiz, difficulty, date, score, result, type };
 }
 
-const rows = [
-    createData('Quiz1', 'Hard', '01/01/2024', '10/30', 'pass'),
-    createData('Quiz2', 'Easy', '01/01/2024', '10/30', 'Fail'),
-    createData('Quiz3', 'Hardest', '01/01/2024', '10/30', 'pass'),
-    createData('Quiz4', 'Hard', '01/01/2024', '10/30', 'Fail'),
-    createData('Quiz5', 'Hardest', '01/01/2024', '10/30', 'pass'),
-    createData('Quiz6', 'Hard', '01/01/2024', '10/30', 'pass'),
-    createData('Quiz7', 'Easy', '01/01/2024', '10/30', 'Fail'),
-    createData('Quiz8', 'Hard', '01/01/2024', '10/30', 'pass'),
+export const QuizData = [
+    createData('Quiz1', 'Hard', '01/01/2024', 20, false, true),
+    createData('Quiz1', 'Easy', '02/01/2024', 50, false, false),
+    createData('Quiz3', 'Hardest', '02/01/2024', 40,true, false),
+    createData('Quiz4', 'Easy', '04/01/2024', 30, true, true),
+    createData('Quiz5', 'Hardest', '04/01/2024', 70,false, false),
+    createData('Quiz6', 'Hard', '06/01/2024', 10,true, false),
+    createData('Quiz7', 'Easy', '07/01/2024', 80, false, true),
+    createData('Quiz8', 'Hard', '08/01/2024', 90,true, true),
 ];
 
 export default function ExamTable() {
+    
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -128,7 +129,7 @@ export default function ExamTable() {
                     </TableHead>
                     <TableBody>
 
-                        {rows.map((row) => (
+                        {QuizData.map((row) => (
 
 
                             <TableRow

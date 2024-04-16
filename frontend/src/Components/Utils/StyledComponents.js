@@ -69,7 +69,7 @@ export const Item = styled(Paper)(({ theme }) => ({
 
 export const WhitePaper = styled(Paper)(({ theme }) => ({
   // display: 'flex',
-  boxShadow: '0px 4px 9px rgba(0, 0, 0, 0.1)',
+  boxShadow: '2px 1px 10px 0px rgba(0, 0, 0, 0.1)',
   // alignItems: 'center',
   // backgroundColor: '#F0F2F7',
   // ...theme.typography.body2,
