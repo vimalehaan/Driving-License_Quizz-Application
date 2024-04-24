@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Grid } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
 import Stack from "@mui/material/Stack";
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -75,49 +76,51 @@ function SideBar() {
 
     const classes = useStyles();
     return (
-        <Drawer className={classes.drawer}
-            variant="permanent"
-            anchor="left"
-            PaperProps={{ elevation: '5', }}
-        >
-            <Grid container marginTop={6} marginLeft={-2}>
-                <Stack direction={"row"} marginLeft={5.5} >
-                    <Avatar sx={{ bgcolor: '#323A6E' }}>L</Avatar>
-                    <Typography className={classes.NameTypo} color='#323A6E' variant="p" height={40} paddingTop={1.2} marginLeft={1.5}>Lehaan</Typography>
-                </Stack>
+        <Box sx={{ display: 'flex' }}>
+            <Drawer className={classes.drawer}
+                variant="permanent"
+                anchor="left"
+                PaperProps={{ elevation: '5', }}
+            >
+                <Grid container marginTop={6} marginLeft={-2}>
+                    <Stack direction={"row"} marginLeft={5.5} >
+                        <Avatar sx={{ bgcolor: '#323A6E' }}>L</Avatar>
+                        <Typography className={classes.NameTypo} color='#323A6E' variant="p" height={40} paddingTop={1.2} marginLeft={1.5}>Lehaan</Typography>
+                    </Stack>
 
-                <List sx={{ marginTop: '20px' }}>
-                    {buttonsData.map((button, index) => (
-                        <ListItem disablePadding sx={{ marginLeft: '35px' }} >
-                            <SideButton disableElevation disableTouchRipple disableFocusRipple
-                                clicked={activeButton[button.num]}
-                                onClick={() => handleButtonClick(button.num, setActiveButton)}
+                    <List sx={{ marginTop: '20px' }}>
+                        {buttonsData.map((button, index) => (
+                            <ListItem disablePadding sx={{ marginLeft: '35px' }} >
+                                <SideButton disableElevation disableTouchRipple disableFocusRipple
+                                    clicked={activeButton[button.num]}
+                                    onClick={() => handleButtonClick(button.num, setActiveButton)}
+                                >
+                                    <>{button.icon}</>
+                                    <Typography variant='h9' fontSize={15} fontWeight={600}>{button.name}</Typography>
+                                </SideButton>
+                            </ListItem>
+                        ))}
+                        <ListItem disablePadding >
+
+                            <SideButton
+                                sx={{
+                                    marginTop: '140px',
+                                    marginLeft: '35px'
+                                }}
+                                disableElevation
+                                disableTouchRipple
+                                disableFocusRipple
                             >
-                                <>{button.icon}</>
-                                <Typography variant='h9' fontSize={15} fontWeight={600}>{button.name}</Typography>
+                                <LogoutOutlinedIcon />
+                                <Typography variant='h9' fontSize={15} fontWeight={600}>Logout</Typography>
                             </SideButton>
                         </ListItem>
-                    ))}
-                    <ListItem disablePadding >
-
-                        <SideButton
-                            sx={{
-                                marginTop: '140px',
-                                marginLeft: '35px'
-                            }}
-                            disableElevation
-                            disableTouchRipple
-                            disableFocusRipple
-                        >
-                            <LogoutOutlinedIcon />
-                            <Typography variant='h9' fontSize={15} fontWeight={600}>Logout</Typography>
-                        </SideButton>
-                    </ListItem>
-                </List>
-            </Grid>
+                    </List>
+                </Grid>
 
 
-        </Drawer>
+            </Drawer>
+        </Box >
     )
 };
 
