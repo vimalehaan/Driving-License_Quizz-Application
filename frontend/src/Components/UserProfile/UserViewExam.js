@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -19,45 +19,12 @@ import CheckIcon from '@mui/icons-material/Check';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
+import { SpecificQuizContext } from '../../Pages/UserProfile';
 
 import QuizzDetails from './QuizDetailComponent';
 import { WhitePaper } from '../Utils/StyledComponents';
 
-const questionsData = [
-    {
-        question: "This free Alberta Driving Practice Test (updated for 2024) covers the basic questions",
-        answers: [
-            { text: "Correct Answer 1", isCorrect: true, isSelected: true },
-            { text: "Wrong Answer 1", isCorrect: false, isSelected: false },
-            { text: "Wrong Answer 2", isCorrect: false, isSelected: false },
-            { text: "Wrong Answer 3", isCorrect: false, isSelected: false }
-        ],
-        userAnswer: "User's Answer 1",
-        userIsCorrect: true
-    },
-    {
-        question: "This free Alberta Driving Practice Test (updated for 2024) covers the basic questions",
-        answers: [
-            { text: "Correct Answer 1", isCorrect: true, isSelected: false },
-            { text: "Wrong Answer 1", isCorrect: false, isSelected: true },
-            { text: "Wrong Answer 2", isCorrect: false, isSelected: false },
-            { text: "Wrong Answer 3", isCorrect: false, isSelected: false }
-        ],
-        userAnswer: "User's Answer 1",
-        userIsCorrect: false
-    },
-    {
-        question: "This free Alberta Driving Practice Test (updated for 2024) covers the basic questions",
-        answers: [
-            { text: "Wrong Answer 1", isCorrect: false, isSelected: true },
-            { text: "Wrong Answer 2", isCorrect: false, isSelected: false },
-            { text: "Wrong Answer 3", isCorrect: false, isSelected: false },
-            { text: "Correct Answer 1", isCorrect: true, isSelected: false }
-        ],
-        userAnswer: "User's Answer 1",
-        userIsCorrect: false
-    },
-];
+
 
 const getBackgroundColor = (answers) => {
     const hasWrongAnswer = answers.some(answer => !answer.isSelected && answer.isCorrect);
@@ -69,8 +36,13 @@ const getBackgroundColor = (answers) => {
 
 function UserExamView() {
 
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const totalQuestions = questionsData.length;
+    const {questionViewData, currentQuestionIndex, setCurrentQuestionIndex} = useContext(SpecificQuizContext);
+    console.log(questionViewData.questions)
+    
+
+    
+    
+    
 
     const handlePrevQuestion = () => {
         if (currentQuestionIndex > 0) {
@@ -84,7 +56,12 @@ function UserExamView() {
         }
     };
 
-    const currentQuestion = questionsData[currentQuestionIndex];
+    // const currentQuestion = questionsData[currentQuestionIndex];
+
+    const currentQuestion = questionViewData.questions[currentQuestionIndex];
+    const totalQuestions = questionViewData.questions.length;
+    const answersData = currentQuestion.answers;
+    console.log(currentQuestion.answers)
 
 
     return (
@@ -100,7 +77,7 @@ function UserExamView() {
                             <QuizzDetails />
                             <Box key={currentQuestionIndex}
                                 sx={{
-                                    backgroundColor: currentQuestion.userIsCorrect ? '#f3f9ed' : '#ffeff1',
+                                    backgroundColor: currentQuestion.isCorrect ? '#fafcf8' : '#fffafa',
                                     borderRadius: '20px',
                                     p: '20px',
                                     marginTop: '25px'
@@ -114,41 +91,41 @@ function UserExamView() {
                                         Q-{currentQuestionIndex + 1}
                                     </Typography>
                                     <Chip
-                                        label={currentQuestion.userIsCorrect ? 'Correct' : 'Wrong'}
+                                        label={currentQuestion.isCorrect ? 'Correct' : 'Wrong'}
                                         variant="outlined"
-                                        icon={currentQuestion.userIsCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
+                                        icon={currentQuestion.isCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
                                         sx={{
-                                            border: currentQuestion.userIsCorrect ? '1.5px solid green' : '1.5px solid #FF7C7C',
+                                            border: currentQuestion.isCorrect ? '1.5px solid #15d147' : '1.5px solid #ff4d4d',
                                             fontSize: '15px',
                                             fontWeight: '500',
-                                            color: currentQuestion.userIsCorrect ? 'green' : '#FF7C7C',
+                                            color: currentQuestion.isCorrect ? '#15d147' : '#ff4d4d',
                                         }} />
                                 </Stack>
 
                                 <Typography fontSize={18} sx={{ margin: '15px 0 0 0px', }}>
-                                    {currentQuestion.question}
+                                    {currentQuestion.question_text}
                                 </Typography>
 
                                 <Stack direction={"column"} spacing={2.5} sx={{ textAlign: 'left', margin: '25px 0 0 100px' }}>
-                                    {currentQuestion.answers.map((answer, answerIndex) => (
+                                    {answersData.map((answer, answerIndex) => (
                                         <Stack direction={'row'} spacing={1} key={answerIndex}>
                                             {answer.isCorrect ? (
-                                                <CheckCircleIcon fontSize="medium" sx={{ color: 'green' }} />
-                                            ) : answer.isCorrect === false && answer.isSelected === true ? (
-                                                <CancelIcon fontSize="medium" sx={{ color: '#d32f2f' }} />
+                                                <CheckCircleIcon fontSize="medium" sx={{ color: '#15d147' }} />
+                                            ) : answer.isCorrect === false && answer.isSelect === true ? (
+                                                <CancelIcon fontSize="medium" sx={{ color: '#ff4d4d' }} />
                                             ) : (<CancelIcon fontSize="medium" sx={{ color: '#9e9e9e' }} />)}
 
                                             <Typography fontSize={18}
                                                 sx={{
                                                     color:
-                                                        answer.isCorrect ? 'green' :
-                                                            answer.isCorrect === false && answer.isSelected === true ? '#d32f2f' :
+                                                        answer.isCorrect ? '#12ba3f' :
+                                                            answer.isCorrect === false && answer.isSelect === true ? '#ff4d4d' :
                                                                 '#9e9e9e',
                                                     textDecoration:
-                                                        answer.isCorrect === false && answer.isSelected === false ? 'line-through' :
+                                                        answer.isCorrect === false && answer.isSelect === false ? 'line-through' :
                                                             'none'
                                                 }}>
-                                                {answer.text}
+                                                {answer.answer_text}
                                             </Typography>
                                         </Stack>
                                     ))}
@@ -157,9 +134,9 @@ function UserExamView() {
                                     <span style={{ fontWeight: 600 }}>Your Answer: </span>
                                     <span style={{
                                         marginLeft: '10px',
-                                        color: currentQuestion.answers.find(answer => answer.isSelected && !answer.isCorrect) ? '#d32f2f' : 'green'
+                                        color: currentQuestion.isCorrect ? '#12ba3f' : '#ff4d4d'
                                     }}>
-                                        {currentQuestion.answers.find(answer => answer.isSelected)?.text}
+                                        {currentQuestion.userAnswer.answer_text}
                                     </span>
 
                                 </Typography>

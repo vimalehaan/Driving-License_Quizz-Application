@@ -13,6 +13,8 @@ import CircleIcon from '@mui/icons-material/Circle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
+
 
 import { WhitePaper } from '../Utils/StyledComponents';
 import { QuizDataContext } from '../../Pages/UserProfile';
@@ -25,22 +27,27 @@ export const useStylesOne = makeStyles((theme) => ({
 
 
 function QuizCard() {
-    const { data } = useContext(QuizDataContext);
-    const {setShowExamView} = useContext(ExamViewContext);
+    const { data, setCurrentQuestionIndex } = useContext(QuizDataContext);
+    const {setShowExamView, setQuestionViewData} = useContext(ExamViewContext);
 
     const handleViewQuizContent = () => {
         setShowExamView(true);
+        setQuestionViewData(data);
+        setCurrentQuestionIndex(0)
     }
+    console.log('key' +data._id)
+   
 
     return (
         <WhitePaper 
+        key={data._id}
         onClick={handleViewQuizContent}
         sx={{
             // backgroundColor:
             height: '160px',
             padding: '0px',
             backgroundImage: data.result ? 'url("./Images/circle-check-regular.png")' : 'url("./Images/circle-xmark-regular.png")',
-            backgroundColor: data.result ? '#fafcf8' : '#fff5f5',
+            backgroundColor: data.result ? '#fcfffa' : '#fffafa',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundSize: '250px',
@@ -62,18 +69,19 @@ function QuizCard() {
                         <Typography
                             align='left'
                             sx={{
+                                fontWeight: '700',
                                 display: 'flex',
                                 alignItems: 'center'
                             }}>
-                            {data.quiz}
-                            <CircleIcon
+                            {data.quizName}
+                            <LocalFireDepartmentIcon
                                 sx={{
                                     color:
                                         data.difficulty === 'Easy' ? '#09BCE0' :
                                             data.difficulty === 'Hard' ? '#9F69D5' :
                                                 data.difficulty === 'Hardest' ? '#6070D4' : null,
-                                    marginLeft: '5px',
-                                    fontSize: '15px'
+                                    marginLeft: '1px',
+                                    fontSize: '19px'
                                 }} />
                         </Typography>
 
@@ -84,9 +92,9 @@ function QuizCard() {
                                 display: 'flex', alignItems: 'center'
                             }}>
                             <CalendarMonthIcon sx={{ fontSize: '17px', marginRight: '5px' }} />
-                            {data.date}
+                            {data.quiz_date.split("T")[0]}
                         </Typography>
-                        {data.type ? <DirectionsCarIcon sx={{ fontSize: '80px' }} /> :
+                        {data.quizType ? <DirectionsCarIcon sx={{ fontSize: '80px' }} /> :
                             <DirectionsBusIcon sx={{ fontSize: '80px' }} />}
                     </Stack>
                     <Box sx={{ display: 'flex', justifyContent: 'start', marginTop: '10px' }}>

@@ -7,10 +7,10 @@ import { ChartDataContext } from '../../Pages/UserProfile';
 
 export default function BasicPie() {
 
-    const { QuizData } = useContext(ChartDataContext);
-    const easyValue = QuizData.filter(data => data.difficulty === 'Easy').length;
-    const hardValue = QuizData.filter(data => data.difficulty === 'Hard').length;
-    const hardestValue = QuizData.filter(data => data.difficulty === 'Hardest').length;
+    const { attemptsData } = useContext(ChartDataContext);
+    const easyValue = attemptsData.filter(data => data.difficulty === 'Easy').length;
+    const hardValue = attemptsData.filter(data => data.difficulty === 'Hard').length;
+    const hardestValue = attemptsData.filter(data => data.difficulty === 'Hardest').length;
 
     console.log('easyValue:', easyValue);
 

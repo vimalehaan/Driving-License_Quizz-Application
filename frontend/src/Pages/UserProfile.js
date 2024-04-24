@@ -1,5 +1,6 @@
 import React from 'react'
 import { createContext, useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { ThemeProvider } from '@emotion/react';
 
 import Container from '@mui/material/Container';
@@ -28,17 +29,49 @@ import { QuizData } from '../Components/UserProfile/ExamTable';
 export const RatioChartContext = createContext();
 export const ChartDataContext = createContext();
 export const ExamViewContext = createContext();
+export const QuestionViewContext = createContext();
 export const QuizDataContext = createContext();
+export const SpecificQuizContext = createContext();
 
 
 
 function UserProfilePage() {
+    const [attemptsData, setAttemptsData] = useState([]);
+    const [questionViewData, setQuestionViewData] = useState({});
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    console.log('questionViewData:: ' + questionViewData._id)
 
-    const attempts = QuizData.length;
-    const completed = QuizData.filter(data => data.result).length;
+    const attempts = attemptsData.length;
+    const completed = attemptsData.filter(data => data.result).length;
 
     const [showExamView, setShowExamView] = useState(false);
     const userExamViewRef = useRef(null);
+
+    useEffect(() => {
+        // Define a function to fetch attempted quizzes
+        const fetchAttempts = async () => {
+            try {
+                // Make a GET request to your backend endpoint
+                const response = await axios.get('http://localhost:3000/getattempts'); // Adjust the URL if your backend is hosted on a different domain
+                console.log('Response from backend:', response.data);
+                // Set the fetched attempted quizzes in state
+                setAttemptsData(response.data);
+            } catch (error) {
+                console.error('Error fetching attempted quizzes:', error);
+            }
+        };
+
+        // Call the fetchAttempts function when the component mounts
+        fetchAttempts();
+    }, []);
+
+    console.log("attempt Data length: " + attemptsData.length)
+    {
+        attemptsData.map(attempts => (
+            console.log("attempt Data: " + attempts.difficulty)
+        ))
+    }
+
 
 
     useEffect(() => {
@@ -49,7 +82,7 @@ function UserProfilePage() {
 
     return (
         <ThemeProvider theme={typographyTheme}>
-            <ChartDataContext.Provider value={{ QuizData }}>
+            <ChartDataContext.Provider value={{ attemptsData }}>
                 <Container
                     maxWidth={'false'}
                     sx={{
@@ -92,9 +125,6 @@ function UserProfilePage() {
                                         </Stack>
                                     </WhitePaper>
                                     <WhitePaper sx={{ height: '230px', marginTop: '20px' }}>
-
-
-
                                         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '-20px' }}>
                                             <BasicPie />
                                         </Box>
@@ -104,19 +134,16 @@ function UserProfilePage() {
                                             <PassRatioChart difficulty='hard' />
                                             <PassRatioChart difficulty='hardest' />
                                         </Box>
-
-
-
                                     </WhitePaper>
 
 
                                 </Grid>
-                                <ExamViewContext.Provider value={{ setShowExamView }}>
+                                <ExamViewContext.Provider value={{ setShowExamView, setQuestionViewData }}>
                                     <Grid item lg='7.5' xs='7.5'>
                                         {/* <ExamTable /> */}
                                         {/* <WhitePaper sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '350px' }}> */}
-                                            {/* <SimpleLineChart /> */}
-                                            <img height='400px' src='./Images/progress.png' />
+                                        {/* <SimpleLineChart /> */}
+                                        <img height='400px' src='./Images/progress.png' />
                                         {/* </WhitePaper> */}
                                     </Grid>
 
@@ -124,8 +151,8 @@ function UserProfilePage() {
                                         <Box sx={{ maxWidth: '1000px' }}>
                                             <Typography align='left' fontSize='20px' fontWeight={600} sx={{ marginLeft: '20px' }}>Your Quizzes</Typography>
                                             <Stack direction={'row'} spacing={'30px'} sx={{ overflowX: 'scroll', padding: '20px' }}>
-                                                {QuizData.map((data) => (
-                                                    <QuizDataContext.Provider value={{ data }}>
+                                                {attemptsData.map((data) => (
+                                                    <QuizDataContext.Provider value={{ data, setCurrentQuestionIndex }}>
                                                         <QuizCard />
                                                     </QuizDataContext.Provider>
                                                 ))}
@@ -137,10 +164,12 @@ function UserProfilePage() {
                                 </ExamViewContext.Provider>
 
                                 {showExamView ? (
-                                    <Grid item lg='12' xs='12'>
-                                        <div ref={userExamViewRef}></div>
-                                        <UserExamView />
-                                    </Grid>
+                                    <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex}}>
+                                        <Grid item lg='12' xs='12'>
+                                            <div ref={userExamViewRef}></div>
+                                            <UserExamView />
+                                        </Grid>
+                                    </SpecificQuizContext.Provider>
                                 ) : null}
 
 
