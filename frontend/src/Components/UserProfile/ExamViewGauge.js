@@ -2,12 +2,24 @@ import React from 'react'
 import { useContext } from 'react';
 
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
+import { SpecificQuizContext } from '../Utils/Contexts';
 
-import { SpecificQuizContext } from '../../Pages/UserProfile';
+// import { SpecificQuizContext } from '../../Pages/UserProfile';
+
 
 function ExamViewCauge() {
 
     const { questionViewData } = useContext(SpecificQuizContext);
+
+    // if (!questionViewData) {
+    //     // If questionViewData is null, render some fallback content or return null
+    //     return <div>Loading...</div>;
+    // }
+    // // Check if questions array is not null before accessing its properties
+    // if (!questionViewData || questionViewData.length === 0) {
+    //     // If questions array is null or empty, render some fallback content or return null
+    //     return <div>No questions available</div>;
+    // }
 
     return (
         <Gauge
@@ -26,11 +38,11 @@ function ExamViewCauge() {
                     fontWeight: 600
                 },
                 [`& .${gaugeClasses.valueArc}`]: {
-                    fill: '#8DF4A9',
+                    fill: '#37407b',
                 },
                 
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: '#FF7C7C',
+                    fill: '#a6a6a6',
                 },
             })}
             text={

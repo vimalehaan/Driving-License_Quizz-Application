@@ -24,6 +24,8 @@ import SimpleLineChart from '../Components/UserProfile/LineChart';
 
 import { QuizData } from '../Components/UserProfile/ExamTable';
 
+import { SpecificQuizContext } from '../Components/Utils/Contexts';
+
 
 
 export const RatioChartContext = createContext();
@@ -31,7 +33,7 @@ export const ChartDataContext = createContext();
 export const ExamViewContext = createContext();
 export const QuestionViewContext = createContext();
 export const QuizDataContext = createContext();
-export const SpecificQuizContext = createContext();
+// export const SpecificQuizContext = createContext();
 
 
 
@@ -40,6 +42,7 @@ function UserProfilePage() {
     const [questionViewData, setQuestionViewData] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     console.log('questionViewData:: ' + questionViewData._id)
+    console.log('dataQst: ' +questionViewData.questions)
 
     const attempts = attemptsData.length;
     const completed = attemptsData.filter(data => data.result).length;

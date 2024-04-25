@@ -20,7 +20,8 @@ import { CusButtonPurp } from '../Utils/StyledComponents';
 import DirectionsCar from '@mui/icons-material/DirectionsCar';
 
 
-import { SpecificQuizContext } from '../../Pages/UserProfile';
+// import { SpecificQuizContext } from '../../Pages/UserProfile';
+import { SpecificQuizContext } from '../Utils/Contexts';
 import DirectionsBus from '@mui/icons-material/DirectionsBus';
 
 
@@ -43,11 +44,11 @@ function QuizzDetails() {
                             {questionViewData.result
                                 ? <CheckCircleIcon fontSize='medium'
                                     sx={{
-                                        color: '#73f295',
+                                        color: '#37407b',
                                     }} />
                                 : <CancelIcon fontSize='medium'
                                     sx={{
-                                        color: '#FF7C7C',
+                                        color: '#666666',
                                     }} />
                             }
                         </Stack>
@@ -76,8 +77,8 @@ function QuizzDetails() {
                     <Box sx={{ marginTop: '10px' }}>
                         <Stack direction={'row'} sx={{ alignItems: 'center' }}>
                             <Stack direction={'column'}>
-                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#8DF4A9' }} /> {correctQuestions} Correct</Typography>
-                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#FF7C7C' }} /> {inCorrectQuestions} Incorrect</Typography>
+                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#37407b' }} /> {correctQuestions} Correct</Typography>
+                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#a6a6a6' }} /> {inCorrectQuestions} Incorrect</Typography>
                             </Stack>
                             <Box>
                                 <ExamViewCauge />
