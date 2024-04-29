@@ -30,10 +30,12 @@ function QuestionBox() {
     //     return <div>No questions available</div>;
     // }
 
-    const currentQuestion = questionViewData.questions[currentQuestionIndex];
-    const totalQuestions = questionViewData.questions.length;
-    const answersData = currentQuestion.answers;
-    console.log(currentQuestion.answers)
+    const currentQuestion = questionViewData.selectedAnswers[currentQuestionIndex];
+    const totalQuestions = questionViewData.selectedAnswers.length;
+    const answersData = currentQuestion.question_id.answers;
+    console.log(currentQuestion)
+    console.log("ansData: " +currentQuestion.selectedAnswer_id.answer_text)
+
 
     const handlePrevQuestion = () => {
         if (currentQuestionIndex > 0) {
@@ -52,7 +54,7 @@ function QuestionBox() {
 
             <Box key={currentQuestionIndex}
                 sx={{
-                    backgroundColor: currentQuestion.isCorrect ? '#edeff7' : '#f2f2f2',
+                    backgroundColor: currentQuestion.selectedAnswer_id.isCorrect ? '#edeff7' : '#FFF7F7',
                     borderRadius: '20px',
                     p: '20px',
                     textAlign: 'left'
@@ -66,19 +68,19 @@ function QuestionBox() {
                         Q-{currentQuestionIndex + 1}
                     </Typography>
                     <Chip
-                        label={currentQuestion.isCorrect ? 'Correct' : 'Wrong'}
+                        label={currentQuestion.selectedAnswer_id.isCorrect ? 'Correct' : 'Wrong'}
                         variant="outlined"
-                        icon={currentQuestion.isCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
+                        icon={currentQuestion.selectedAnswer_id.isCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
                         sx={{
-                            border: currentQuestion.isCorrect ? '1.5px solid #3f4a8d' : '1.5px solid #666666',
+                            border: currentQuestion.selectedAnswer_id.isCorrect ? '1.5px solid #3f4a8d' : '1.5px solid #ff4d4d',
                             fontSize: '15px',
                             fontWeight: '500',
-                            color: currentQuestion.isCorrect ? '#3f4a8d' : '#666666',
+                            color: currentQuestion.selectedAnswer_id.isCorrect ? '#3f4a8d' : '#ff4d4d',
                         }} />
                 </Stack>
 
                 <Typography align='left' fontSize={18} sx={{ margin: '15px 0 0 0px', }}>
-                    {currentQuestion.question_text}
+                    {currentQuestion.question_id.question_text}
                 </Typography>
 
                 <Stack direction={"column"} spacing={2.5} sx={{ textAlign: 'left', margin: '25px 0 0 100px' }}>
@@ -86,7 +88,7 @@ function QuestionBox() {
                         <Stack direction={'row'} spacing={1} key={answerIndex}>
                             {answer.isCorrect ? (
                                 <CheckCircleIcon fontSize="medium" sx={{ color: '#37407b' }} />
-                            ) : answer.isCorrect === false && answer.isSelect === true ? (
+                            ) : answer.isCorrect === false && currentQuestion.selectedAnswer_id._id === answer._id  ? (
                                 <CancelIcon fontSize="medium" sx={{ color: '#ff4d4d' }} />
                             ) : (<CancelIcon fontSize="medium" sx={{ color: '#9e9e9e' }} />)}
 
@@ -94,13 +96,13 @@ function QuestionBox() {
                                 sx={{
                                     color:
                                         answer.isCorrect ? '#37407b' :
-                                            answer.isCorrect === false && answer.isSelect === true ? '#ff4d4d' :
+                                            answer.isCorrect === false && currentQuestion.selectedAnswer_id._id === answer._id ? '#ff4d4d' :
                                                 '#9e9e9e',
                                     textDecoration:
-                                        answer.isCorrect === false && answer.isSelect === false ? 'line-through' :
-                                            'none'
+                                        answer.isCorrect === false && currentQuestion.selectedAnswer_id._id !== answer._id ? 'line-through' : 'none'
                                 }}>
                                 {answer.answer_text}
+                                
                             </Typography>
                         </Stack>
                     ))}
@@ -109,9 +111,9 @@ function QuestionBox() {
                     <span style={{ fontWeight: 600 }}>Your Answer: </span>
                     <span style={{
                         marginLeft: '10px',
-                        color: currentQuestion.isCorrect ? '#37407b' : '#ff4d4d'
+                        color: currentQuestion.selectedAnswer_id.isCorrect ? '#37407b' : '#ff4d4d'
                     }}>
-                        {currentQuestion.userAnswer.answer_text}
+                        {currentQuestion.selectedAnswer_id.answer_text}
                     </span>
 
                 </Typography>

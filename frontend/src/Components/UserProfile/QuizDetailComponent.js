@@ -30,8 +30,18 @@ function QuizzDetails() {
     const { questionViewData } = useContext(SpecificQuizContext);
     console.log("grandChild: " + questionViewData._id)
 
-    const correctQuestions = questionViewData.questions.filter(question => question.isCorrect).length;
-    const inCorrectQuestions = questionViewData.questions.length - correctQuestions;
+    // if (!questionViewData) {
+    //     // If questionViewData is null, render some fallback content or return null
+    //     return <div>Loading...</div>;
+    // }
+    // // Check if questions array is not null before accessing its properties
+    // if (!questionViewData || questionViewData.length === 0) {
+    //     // If questions array is null or empty, render some fallback content or return null
+    //     return <div>No questions available</div>;
+    // }
+
+    const correctQuestions = questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id.isCorrect).length;
+    const inCorrectQuestions = questionViewData.selectedAnswers.length - correctQuestions;
 
     return (
         <div>
@@ -39,7 +49,7 @@ function QuizzDetails() {
                 <Grid item xs={12} sx={{}}>
                     <Box sx={{ borderRadius: '20px', marginTop: '-20px' }} >
                         <Stack direction={'row'} spacing={0.5} sx={{ alignItems: 'center' }}>
-                            <Typography fontSize={23} fontWeight={700} >{questionViewData.quizName}</Typography>
+                            <Typography fontSize={23} fontWeight={700} >{questionViewData.quiz_id.quizName}</Typography>
                             {/* <DirectionsCar sx={{ fontSize: '27px' }} /> */}
                             {questionViewData.result
                                 ? <CheckCircleIcon fontSize='medium'
@@ -48,7 +58,7 @@ function QuizzDetails() {
                                     }} />
                                 : <CancelIcon fontSize='medium'
                                     sx={{
-                                        color: '#666666',
+                                        color: '#FF8585',
                                     }} />
                             }
                         </Stack>
@@ -60,11 +70,11 @@ function QuizzDetails() {
                     <Stack direction={'column'} spacing={1} sx={{ alignItems: 'left' }}>
                         <Typography
                             sx={{ display: 'flex', alignItems: 'center' }}>
-                            <LocalFireDepartmentIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> {questionViewData.difficulty}
+                            <LocalFireDepartmentIcon sx={{ fontSize: '20px', marginRight: '5px' }} /> {questionViewData.quiz_id.difficulty}
                         </Typography>
                         <Typography
                             sx={{ display: 'flex', alignItems: 'center' }}>
-                            {questionViewData.quizType ?
+                            {questionViewData.quiz_id.quizType ?
                                 <><DirectionsCar sx={{ fontSize: '20px', marginRight: '5px' }} /> Car </>:
                                 <><DirectionsBus sx={{ fontSize: '20px', marginRight: '5px' }} /> Commercial </>}    
                         </Typography>
@@ -78,7 +88,7 @@ function QuizzDetails() {
                         <Stack direction={'row'} sx={{ alignItems: 'center' }}>
                             <Stack direction={'column'}>
                                 <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#37407b' }} /> {correctQuestions} Correct</Typography>
-                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#a6a6a6' }} /> {inCorrectQuestions} Incorrect</Typography>
+                                <Typography fontSize={'16px'}><CircleIcon sx={{ fontSize: '12px', color: '#FFD6D6' }} /> {inCorrectQuestions} Incorrect</Typography>
                             </Stack>
                             <Box>
                                 <ExamViewCauge />

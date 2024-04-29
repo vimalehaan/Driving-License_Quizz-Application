@@ -11,15 +11,6 @@ function ExamViewCauge() {
 
     const { questionViewData } = useContext(SpecificQuizContext);
 
-    // if (!questionViewData) {
-    //     // If questionViewData is null, render some fallback content or return null
-    //     return <div>Loading...</div>;
-    // }
-    // // Check if questions array is not null before accessing its properties
-    // if (!questionViewData || questionViewData.length === 0) {
-    //     // If questions array is null or empty, render some fallback content or return null
-    //     return <div>No questions available</div>;
-    // }
 
     return (
         <Gauge
@@ -27,7 +18,7 @@ function ExamViewCauge() {
             height={120}
             outerRadius={80}
             innerRadius={55}
-            value={Math.round(questionViewData.questions.filter(question => question.isCorrect).length / questionViewData.questions.length *100)}
+            value={Math.round(questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id.isCorrect).length / questionViewData.selectedAnswers.length *100)}
             cornerRadius={'20px'}
             startAngle={-110}
             endAngle={110}
@@ -42,7 +33,7 @@ function ExamViewCauge() {
                 },
                 
                 [`& .${gaugeClasses.referenceArc}`]: {
-                    fill: '#a6a6a6',
+                    fill: '#FFD6D6',
                 },
             })}
             text={

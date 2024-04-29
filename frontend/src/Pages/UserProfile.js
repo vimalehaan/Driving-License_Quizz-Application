@@ -71,11 +71,9 @@ function UserProfilePage() {
     console.log("attempt Data length: " + attemptsData.length)
     {
         attemptsData.map(attempts => (
-            console.log("attempt Data: " + attempts.difficulty)
+            console.log("attempt Data: " + attempts.quiz_id.difficulty)
         ))
     }
-
-
 
     useEffect(() => {
         if (showExamView && userExamViewRef.current) {

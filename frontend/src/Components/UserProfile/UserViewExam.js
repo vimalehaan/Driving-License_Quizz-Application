@@ -35,21 +35,7 @@ function UserExamView() {
 
     const { questionViewData, currentQuestionIndex, setCurrentQuestionIndex } = useContext(SpecificQuizContext);
 
-    if (!questionViewData) {
-        // If questionViewData is null, render some fallback content or return null
-        return <div>Loading...</div>;
-    }
-
-    // Destructure properties from questionViewData
-    const { questions } = questionViewData;
-
-    // Check if questions array is not null before accessing its properties
-    if (!questions || questions.length === 0) {
-        // If questions array is null or empty, render some fallback content or return null
-        return <div>No questions available</div>;
-    }
-
-    console.log(questionViewData.questions)
+    console.log("QQQQ " +questionViewData.quiz_id.questions)
 
 
 
@@ -68,7 +54,6 @@ function UserExamView() {
                             <QuizzDetails />
                             <Box sx={{marginTop: '25px'}}>
                                 <QuestionBox />
-                                
                             </Box>
                         </Grid>
 

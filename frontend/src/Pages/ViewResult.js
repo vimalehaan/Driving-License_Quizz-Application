@@ -19,7 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { typographyTheme } from '../Components/Utils/TypographyTheme';
-import { WhitePaper } from '../Components/Utils/StyledComponents';
+import { WhitePaper, CusButtonPurp } from '../Components/Utils/StyledComponents';
 import ExamViewCauge from '../Components/UserProfile/ExamViewGauge';
 import QuestionButtons from '../Components/ViewResult/QuestionButtonSet';
 import QuestionBox from '../Components/UserProfile/QuestionBox';
@@ -36,7 +36,7 @@ function ViewResultPage() {
         const fetchAttempts = async () => {
             try {
                 // Make a GET request to your backend endpoint
-                const response = await axios.get('http://localhost:3000/viewResult/662ad2428e98bd4d52180d53'); // Adjust the URL if your backend is hosted on a different domain
+                const response = await axios.get('http://localhost:3000/viewResult/662c21929cf7df3af2937cfb'); // Adjust the URL if your backend is hosted on a different domain
                 console.log('Response from backend:', response.data);
                 // Set the fetched attempted quiz in state
                 setQuestionViewData(response.data);
@@ -75,15 +75,18 @@ function ViewResultPage() {
                         <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex }}>
                             <Grid item lg='4' xs='4'>
                                 {/* <UserExamView /> */}
-                                <WhitePaper sx={{ height: '200px' }}>
-                                   <QuizResultComponent />
+                                <WhitePaper sx={{ height: '220px' }}>
+                                    <QuizResultComponent />
                                 </WhitePaper>
+                                <Box>
+                                    
+                                </Box>
                                 <WhitePaper sx={{ marginTop: '30px' }}>
-                                    
 
+                                    {/* <QuizzDetails /> */}
                                     <QuestionButtons />
-                                    
-                                  
+
+
                                 </WhitePaper>
                             </Grid>
                             <Grid item lg='8' xs='8'>
