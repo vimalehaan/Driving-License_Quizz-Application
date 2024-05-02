@@ -11,14 +11,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import Stack from "@mui/material/Stack";
 
-
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import UnpublishedIcon from '@mui/icons-material/Unpublished';
 
 import { CusButtonPurp } from '../Utils/StyledComponents';
-import { QuestionContext, AnswerContext } from './Switch_Component';
-
+import { QuestionContext, AnswerContext, Test_ButtonContext ,Difficulty_ButtonContext } from './Switch_Component';
+import axios from 'axios';
 
 const CusDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -29,15 +28,61 @@ const CusDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
+export default function CustomizedDialogs({ state, setOpen }) 
+{
 
-export default function CustomizedDialogs({ state, setOpen }) {
+  const { questionText } = useContext(QuestionContext);
+  const { answers } = useContext(AnswerContext);
+  const {selectedButton_Tests} = useContext(Test_ButtonContext);
+  const {selectedButtons_Difficulty} = useContext(Difficulty_ButtonContext);
 
-  const { questionText, setQuestionText } = useContext(QuestionContext);
-  const { answers, setanswer } = useContext(AnswerContext);
-
+  console.log("selectedButton_Tests, ",selectedButton_Tests)
+  
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleSaveChanges = async () => {
+    try {
+      const formattedAnswers = answers.map(answer => ({
+        answer_text: answer.text, // Change 'text' to 'answer_text'
+        is_correct: answer.isCorrect, // Change 'isCorrect' to 'is_correct'
+      }));
+  
+      const data = {
+        question_text: questionText,
+        answers: formattedAnswers,
+        tests : selectedButton_Tests,
+        type_of_exam : selectedButtons_Difficulty
+      };
+  
+      console.log(data);
+  
+      const res = await axios.post(
+        'http://localhost:8000/questions/createQuestion',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      console.log('test1');
+      console.log(res);
+  
+      if (res.status !== 200) {
+        console.error('Error in saving');
+        return;
+      }
+  
+      console.log('test2');
+      alert('Saved successfully');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   return (
     <React.Fragment>
@@ -65,18 +110,28 @@ export default function CustomizedDialogs({ state, setOpen }) {
         </IconButton>
         <DialogContent dividers>
           <Stack direction={'column'} >
+
+          <Typography fontWeight={'bold'}>Tests:</Typography>
+            
+            <Typography variant='h5' fontWeight={'bold'} sx={{ margin: "10px 30px 20px 30px" }}>{selectedButton_Tests}</Typography>
+
+          <Typography fontWeight={'bold'} > Difficulty: </Typography>
+
+            <Typography variant='h5' fontWeight={'bold'} sx={{margin : "10px 30px 20px 30px"}} >  {selectedButtons_Difficulty} </Typography>
+          
             <Typography fontWeight={'bold'}>Question:</Typography>
+            
             <Typography variant='h5' fontWeight={'bold'} sx={{ margin: "10px 30px 20px 30px" }}>{questionText}</Typography>
 
             <Typography fontWeight={'bold'}>Answers:</Typography>
 
             {answers.map((answer, index) => (
-              <Typography 
-              sx={{
-                margin: "10px 30px 15px 90px", display: 'flex', alignItems: 'center',
-                textDecoration: answer.isCorrect ? 'none' : 'line-through',
-                textDecorationColor:  'red',
-              }}
+              <Typography
+                sx={{
+                  margin: "10px 30px 15px 90px", display: 'flex', alignItems: 'center',
+                  textDecoration: answer.isCorrect ? 'none' : 'line-through',
+                  textDecorationColor: 'red',
+                }}
                 key={index} >
                 {answer.isCorrect ? <CheckCircleIcon sx={{ color: 'green', marginRight: '10px' }} /> : <UnpublishedIcon sx={{ color: 'red', marginRight: '10px' }} />}
                 {answer.text}
@@ -87,7 +142,7 @@ export default function CustomizedDialogs({ state, setOpen }) {
 
         </DialogContent>
         <DialogActions>
-          <CusButtonPurp onClick={handleClose} sx={{ width: '150px', fontWeight: '40px', }}>
+          <CusButtonPurp onClick={handleSaveChanges} sx={{ width: '150px', fontWeight: '40px', }}>
             <Typography fontSize={16} sx={{ margin: '-2px 5px 0px 0px' }}>Save changes</Typography>
             <CheckCircleOutlinedIcon sx={{ marginRight: '-8px', fontSize: '17px' }} />
           </CusButtonPurp>

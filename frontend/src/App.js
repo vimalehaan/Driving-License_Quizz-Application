@@ -19,11 +19,11 @@ function App() {
       
       {/* <Loginpg1 /> */}
       {/* <Loginpg2 /> */}
-      {/* <AddTest /> */}
+      <AddTest />
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
-      <UserProfilePage />
+      {/* <UserProfilePage /> */}
       {/* <BasicPie /> */}
       {/* <PassRatioChart /> */}
       {/* <StickyHeadTable /> */}
