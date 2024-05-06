@@ -37,7 +37,7 @@ export const TopButton_Tests = ({buttons , sx , handleSelectedButtons_Tests}) =>
     const handleMenuItemClick = (itemName) => {
         handleSelectedButtons_Tests(itemName)
         setSelectedMenuItem(itemName);
-        console.log("Tests "+ itemName);
+        console.log(itemName);
         handleClose();
     };
     
