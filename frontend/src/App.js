@@ -12,6 +12,7 @@ import UserProfilePage from './Pages/UserProfile'
 import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
+import Certificate from './Pages/CertificatePage/certificate';
 
 function App() {
   return (
@@ -23,10 +24,11 @@ function App() {
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
-      <UserProfilePage />
+      {/* <UserProfilePage /> */}
       {/* <BasicPie /> */}
       {/* <PassRatioChart /> */}
       {/* <StickyHeadTable /> */}
+      <Certificate/>
 
     </div>
   );
