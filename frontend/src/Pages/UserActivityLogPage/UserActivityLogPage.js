@@ -1,0 +1,271 @@
+import React, { useState, useEffect } from 'react';
+import {
+  Paper, Table, TableBody, TableCell, TableContainer,
+  TableHead, TablePagination, TableRow, TextField,
+  FormControl, InputLabel, Select, MenuItem, Typography, Grid, InputAdornment
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+
+const columns = [
+  { id: 'userID', label: 'User ID', minWidth: 170 },
+  { id: 'action', label: 'Action', minWidth: 170 },
+  { id: 'timestamp', label: 'Timestamp', minWidth: 170 },
+  { id: 'type', label: 'Type', minWidth: 170 },
+];
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  overflow: 'hidden',
+  borderRadius: '10px',
+  border: '2px solid',
+  borderColor: 'transparent',
+  boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
+  marginBottom: '20px',
+  '&:hover': {
+    borderColor: theme.palette.primary.main,
+  },
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  minWidth: 150,
+  fontWeight: 'bold',
+  backgroundColor: '#6070D4',
+  color: 'black',
+  borderBottom: 'none',
+  padding: '10px 15px', // Adjusted padding for header cells
+  margin: 0,
+  boxSizing: 'border-box', // Ensure padding is included in width/height calculations
+  justifyContent: 'space-between', // Ensure content is spaced between
+  alignItems: 'center', // Center align items vertically
+}));
+
+const StyledSelect = styled(Select)(({ theme }) => ({
+  minHeight: '20px', // Minimum height for selection buttons
+  fontSize: '0.875rem', // Adjust font size
+  padding: '0 10px', // Adjust padding to fit text
+  display: 'flex',
+  alignItems: 'center',
+  lineHeight: '1.2', // Adjust line height for better text fit
+}));
+
+const UserActivityLogPage = () => {
+  const [logs, setLogs] = useState([]);
+  const [filter, setFilter] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [filters, setFilters] = useState({
+    action: '',
+    type: '',
+  });
+
+  useEffect(() => {
+    // Initial data load (empty array as mock data is removed)
+    setLogs([]);
+  }, []);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleFilterSelect = (columnId, value) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [columnId]: value,
+    }));
+  };
+
+  const filteredLogs = logs.filter(log => {
+    return Object.keys(filters).every(key => {
+      if (filters[key] === '') {
+        return true;
+      } else {
+        return log[key].toLowerCase().includes(filters[key].toLowerCase());
+      }
+    }) && (
+      log.userID.toLowerCase().includes(filter.toLowerCase()) ||
+      log.action.toLowerCase().includes(filter.toLowerCase()) ||
+      log.timestamp.toLowerCase().includes(filter.toLowerCase()) ||
+      log.type.toLowerCase().includes(filter.toLowerCase())
+    );
+  });
+
+  useEffect(() => {
+    setPage(0);
+  }, [filters, filter]);
+
+  const renderFilterSelect = (columnId, label) => (
+    <FormControl sx={{ m: 1, minWidth: 100 }}>
+      <InputLabel id={`select-${columnId}-label`}>{label}</InputLabel>
+      <StyledSelect
+        labelId={`select-${columnId}-label`}
+        id={`select-${columnId}`}
+        value={filters[columnId]}
+        onChange={(e) => handleFilterSelect(columnId, e.target.value)}
+        autoWidth
+        label={label}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxWidth: 100,
+              maxHeight: 150,
+              marginTop: 10,
+            },
+          },
+        }}
+      >
+        <MenuItem value="">
+          <em>None</em>
+        </MenuItem>
+        {getUniqueValues(columnId).map((value, index) => (
+          <MenuItem key={index} value={value}>{value}</MenuItem>
+        ))}
+      </StyledSelect>
+    </FormControl>
+  );
+
+  const getUniqueValues = (columnId) => {
+    const uniqueValues = new Set();
+    logs.forEach(log => uniqueValues.add(log[columnId]));
+    return Array.from(uniqueValues);
+  };
+
+  const getTypeCellStyle = (type) => {
+    let style = {};
+    switch (type.toLowerCase()) {
+      case 'online':
+        style = { color: 'green', fontWeight: 'bold' };
+        break;
+      case 'offline':
+        style = { color: 'red', fontWeight: 'bold' };
+        break;
+      case 'attempting':
+        style = { color: 'blue', fontWeight: 'bold' };
+        break;
+      default:
+        break;
+    }
+    return style;
+  };
+
+  // Custom theme for table and typography
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Roboto, sans-serif',
+    },
+    palette: {
+      primary: {
+        main: '#6070D4',
+      },
+      secondary: {
+        main: '#FF4081',
+      },
+      background: {
+        default: '#f9f9f9',
+      },
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div className="container" style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          style={{
+            margin: '20px 10px',
+            fontWeight: 'bold',
+            color: 'transparent',
+            backgroundImage: 'linear-gradient(180deg, #6070D4 0%, #323A6E 100%)',
+            WebkitBackgroundClip: 'text',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
+          }}
+        >
+          User Activity Log
+        </Typography>
+
+        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ margin: '20px auto', width: '80%' }}>
+          <Grid item xs={12} sm={8} md={6} style={{ display: 'flex', justifyContent: 'center' }}>
+            <TextField
+              variant="outlined"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              placeholder="Search..."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon style={{ color: '#9e9e9e' }} />
+                  </InputAdornment>
+                ),
+                style: { width: '100%' },
+              }}
+              style={{ boxShadow: '0px 2px 4px rgba(0,0,0,0.1)', borderRadius: '4px', width: '100%' }}
+            />
+          </Grid>
+        </Grid>
+
+        <StyledPaper elevation={3}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <StyledTableCell key={column.id} align={column.align}>
+                      {column.label}
+                      {(column.id === 'action' || column.id === 'type') && renderFilterSelect(column.id, column.label)}
+                    </StyledTableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredLogs
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((log, index) => (
+                    <TableRow
+                      key={index}
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      style={{ backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#fff', transition: 'background-color 0.3s' }}
+                    >
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ borderBottom: '1px solid #e0e0e0', padding: '12px' }}
+                        >
+                          {column.id === 'type' ? (
+                            <span style={getTypeCellStyle(log[column.id])}>{log[column.id]}</span>
+                          ) : (
+                            log[column.id]
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={filteredLogs.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            style={{ borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px' }}
+          />
+        </StyledPaper>
+      </div>
+    </ThemeProvider>
+  );
+};
+
+export default UserActivityLogPage;
