@@ -24,8 +24,8 @@ function App() {
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
-      <UserProfilePage />
-      {/* <ViewResultPage /> */}
+      {/* <UserProfilePage /> */}
+      <ViewResultPage />
     </div>
   );
 }
