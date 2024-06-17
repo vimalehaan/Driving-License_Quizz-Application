@@ -1,6 +1,6 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddTest from './Pages/AdminPage/AddTest';
-import Payment from './Pages/PaymentPage/Payment';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
 import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
@@ -12,10 +12,29 @@ import UserProfilePage from './Pages/UserProfile'
 import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
+import CheckoutForm from './Components/Payment/CheckoutForm';
+import Return from './Components/Payment/Return';
+
 
 function App() {
   return (
     <div className="App">
+
+    <Router>
+      <Routes>
+        <Route path="/loginpg1" element={<Loginpg1 />} />
+        <Route path="/loginpg2" element={<Loginpg2 />} />
+        <Route path="/addtest" element={<AddTest />} />
+        <Route path="/customdialog" element={<CustomizedDialogs />} />
+        <Route path="/carexamdb" element={<CarExamDashboard />} />
+        <Route path="/userpropage" element={<UserProfilePage />} />
+        <Route path="/piechart" element={<BasicPie />} />
+        <Route path="/passratiochart" element={<PassRatioChart />} />
+        <Route path="/stickyheadtable" element={<StickyHeadTable />} />
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/return" element={<Return />} />
+      </Routes>
+    </Router>
       
       {/* <Loginpg1 /> */}
       {/* <Loginpg2 /> */}
@@ -23,7 +42,7 @@ function App() {
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
       {/* <CarExamDashboard /> */}
-      <UserProfilePage />
+      {/* <UserProfilePage /> */}
       {/* <BasicPie /> */}
       {/* <PassRatioChart /> */}
       {/* <StickyHeadTable /> */}
