@@ -13,8 +13,9 @@ import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
 import ViewResultPage from './Pages/ViewResult';
-// import CheckoutForm from './Components/Payment/CheckoutForm';
-// import Return from './Components/Payment/Return';
+import CheckoutForm from './Components/Payment/CheckoutForm';
+import Return from './Components/Payment/Return';
+
 
 
 function App() {
@@ -33,8 +34,9 @@ function App() {
         <Route path="/passratiochart" element={<PassRatioChart />} />
         <Route path="/stickyheadtable" element={<StickyHeadTable />} />
         <Route path="/result" element={<ViewResultPage />} />
-        {/* <Route path="/checkout" element={<CheckoutForm />} /> */}
-        {/* <Route path="/return" element={<Return />} /> */}
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/return" element={<Return />} />
+
       </Routes>
     </Router>
       
