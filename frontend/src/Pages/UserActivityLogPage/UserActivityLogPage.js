@@ -60,7 +60,7 @@ const UserActivityLogPage = () => {
   });
 
   useEffect(() => {
-    // Initial data load (empty array as mock data is removed)
+    // Initial data load 
     setLogs([]);
   }, []);
 
