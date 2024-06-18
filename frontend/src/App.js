@@ -4,18 +4,23 @@ import Payment from './Pages/PaymentPage/Payment';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
 import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
-import Loginpg1 from './Pages/UserLogPage/Loginpg1';
-import Loginpg2 from './Pages/UserLogPage/Loginpg2';
-
+import Login from './Pages/UserLogPage/Login';
+import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
+import OTP from './Pages/UserLogPage/OTP';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      
-      {/* <Loginpg1 /> */}
-      <Loginpg2 />
-      {/* <AddTest /> */}
-      {/* <Payment /> */}
-      {/* <CarExamDashboard /> */}
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/login" element={<Login/>}/>
+          <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
+          {/* <Route path="/a"><AddTest /></Route>
+          <Route path="/b"><Payment /></Route>
+          <Route path="/c"><CarExamDashboard /></Route>
+          <Route path="/verify"><OTP /></Route> */}
+        </Routes>
+      </BrowserRouter>
       
     </div>
   );

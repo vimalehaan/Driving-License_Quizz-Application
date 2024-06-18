@@ -16,7 +16,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
 
-function Loginpg1() {
+function Login() {
 
     const classes = useStyle();
 
@@ -34,6 +34,7 @@ function Loginpg1() {
     });
 
     const handleSubmit = (event) => {
+
         event.preventDefault();
         // Add form submission logic here
     };
@@ -41,10 +42,10 @@ function Loginpg1() {
     return (
 
         <div className='loginPage'>
-            
+
             <Grid container className={classes.gridContainer} >
-               <Grid item lg ={12}>
-                        <Appbar/>
+                <Grid item lg={12}>
+                    <Appbar />
                 </Grid>
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
@@ -58,16 +59,19 @@ function Loginpg1() {
                                     <TextField className={classes.textField}
                                         required
                                         label="Email "
+                                        name="Email"
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
                                     <TextField className={classes.textField}
                                         required
+                                        type="password"
                                         label="Password"
+                                        name="Password"
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
-                                    <Button sx={{ borderRadius: '20px' , textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
+                                    <Button sx={{ borderRadius: '20px', textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
@@ -90,4 +94,4 @@ function Loginpg1() {
     );
 }
 
-export default Loginpg1;
+export default Login;
