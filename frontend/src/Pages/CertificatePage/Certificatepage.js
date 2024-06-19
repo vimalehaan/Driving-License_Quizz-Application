@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CertificateTemplate from '../../Components/Certificate/certificatetemplate';
+// import CertificateTemplate from '../../Components/Certificate/CertificateTemplate';  // Ensure this path is correct
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import ShareIcon from '@mui/icons-material/Share';
@@ -8,13 +8,12 @@ import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NavBarTop from '../../Components/Utils/NavBarTop';
 import Footer from '../../Components/Utils/Footer';
-
+import '../../App.css';
 const Certificate = ({ recipientName, courseName, completionDate, recipientEmail }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [certificateAppeared, setCertificateAppeared] = useState(false);
 
   useEffect(() => {
-    // Trigger animation when the component mounts
     setCertificateAppeared(true);
   }, []);
 
@@ -28,19 +27,16 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
 
   const generateCertificate = async () => {
     try {
-      // Generate the certificate
       const response = await axios.post('/api/certificate/generate', {
         recipientName,
         courseName,
         completionDate,
       });
       const certificateFilePath = response.data.certificateFilePath;
-
-      // Send the certificate via email
       await sendCertificateByEmail(recipientEmail, certificateFilePath);
     } catch (error) {
       console.error('Error generating or sending certificate:', error);
-      alert('Failed to generate or send certificate. Please try again.'); // Show error message
+      alert('Failed to generate or send certificate. Please try again.');
     }
   };
 
@@ -48,46 +44,38 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
     try {
       await axios.post('/api/certificate/send-email', {
         recipientEmail,
-        certificateFilePath
+        certificateFilePath,
       });
-      alert('Certificate sent via email successfully.'); // Show success message
+      alert('Certificate sent via email successfully.');
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Failed to send email. Please try again.'); // Show error message
+      alert('Failed to send email. Please try again.');
     }
   };
 
   const shareOnLinkedIn = () => {
-    // Construct the LinkedIn share URL
     const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
-  
-    // Open a new window with the LinkedIn share URL
     window.open(shareUrl, '_blank');
   };
 
   return (
     <>
       <NavBarTop />
-      
-      <div className={`certificate-container ${certificateAppeared ? 'certificate-appeared' : ''}`}  >
+      <div className={`certificate-container ${certificateAppeared ? 'certificate-appeared' : ''}`}>
         <h1 style={{ color: '#49108B', fontFamily: 'sans-serif', fontSize: '50px', textAlign: 'center' }}>Congratulations!</h1>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)', padding: '20px', borderRadius: '10px', marginBottom: '20px', width: 'fit-content' }}>
+          {/* <div style={{ boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)', padding: '20px', borderRadius: '10px', marginBottom: '20px', width: 'fit-content' }}>
             <CertificateTemplate recipientName={recipientName} courseName={courseName} completionDate={completionDate} />
-          </div>
+          </div> */}
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <IconButton onClick={generateCertificate} style={{ marginRight: '20px' }}>
-            <FileDownloadIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} /> 
+            <FileDownloadIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} />
           </IconButton>
-          <IconButton onClick={handleShareButtonClick} >
-            <ShareIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} />  
+          <IconButton onClick={handleShareButtonClick}>
+            <ShareIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} />
           </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleCloseMenu}
-          >
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
             <MenuItem onClick={() => sendCertificateByEmail(recipientEmail)}>
               <EmailIcon />
               Email

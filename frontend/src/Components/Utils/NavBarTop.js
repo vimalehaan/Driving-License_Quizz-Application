@@ -23,6 +23,7 @@ const NavBarTop = () => {
         </div>
       </Toolbar>
     </AppBar>
+    
   );
 };
 
