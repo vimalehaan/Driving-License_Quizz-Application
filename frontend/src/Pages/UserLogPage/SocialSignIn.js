@@ -14,10 +14,9 @@ import { Appbar } from '../../Components/UserLog/AppBar.js';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
+import FacebookLogin from 'react-facebook-login';
 
-
-
-function Loginpg2() {
+function SocialSignIn() {
 
     const classes = useStyle();
 
@@ -39,6 +38,14 @@ function Loginpg2() {
         event.preventDefault();
         // Add form submission logic here
     };
+
+    const componentClicked = (event) => {
+        console.log(event)
+    }
+
+    const responseFacebook = (response) => {
+        console.log(response)
+    }
 
     return (
 
@@ -69,7 +76,13 @@ function Loginpg2() {
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     /> */}
                                     <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'> <img src='\Images\google icon.png' style={{marginRight:'20px'}}></img>Signup with Google</Button>
-                                    <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'> <img src='\Images\facebook icon.png' style={{marginRight:'20px'}}></img>Signup with Facebook</Button>
+                                    <FacebookLogin
+                                        appId="2855786357905495"
+                                        autoLoad={true}
+                                        fields="name,email"
+                                        onClick={componentClicked}
+                                        callback={responseFacebook} />,
+                                    {/* <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'> <img src='\Images\facebook icon.png' style={{marginRight:'20px'}}></img>Signup with Facebook</Button> */}
 
                                 </Stack>
                             </form>
@@ -95,4 +108,4 @@ function Loginpg2() {
     );
 }
 
-export default Loginpg2;
+export default SocialSignIn;

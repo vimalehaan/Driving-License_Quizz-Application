@@ -76,6 +76,8 @@ const useStyle = makeStyles((theme) => ({
         fontSize:'17px',
         color: '#fff'
     }
+
+
 }));
 
 export default useStyle;

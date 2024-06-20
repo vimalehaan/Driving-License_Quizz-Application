@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppBar, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -16,7 +16,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
 
-function Loginpg1() {
+function Signup() {
 
     const classes = useStyle();
 
@@ -33,18 +33,51 @@ function Loginpg1() {
         },
     });
 
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+
     const handleSubmit = (event) => {
+
         event.preventDefault();
+
+        let isValid = true;
+        console.log('asdas');
+        if (!validateEmail(email)) {
+            setEmailError('Invalid email format');
+            isValid = false;
+        } else {
+            setEmailError('');
+        }
+
+        if (password.length < 6) {
+            setPasswordError('Password must be at least 6 characters');
+            isValid = false;
+        } else {
+            setPasswordError('');
+        }
+
+        if (isValid) {
+            // Add form submission logic here
+            console.log('Form submitted');
+        }
         // Add form submission logic here
     };
 
     return (
 
-        <div className='loginPage'>
-            
+        <div className='SignupPage'>
+
             <Grid container className={classes.gridContainer} >
-               <Grid item lg ={12}>
-                        <Appbar/>
+                <Grid item lg={12}>
+                    <Appbar />
                 </Grid>
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
@@ -57,17 +90,41 @@ function Loginpg1() {
                                 <Stack direction="column" >
                                     <TextField className={classes.textField}
                                         required
-                                        label="Email "
+                                        label="FirstName"
+                                        name="FirstName"
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
                                     <TextField className={classes.textField}
                                         required
-                                        label="Password"
+                                        label="LastName "
+                                        name="LastName"
+                                        InputProps={{ sx: { borderRadius: '20px' } }}
+                                    />
+                                    <TextField className={classes.textField}
+                                        required
+                                        label="Email "
+                                        name="Email"
+                                        value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    error={!!emailError}
+                                    helperText={emailError}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
-                                    <Button sx={{ borderRadius: '20px' , textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
+                                    <TextField className={classes.textField}
+                                        required
+                                        type="password"
+                                        label="Password"
+                                        name="Password"
+                                        value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    error={!!passwordError}
+                                    helperText={passwordError}
+                                        InputProps={{ sx: { borderRadius: '20px' } }}
+                                    />
+
+                                    <Button type="submit" sx={{ borderRadius: '20px', textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
@@ -90,4 +147,4 @@ function Loginpg1() {
     );
 }
 
-export default Loginpg1;
+export default Signup;
