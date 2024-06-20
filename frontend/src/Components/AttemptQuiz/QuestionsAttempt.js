@@ -65,7 +65,7 @@ function QuizQuestions() {
                         justifyContent: 'space-between'
                     }}>
                     <Typography variant="inherit" fontSize={17} fontWeight={600}>
-                        Question {currentQuestionIndex + 1}
+                        Question {currentQuestionIndex + 1} 
                     </Typography>
                 </Stack>
 

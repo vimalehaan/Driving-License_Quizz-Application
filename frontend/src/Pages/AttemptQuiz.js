@@ -5,58 +5,106 @@ import axios from 'axios';
 import Container from '@mui/material/Container';
 import { Button, Grid } from "@mui/material";
 import Box from '@mui/material/Box';
+import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
 import ReplayIcon from '@mui/icons-material/Replay';
 import SendIcon from '@mui/icons-material/Send';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 import QuizQuestionButtons from "../Components/AttemptQuiz/QuestionButtons";
 import QuizQuestions from "../Components/AttemptQuiz/QuestionsAttempt";
 import { WhitePaper } from "../Components/Utils/StyledComponents";
+import RestartDialog from "../Components/AttemptQuiz/RestartDialog";
+import TimeoutDialog from "../Components/AttemptQuiz/TimeoutDialog";
 
 import { SpecificQuizContext } from '../Components/Utils/Contexts';
+
+
 
 
 function AttemptQuiz() {
 
     const [questionViewData, setQuestionViewData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [userAnswer, setUserAnswer] = useState(Array(questionViewData.selectedAnswers));
+    const [userAnswer, setUserAnswer] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [restartDialogOpen, setRestartDialogOpen] = useState(false);
+    const [timeUpDialogOpen, setTimeUpDialogOpen] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(60); 
 
-    const areAllQuestionsAnswered = userAnswer.every(answer => answer !== undefined || null);
+    const areAllQuestionsAnswered = userAnswer.every(answer => answer !== '');
+    const noQuestionsAnswered = userAnswer.every(answer => answer === '');
 
-    const handleRestart = () => {
-        setCurrentQuestionIndex(0);
-        setUserAnswer(Array(questionViewData.selectedAnswers.length));
-    };
 
-    console.log(userAnswer)
+    
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
-                // Make a GET request to your backend endpoint
-                const response = await axios.get('http://localhost:3000/viewResult/6671c33dcd37ec7c5280c9b1'); // Adjust the URL if your backend is hosted on a different domain
+                const response = await axios.get('http://localhost:3000/viewResult/6671c33dcd37ec7c5280c9b1');
                 console.log('Response from backend:', response.data);
-                // Set the fetched attempted quiz in state
                 setQuestionViewData(response.data);
+                setUserAnswer(Array(response.data.selectedAnswers.length).fill(''));
             } catch (error) {
                 console.error('Error fetching attempted quizzes:', error);
             }
         };
-
-        // Call the fetchAttempts function when the component mounts
         fetchAttempts();
     }, []);
 
+    useEffect(() => {
+        if (timeLeft > 0 ) {
+            const timer = setInterval(() => {
+                setTimeLeft(timeLeft - 1);
+            }, 1000);
+
+            return () => clearInterval(timer);
+        } else if (timeLeft === 0) {
+            setRestartDialogOpen(false);
+            setTimeUpDialogOpen(true);
+        }
+    }, [timeLeft]);
+
+    console.log(userAnswer)
+
+    const handleRestartDialogClose = () => {
+        setRestartDialogOpen(false);
+    };
+
+    const handleRestart = () => {
+        // Restart logic here
+        setUserAnswer(Array(questionViewData.selectedAnswers.length).fill(''));
+        setCurrentQuestionIndex(0);
+        setTimeLeft(10); // Reset timer
+        setRestartDialogOpen(false);
+        setTimeUpDialogOpen(false);
+
+    };
+
+    const handleTimeUpDialogClose = () => {
+        setTimeUpDialogOpen(false);
+    };
+
+    const handleViewResult = () => {
+        // View result logic here
+        setTimeUpDialogOpen(false);
+    };
+
+
+
     if (!questionViewData) {
-        // If questionViewData is null, render some fallback content or return null
         return <div>Loading...</div>;
     }
-    // Check if questions array is not null before accessing its properties
     if (!questionViewData || questionViewData.length === 0) {
-        // If questions array is null or empty, render some fallback content or return null
         return <div>No questions available</div>;
     }
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    };
 
     return (
         <div>
@@ -69,15 +117,29 @@ function AttemptQuiz() {
                     marginTop: '50px'
                 }}>
                 <Grid container spacing={"20px"}>
-                    <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex, userAnswer, setUserAnswer }}>
+                    <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex, userAnswer, setUserAnswer, open, setOpen, timeLeft, setTimeLeft, }}>
                         <Grid item lg='4' xs='4'>
-                            <WhitePaper sx={{ marginTop: '30px' }}>
+                            <WhitePaper sx={{ marginTop: '30px', }}>
                                 <QuizQuestionButtons />
+                                <Box sx={{ marginTop: '5px', display: 'flex', alignItems: 'start', }}>
+
+                                    <Typography
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            color: timeLeft <= 30 ? '#ff6666' : '#37407b',
+                        
+                                        }} variant="h6">
+                                        {timeLeft <= 30 ? <WarningAmberIcon sx={{ marginRight: '5px' }} /> : <AccessTimeIcon sx={{ marginRight: '5px' }} />}
+                                        {formatTime(timeLeft)}
+                                    </Typography>
+                                </Box>
                             </WhitePaper>
                             <Box sx={{ marginTop: '20px' }}>
                                 <Stack direction={"row"} spacing={'15px'}>
                                     <Button
-                                        onClick={handleRestart}
+                                        disabled={noQuestionsAnswered}
+                                        onClick={() => setRestartDialogOpen(true)}
                                         startIcon={<ReplayIcon />}
                                         disableRipple
                                         sx={{
@@ -108,7 +170,18 @@ function AttemptQuiz() {
                                     </Button>
                                 </Stack>
 
-
+                                <RestartDialog
+                                    open={restartDialogOpen}
+                                    onClose={handleRestartDialogClose}
+                                    onRestart={handleRestart}
+                                    timeLeft={timeLeft}
+                                />
+                                <TimeoutDialog
+                                    open={timeUpDialogOpen}
+                                    onClose={handleTimeUpDialogClose}
+                                    onRestart={handleRestart}
+                                    onViewResult={handleViewResult}
+                                />
                             </Box>
 
                         </Grid>

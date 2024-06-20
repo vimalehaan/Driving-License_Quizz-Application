@@ -30,8 +30,8 @@ function QuizQuestionButtons() {
                         variant="contained"
                         onClick={() => handleQuestionView(index)}
                         sx={{
-                            color: userAnswer[index] === undefined  ? '#37407b' : '#ffffff',
-                            backgroundColor: userAnswer[index] === undefined ? '#ffffff' : '#37407b',
+                            color: userAnswer[index] === ''  ? '#37407b' : '#ffffff',
+                            backgroundColor: userAnswer[index] === '' ? '#ffffff' : '#37407b',
                             border: "1.5px solid #37407b",
                             transform: index === currentQuestionIndex ? 'scale(1.12)' : 'inherit',
                             borderRadius: '8px',
@@ -42,7 +42,7 @@ function QuizQuestionButtons() {
                             padding: '14px',
                             margin: '4px', // Optional: Add margin between buttons
                             "&:hover": {
-                                backgroundColor: userAnswer[index] === undefined ? '#f2f2f2' : '#37407b'
+                                backgroundColor: userAnswer[index] === '' ? '#f2f2f2' : '#37407b'
                             },
 
                         }}
