@@ -16,7 +16,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import FacebookLogin from 'react-facebook-login';
 
-
 function SocialSignIn() {
 
     const classes = useStyle();
