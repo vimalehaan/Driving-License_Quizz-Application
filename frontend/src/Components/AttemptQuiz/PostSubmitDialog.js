@@ -29,9 +29,7 @@ export default function PostSubmitDialog({ open, onClose, onViewResult }) {
 
                     }
                 }}
-                // open={timeLeft === 0 ? true : false}
                 open={open}
-                
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >

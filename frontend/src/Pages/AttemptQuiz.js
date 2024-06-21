@@ -38,7 +38,7 @@ function AttemptQuiz() {
     const [timeUpDialogOpen, setTimeUpDialogOpen] = useState(false);
     const [confirmSubmitDialogOpen, setConfirmSubmitDialogOpen] = useState(false);
     const [postSubmitDialogOpen, setPostSubmitDialogOpen] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(65);
+    const [timeLeft, setTimeLeft] = useState(5);
     const [snackBarState, setSnackBarState] = useState({ open: false, message: '', alert: 'warning' });
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -62,7 +62,7 @@ function AttemptQuiz() {
     }, []);
 
     useEffect(() => {
-        if (timeLeft > 0 && !isSubmitted ) {
+        if (timeLeft > 0 && !isSubmitted) {
             const timer = setInterval(() => {
                 setTimeLeft(timeLeft - 1);
             }, 1000);
@@ -74,17 +74,52 @@ function AttemptQuiz() {
             }
             return () => clearInterval(timer);
         } else if (timeLeft === 0 && !isSubmitted) {
-            setRestartDialogOpen(false);
-            setTimeUpDialogOpen(true);
-            setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
+            autoSubmission();
         }
     }, [timeLeft, isSubmitted]);
 
-    console.log(userAnswer)
 
-    const handleRestartDialogClose = () => {
-        setRestartDialogOpen(false);
+
+
+    const handleSubmit = async () => {
+        try {
+            // const candidateId = 'candidate123'; // Replace with actual candidate ID
+            // const quizId = '6671c33dcd37ec7c5280c9b1'; // Replace with actual quiz ID
+            // const attemptId = 'your_attempt_id'; // Replace with the actual attempt ID
+            const selectedAnswers = userAnswer.map((answer, index) => ({
+                question_id: questionViewData.quiz_id.questions[index],
+                selectedAnswer_id: answer || null
+            }));
+
+            const score = calculateScore(userAnswer); // Implement this function
+            const result = calculateResult(userAnswer); // Implement this function
+
+            const response = await axios.put(`http://localhost:3000/updateattempt/66756fdb6534ae372f41a730`, {
+                selectedAnswers,
+                score,
+                result
+            });
+
+            setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
+
+        } catch (error) {
+            console.error('Error submitting answers:', error);
+            setSnackBarState({ open: true, message: 'Submission failed', alert: 'error' });
+        }
     };
+
+    const userSubmission = () => {
+        setIsSubmitted(true);
+        setTimeLeft(0);
+        setPostSubmitDialogOpen(true)
+        setConfirmSubmitDialogOpen(false);
+        handleSubmit();
+    }
+    const autoSubmission = () => {
+        setRestartDialogOpen(false);
+        setTimeUpDialogOpen(true);
+        handleSubmit();
+    }
 
     const handleRestart = () => {
         // Restart logic here
@@ -94,6 +129,10 @@ function AttemptQuiz() {
         setRestartDialogOpen(false);
         setTimeUpDialogOpen(false);
 
+    };
+
+    const handleRestartDialogClose = () => {
+        setRestartDialogOpen(false);
     };
 
     const handleTimeUpDialogClose = () => {
@@ -117,46 +156,9 @@ function AttemptQuiz() {
         setPostSubmitDialogOpen(false);
     };
 
-    // const handleSubmit = () => {
-    //     setIsSubmitted(true);
-    //     setTimeLeft(0);
-    //     setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
-    //     setConfirmSubmitDialogOpen(false);
-    //     setPostSubmitDialogOpen(true);
-    // }
 
-    const handleSubmit = async () => {
-        try {
-            // const candidateId = 'candidate123'; // Replace with actual candidate ID
-            // const quizId = '6671c33dcd37ec7c5280c9b1'; // Replace with actual quiz ID
-            // const attemptId = 'your_attempt_id'; // Replace with the actual attempt ID
-            const selectedAnswers = userAnswer.map((answer, index) => ({
-                question_id: questionViewData.quiz_id.questions[index],
-                selectedAnswer_id: answer || null
-            }));
-    
-            const score = calculateScore(userAnswer); // Implement this function
-            const result = calculateResult(userAnswer); // Implement this function
-            // const score = 30;
-            // const result = false;
-    
-    
-            const response = await axios.put(`http://localhost:3000/updateattempt/66756fdb6534ae372f41a730`, {
-                selectedAnswers,
-                score,
-                result
-            });
-    
-            setIsSubmitted(true);
-            setTimeLeft(0);
-            setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
-            setConfirmSubmitDialogOpen(false);
-            setPostSubmitDialogOpen(true);
-        } catch (error) {
-            console.error('Error submitting answers:', error);
-            setSnackBarState({ open: true, message: 'Submission failed', alert: 'error' });
-        }
-    };
+
+
 
     const calculateScore = (userAnswer) => {
         let correctAnswers = 0;
@@ -164,13 +166,13 @@ function AttemptQuiz() {
             const question = questionViewData.selectedAnswers[index].question_id;
             const selectedAnswer = question.answers.find(ans => ans._id === answer);
             if (selectedAnswer && selectedAnswer.isCorrect) {
-                correctAnswers += 1; // Assuming each correct answer is worth 1 point
+                correctAnswers += 1;
             }
         });
-        let score = Math.round(correctAnswers / questionViewData.quiz_id.questions.length *100)
+        let score = Math.round(correctAnswers / questionViewData.quiz_id.questions.length * 100)
         return score;
     };
-    
+
     const calculateResult = (userAnswer) => {
         const score = calculateScore(userAnswer);
         const passingScore = 80; // Define your passing score threshold
@@ -178,12 +180,6 @@ function AttemptQuiz() {
     };
 
 
-    const handleSnackBarState = ({ timeLeft }) => {
-        setSnackBarState({
-            open: true,
-            message: timeLeft === 30 ? '30 seconds left !' : "nothing"
-        });
-    }
     const handleSnackBarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -257,7 +253,6 @@ function AttemptQuiz() {
                                         }}>Restart
                                     </Button>
                                     <Button
-                                        // disabled={!areAllQuestionsAnswered}
                                         onClick={handleConfirmSubmitDialogOpen}
                                         endIcon={<SendIcon />}
                                         disableRipple
@@ -289,7 +284,7 @@ function AttemptQuiz() {
                                 <ConfirmSubmitDialog
                                     open={confirmSubmitDialogOpen}
                                     onClose={handleConfirmSubmitDialogClose}
-                                    onSubmit={handleSubmit}
+                                    onSubmit={userSubmission}
                                 />
                                 <PostSubmitDialog
                                     open={postSubmitDialogOpen}

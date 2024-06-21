@@ -34,7 +34,7 @@ function QuestionBox() {
     const totalQuestions = questionViewData.selectedAnswers.length;
     const answersData = currentQuestion.question_id.answers;
     console.log(currentQuestion)
-    console.log("ansData: " +currentQuestion.selectedAnswer_id.answer_text)
+    // console.log("ansData: " +currentQuestion.selectedAnswer_id.answer_text)
 
 
     const handlePrevQuestion = () => {
@@ -49,12 +49,14 @@ function QuestionBox() {
         }
     };
 
+    const isCorrect = currentQuestion.selectedAnswer_id && currentQuestion.selectedAnswer_id.isCorrect;
+
     return (
         <div>
 
             <Box key={currentQuestionIndex}
                 sx={{
-                    backgroundColor: currentQuestion.selectedAnswer_id.isCorrect ? '#edeff7' : '#FFF7F7',
+                    backgroundColor: isCorrect ? '#edeff7' : '#FFF7F7',
                     borderRadius: '20px',
                     p: '20px',
                     textAlign: 'left'
@@ -68,14 +70,14 @@ function QuestionBox() {
                         Q-{currentQuestionIndex + 1}
                     </Typography>
                     <Chip
-                        label={currentQuestion.selectedAnswer_id.isCorrect ? 'Correct' : 'Wrong'}
+                        label={isCorrect ? 'Correct' : 'Wrong'}
                         variant="outlined"
-                        icon={currentQuestion.selectedAnswer_id.isCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
+                        icon={isCorrect ? <CheckIcon color='inherit' /> : <CloseIcon color='inherit' />}
                         sx={{
-                            border: currentQuestion.selectedAnswer_id.isCorrect ? '1.5px solid #3f4a8d' : '1.5px solid #ff4d4d',
+                            border: isCorrect ? '1.5px solid #3f4a8d' : '1.5px solid #ff4d4d',
                             fontSize: '15px',
                             fontWeight: '500',
-                            color: currentQuestion.selectedAnswer_id.isCorrect ? '#3f4a8d' : '#ff4d4d',
+                            color: isCorrect ? '#3f4a8d' : '#ff4d4d',
                         }} />
                 </Stack>
 
@@ -88,7 +90,7 @@ function QuestionBox() {
                         <Stack direction={'row'} spacing={1} key={answerIndex}>
                             {answer.isCorrect ? (
                                 <CheckCircleIcon fontSize="medium" sx={{ color: '#37407b' }} />
-                            ) : answer.isCorrect === false && currentQuestion.selectedAnswer_id._id === answer._id  ? (
+                            ) : currentQuestion.selectedAnswer_id && currentQuestion.selectedAnswer_id._id === answer._id && !answer.isCorrect ? (
                                 <CancelIcon fontSize="medium" sx={{ color: '#ff4d4d' }} />
                             ) : (<CancelIcon fontSize="medium" sx={{ color: '#9e9e9e' }} />)}
 
@@ -96,10 +98,10 @@ function QuestionBox() {
                                 sx={{
                                     color:
                                         answer.isCorrect ? '#37407b' :
-                                            answer.isCorrect === false && currentQuestion.selectedAnswer_id._id === answer._id ? '#ff4d4d' :
-                                                '#9e9e9e',
+                                        (currentQuestion.selectedAnswer_id && currentQuestion.selectedAnswer_id._id === answer._id && !answer.isCorrect) ? '#ff4d4d' :
+                                        '#9e9e9e',
                                     textDecoration:
-                                        answer.isCorrect === false && currentQuestion.selectedAnswer_id._id !== answer._id ? 'line-through' : 'none'
+                                        (currentQuestion.selectedAnswer_id && currentQuestion.selectedAnswer_id._id !== answer._id && !answer.isCorrect) ? 'line-through' : 'none'
                                 }}>
                                 {answer.answer_text}
                                 
@@ -111,9 +113,9 @@ function QuestionBox() {
                     <span style={{ fontWeight: 600 }}>Your Answer: </span>
                     <span style={{
                         marginLeft: '10px',
-                        color: currentQuestion.selectedAnswer_id.isCorrect ? '#37407b' : '#ff4d4d'
+                        color: isCorrect ? '#37407b' : '#ff4d4d'
                     }}>
-                        {currentQuestion.selectedAnswer_id.answer_text}
+                    {currentQuestion.selectedAnswer_id === null ? "none" : currentQuestion.selectedAnswer_id.answer_text}
                     </span>
 
                 </Typography>

@@ -30,7 +30,7 @@ function App() {
         <Route path="/addtest" element={<AddTest />} />
         <Route path="/customdialog" element={<CustomizedDialogs />} />
         <Route path="/carexamdb" element={<CarExamDashboard />} />
-        <Route path="/userpropage" element={<UserProfilePage />} />
+        <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/piechart" element={<BasicPie />} />
         <Route path="/passratiochart" element={<PassRatioChart />} />
         <Route path="/stickyheadtable" element={<StickyHeadTable />} />
