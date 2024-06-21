@@ -9,45 +9,41 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 
-export default function RestartDialog({ open, onClose, onRestart, timeLeft }) {
 
-
-    // const handleClose = () => {
-    //     setOpen(false);
-    // };
+export default function ConfirmSubmitDialog({ open, onClose, onSubmit }) {
 
 
     return (
         <React.Fragment>
             <Dialog
-                open={open}
-                onClose={onClose}
-                // open = {true}
-                // onClose={timeLeft === 0 ? true : handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
                 sx={{
                     ".MuiDialog-paper": {
                         minWidth: '615px',
                         borderRadius: '20px',
                         padding: '20px',
-                        backgroundImage: 'url("./Images/restart_icon.png")',
+                        backgroundImage: 'url("./Images/upload-solid.png")',
                         backgroundRepeat: 'no-repeat',
-                        backgroundSize: '190px',
+                        backgroundSize: '180px',
                         backgroundPositionX: '440px',
-                        backgroundPositionY: '27px',
+                        backgroundPositionY: '18px',
 
                     }
                 }}
+                // open={timeLeft === 0 ? true : false}
+                open={open}
+                
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" sx={{ fontSize: '27px', fontWeight: '200', color: '#f57c00' }}>
-                    {"Confirm restart?"}
+                <DialogTitle id="alert-dialog-title" sx={{ fontSize: '27px', fontWeight: '200' }}>
+                    {"Confirm Submission"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description" sx={{ color: '', }}>
+                    <DialogContentText id="alert-dialog-description" sx={{ color: '' }}>
                         <Typography sx={{ width: '400px' }}>
-                            All your current answers will be lost, and one attempt will be deducted from your 3-attempt limit.
+                        Are you sure you want to submit your answers?
                         </Typography>
+
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions sx={{ display: 'flex', justifyContent: 'start', marginLeft: '10px' }}>
@@ -56,17 +52,16 @@ export default function RestartDialog({ open, onClose, onRestart, timeLeft }) {
                         fontWeight: '400',
                         textTransform: 'capitalize',
                         fontSize: '17px',
-                        borderRadius: '20px',
-                        marginRight: '10px'
+                        borderRadius: '20px'
                     }}>Cancel</Button>
-                    <Button onClick={onRestart} sx={{
+                    <Button onClick={onSubmit} sx={{
                         color: '#37407b',
                         fontWeight: '400',
                         textTransform: 'capitalize',
                         fontSize: '17px',
                         borderRadius: '20px'
                     }}>
-                        Confirm
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>

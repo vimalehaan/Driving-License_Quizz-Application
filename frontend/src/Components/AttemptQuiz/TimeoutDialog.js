@@ -9,7 +9,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 
-import { SpecificQuizContext } from '../Utils/Contexts';
 
 export default function TimeoutDialog({ open, onClose, onRestart, onViewResult }) {
 
@@ -36,7 +35,7 @@ export default function TimeoutDialog({ open, onClose, onRestart, onViewResult }
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" sx={{ fontSize: '27px', fontWeight: '200' }}>
+                <DialogTitle id="alert-dialog-title" sx={{ fontSize: '27px', fontWeight: '200', color: '#f44336' }}>
                     {"Time's Up :("}
                 </DialogTitle>
                 <DialogContent>

@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 
 import Container from '@mui/material/Container';
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Slide } from "@mui/material";
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import ReplayIcon from '@mui/icons-material/Replay';
 import SendIcon from '@mui/icons-material/Send';
@@ -18,6 +20,8 @@ import QuizQuestions from "../Components/AttemptQuiz/QuestionsAttempt";
 import { WhitePaper } from "../Components/Utils/StyledComponents";
 import RestartDialog from "../Components/AttemptQuiz/RestartDialog";
 import TimeoutDialog from "../Components/AttemptQuiz/TimeoutDialog";
+import ConfirmSubmitDialog from "../Components/AttemptQuiz/ConfirmSubmitDialog";
+import PostSubmitDialog from "../Components/AttemptQuiz/PostSubmitDialog";
 
 import { SpecificQuizContext } from '../Components/Utils/Contexts';
 
@@ -32,13 +36,17 @@ function AttemptQuiz() {
     const [open, setOpen] = useState(false);
     const [restartDialogOpen, setRestartDialogOpen] = useState(false);
     const [timeUpDialogOpen, setTimeUpDialogOpen] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(60); 
+    const [confirmSubmitDialogOpen, setConfirmSubmitDialogOpen] = useState(false);
+    const [postSubmitDialogOpen, setPostSubmitDialogOpen] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(65);
+    const [snackBarState, setSnackBarState] = useState({ open: false, message: '', alert: 'warning' });
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const areAllQuestionsAnswered = userAnswer.every(answer => answer !== '');
     const noQuestionsAnswered = userAnswer.every(answer => answer === '');
 
 
-    
+
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
@@ -54,17 +62,23 @@ function AttemptQuiz() {
     }, []);
 
     useEffect(() => {
-        if (timeLeft > 0 ) {
+        if (timeLeft > 0 && !isSubmitted ) {
             const timer = setInterval(() => {
                 setTimeLeft(timeLeft - 1);
             }, 1000);
-
+            if (timeLeft === 60) {
+                setSnackBarState({ open: true, message: 'Only 1 minute left!', alert: 'warning' });
+            }
+            else if (timeLeft === 30) {
+                setSnackBarState({ open: true, message: 'Only 30 seconds left!', alert: 'warning' });
+            }
             return () => clearInterval(timer);
-        } else if (timeLeft === 0) {
+        } else if (timeLeft === 0 && !isSubmitted) {
             setRestartDialogOpen(false);
             setTimeUpDialogOpen(true);
+            setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
         }
-    }, [timeLeft]);
+    }, [timeLeft, isSubmitted]);
 
     console.log(userAnswer)
 
@@ -76,7 +90,7 @@ function AttemptQuiz() {
         // Restart logic here
         setUserAnswer(Array(questionViewData.selectedAnswers.length).fill(''));
         setCurrentQuestionIndex(0);
-        setTimeLeft(10); // Reset timer
+        setTimeLeft(65); // Reset timer
         setRestartDialogOpen(false);
         setTimeUpDialogOpen(false);
 
@@ -86,12 +100,46 @@ function AttemptQuiz() {
         setTimeUpDialogOpen(false);
     };
 
+    const handleConfirmSubmitDialogOpen = () => {
+        setConfirmSubmitDialogOpen(true);
+    }
+    const handleConfirmSubmitDialogClose = () => {
+        setConfirmSubmitDialogOpen(false);
+    }
+
+    const handlePostSubmitDialogClose = () => {
+        setPostSubmitDialogOpen(false);
+    }
+
     const handleViewResult = () => {
         // View result logic here
         setTimeUpDialogOpen(false);
+        setPostSubmitDialogOpen(false);
     };
 
+    const handleSubmit = () => {
+        setIsSubmitted(true);
+        setTimeLeft(0);
+        setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
+        setConfirmSubmitDialogOpen(false);
+        setPostSubmitDialogOpen(true);
+    }
 
+    const handleSnackBarState = ({ timeLeft }) => {
+        setSnackBarState({
+            open: true,
+            message: timeLeft === 30 ? '30 seconds left !' : "nothing"
+        });
+    }
+    const handleSnackBarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackBarState({
+            ...snackBarState,
+            open: false,
+        });
+    };
 
     if (!questionViewData) {
         return <div>Loading...</div>;
@@ -121,16 +169,18 @@ function AttemptQuiz() {
                         <Grid item lg='4' xs='4'>
                             <WhitePaper sx={{ marginTop: '30px', }}>
                                 <QuizQuestionButtons />
-                                <Box sx={{ marginTop: '5px', display: 'flex', alignItems: 'start', }}>
+                                <Box sx={{ marginTop: '10px', display: 'flex', alignItems: 'start', }}>
 
                                     <Typography
+                                        fontSize={'24px'}
+                                        fontWeight={500}
                                         sx={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            color: timeLeft <= 30 ? '#ff6666' : '#37407b',
-                        
+                                            color: timeLeft <= 30 ? '#ff6666' : timeLeft <= 60 ? '#f57c00' : '#37407b',
+
                                         }} variant="h6">
-                                        {timeLeft <= 30 ? <WarningAmberIcon sx={{ marginRight: '5px' }} /> : <AccessTimeIcon sx={{ marginRight: '5px' }} />}
+                                        {timeLeft <= 30 ? <WarningAmberIcon sx={{ marginRight: '5px', fontSize: "30px" }} /> : <AccessTimeIcon sx={{ marginRight: '5px', fontSize: "30px" }} />}
                                         {formatTime(timeLeft)}
                                     </Typography>
                                 </Box>
@@ -154,7 +204,8 @@ function AttemptQuiz() {
                                         }}>Restart
                                     </Button>
                                     <Button
-                                        disabled={!areAllQuestionsAnswered}
+                                        // disabled={!areAllQuestionsAnswered}
+                                        onClick={handleConfirmSubmitDialogOpen}
                                         endIcon={<SendIcon />}
                                         disableRipple
                                         sx={{
@@ -182,6 +233,28 @@ function AttemptQuiz() {
                                     onRestart={handleRestart}
                                     onViewResult={handleViewResult}
                                 />
+                                <ConfirmSubmitDialog
+                                    open={confirmSubmitDialogOpen}
+                                    onClose={handleConfirmSubmitDialogClose}
+                                    onSubmit={handleSubmit}
+                                />
+                                <PostSubmitDialog
+                                    open={postSubmitDialogOpen}
+                                    onClose={handlePostSubmitDialogClose}
+                                    onViewResult={handleViewResult}
+                                />
+                                <Snackbar
+                                    open={snackBarState.open}
+                                    onClose={handleSnackBarClose}
+                                    TransitionComponent={Slide}
+                                    autoHideDuration={4000}
+                                    sx={{}}
+
+                                >
+                                    <Alert severity={snackBarState.alert} sx={{}}>
+                                        {snackBarState.message}
+                                    </Alert>
+                                </Snackbar>
                             </Box>
 
                         </Grid>

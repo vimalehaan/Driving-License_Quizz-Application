@@ -17,11 +17,11 @@ function QuizQuestionButtons() {
     };
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', }}>
-            <Stack direction={"column"} spacing={'12px'}>
+            <Stack direction={"column"} spacing={'20px'}>
                 <Typography variant="inherit" fontSize={20} fontWeight={600} sx={{display:'flex', alignItems: 'start', color: '#37407b'}}>
                     {questionViewData.quiz_id.quizName}
                 </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: '100%', flexWrap: 'wrap',}}>
+                <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: '100%', flexWrap: 'wrap', }}>
 
                 {questionViewData.quiz_id.questions.map((question, index) => (
                     <Button
