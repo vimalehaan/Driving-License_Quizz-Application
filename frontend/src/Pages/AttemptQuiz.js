@@ -50,7 +50,7 @@ function AttemptQuiz() {
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/viewResult/6671c33dcd37ec7c5280c9b1');
+                const response = await axios.get('http://localhost:3000/viewResult/66756fdb6534ae372f41a730');
                 console.log('Response from backend:', response.data);
                 setQuestionViewData(response.data);
                 setUserAnswer(Array(response.data.selectedAnswers.length).fill(''));
@@ -117,13 +117,66 @@ function AttemptQuiz() {
         setPostSubmitDialogOpen(false);
     };
 
-    const handleSubmit = () => {
-        setIsSubmitted(true);
-        setTimeLeft(0);
-        setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
-        setConfirmSubmitDialogOpen(false);
-        setPostSubmitDialogOpen(true);
-    }
+    // const handleSubmit = () => {
+    //     setIsSubmitted(true);
+    //     setTimeLeft(0);
+    //     setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
+    //     setConfirmSubmitDialogOpen(false);
+    //     setPostSubmitDialogOpen(true);
+    // }
+
+    const handleSubmit = async () => {
+        try {
+            // const candidateId = 'candidate123'; // Replace with actual candidate ID
+            // const quizId = '6671c33dcd37ec7c5280c9b1'; // Replace with actual quiz ID
+            // const attemptId = 'your_attempt_id'; // Replace with the actual attempt ID
+            const selectedAnswers = userAnswer.map((answer, index) => ({
+                question_id: questionViewData.quiz_id.questions[index],
+                selectedAnswer_id: answer || null
+            }));
+    
+            const score = calculateScore(userAnswer); // Implement this function
+            const result = calculateResult(userAnswer); // Implement this function
+            // const score = 30;
+            // const result = false;
+    
+    
+            const response = await axios.put(`http://localhost:3000/updateattempt/66756fdb6534ae372f41a730`, {
+                selectedAnswers,
+                score,
+                result
+            });
+    
+            setIsSubmitted(true);
+            setTimeLeft(0);
+            setSnackBarState({ open: true, message: 'Your Answers have been submitted', alert: 'success' });
+            setConfirmSubmitDialogOpen(false);
+            setPostSubmitDialogOpen(true);
+        } catch (error) {
+            console.error('Error submitting answers:', error);
+            setSnackBarState({ open: true, message: 'Submission failed', alert: 'error' });
+        }
+    };
+
+    const calculateScore = (userAnswer) => {
+        let correctAnswers = 0;
+        userAnswer.forEach((answer, index) => {
+            const question = questionViewData.selectedAnswers[index].question_id;
+            const selectedAnswer = question.answers.find(ans => ans._id === answer);
+            if (selectedAnswer && selectedAnswer.isCorrect) {
+                correctAnswers += 1; // Assuming each correct answer is worth 1 point
+            }
+        });
+        let score = Math.round(correctAnswers / questionViewData.quiz_id.questions.length *100)
+        return score;
+    };
+    
+    const calculateResult = (userAnswer) => {
+        const score = calculateScore(userAnswer);
+        const passingScore = 80; // Define your passing score threshold
+        return score >= passingScore;
+    };
+
 
     const handleSnackBarState = ({ timeLeft }) => {
         setSnackBarState({
