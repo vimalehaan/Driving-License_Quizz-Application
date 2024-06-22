@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Container from '@mui/material/Container';
@@ -38,22 +39,26 @@ function AttemptQuiz() {
     const [timeUpDialogOpen, setTimeUpDialogOpen] = useState(false);
     const [confirmSubmitDialogOpen, setConfirmSubmitDialogOpen] = useState(false);
     const [postSubmitDialogOpen, setPostSubmitDialogOpen] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(5);
+    const [timeLeft, setTimeLeft] = useState(65);
     const [snackBarState, setSnackBarState] = useState({ open: false, message: '', alert: 'warning' });
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const navigate = useNavigate();
 
     const areAllQuestionsAnswered = userAnswer.every(answer => answer !== '');
     const noQuestionsAnswered = userAnswer.every(answer => answer === '');
 
+    const attemptId = '6675bc697a24036b1905b1df';
 
+    console.log(userAnswer.length)
 
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/viewResult/66756fdb6534ae372f41a730');
+                const response = await axios.get(`http://localhost:3000/viewattempt/${attemptId}`);
                 console.log('Response from backend:', response.data);
                 setQuestionViewData(response.data);
-                setUserAnswer(Array(response.data.selectedAnswers.length).fill(''));
+                setUserAnswer(Array(response.data.quiz_id.questions.length).fill(''));
             } catch (error) {
                 console.error('Error fetching attempted quizzes:', error);
             }
@@ -94,7 +99,7 @@ function AttemptQuiz() {
             const score = calculateScore(userAnswer); // Implement this function
             const result = calculateResult(userAnswer); // Implement this function
 
-            const response = await axios.put(`http://localhost:3000/updateattempt/66756fdb6534ae372f41a730`, {
+            const response = await axios.put(`http://localhost:3000/submit/${attemptId}`, {
                 selectedAnswers,
                 score,
                 result
@@ -120,6 +125,13 @@ function AttemptQuiz() {
         setTimeUpDialogOpen(true);
         handleSubmit();
     }
+
+    const handleViewResult = () => {
+        // View result logic here
+        setTimeUpDialogOpen(false);
+        setPostSubmitDialogOpen(false);
+        navigate(`/result/${attemptId}`);
+    };
 
     const handleRestart = () => {
         // Restart logic here
@@ -150,15 +162,7 @@ function AttemptQuiz() {
         setPostSubmitDialogOpen(false);
     }
 
-    const handleViewResult = () => {
-        // View result logic here
-        setTimeUpDialogOpen(false);
-        setPostSubmitDialogOpen(false);
-    };
-
-
-
-
+    
 
     const calculateScore = (userAnswer) => {
         let correctAnswers = 0;

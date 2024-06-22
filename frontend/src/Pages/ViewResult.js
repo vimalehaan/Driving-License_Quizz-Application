@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 
 import Container from '@mui/material/Container';
@@ -15,25 +16,55 @@ import QuizResultComponent from '../Components/ViewResult/QuizResultData';
 import { SpecificQuizContext } from '../Components/Utils/Contexts';
 
 function ViewResultPage() {
+    const { attemptId } = useParams();
+    const navigate = useNavigate();
+
     const [questionViewData, setQuestionViewData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [isUnavailable, setIsUnavailable] = useState(false);
 
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
                 // Make a GET request to your backend endpoint
-                const response = await axios.get('http://localhost:3000/viewResult/66756fdb6534ae372f41a730'); 
+                const response = await axios.get(`http://localhost:3000/viewattempt/${attemptId}`); 
                 console.log('Response from backend:', response.data);
                 // Set the fetched attempted quiz in state
                 setQuestionViewData(response.data);
             } catch (error) {
                 console.error('Error fetching attempted quizzes:', error);
+                setIsUnavailable(true);
             }
         };
 
         // Call the fetchAttempts function when the component mounts
         fetchAttempts();
     }, []);
+
+    useEffect(() => {
+        const handleNavigation = (event) => {
+          event.preventDefault(); // Prevent default behavior
+          alert("You can't go back to this page."); // Show a message to the user
+          navigate('/carexamdb'); // Navigate to the home page
+        };
+    
+        window.history.pushState(null, null, window.location.pathname); // Ensure current location in history
+        window.addEventListener('popstate', handleNavigation); // Listen for back navigation
+    
+        return () => {
+          window.removeEventListener('popstate', handleNavigation); // Cleanup
+        };
+      }, [navigate]);
+    
+
+    if (isUnavailable) {
+        return (
+            <div>
+                <h1>Page is Unavailable</h1>
+                <p>You cannot go back to the quiz attempt page after viewing the results. Redirecting to home page...</p>
+            </div>
+        );
+    }
 
     if (!questionViewData) {
         // If questionViewData is null, render some fallback content or return null

@@ -40,7 +40,7 @@ function QuizzDetails() {
     //     return <div>No questions available</div>;
     // }
 
-    const correctQuestions = questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id.isCorrect).length;
+    const correctQuestions = questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id && question.selectedAnswer_id.isCorrect ).length;
     const inCorrectQuestions = questionViewData.selectedAnswers.length - correctQuestions;
 
     return (

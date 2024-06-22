@@ -34,7 +34,7 @@ function App() {
         <Route path="/piechart" element={<BasicPie />} />
         <Route path="/passratiochart" element={<PassRatioChart />} />
         <Route path="/stickyheadtable" element={<StickyHeadTable />} />
-        <Route path="/result" element={<ViewResultPage />} />
+        <Route path="/result/:attemptId" element={<ViewResultPage />} />
         {/* <Route path="/checkout" element={<CheckoutForm />} /> */}
         {/* <Route path="/return" element={<Return />} /> */}
         <Route path="/quiz" element={<AttemptQuiz />} />
