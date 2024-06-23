@@ -15,21 +15,23 @@ import CustomizedDialogs from './SaveDialog';
 import AddQA from "./Q&A_Container";
 
 
-
-
-
 export const QuestionContext = createContext();
 export const AnswerContext = createContext();
+export const Test_ButtonContext = createContext();
+export const Difficulty_ButtonContext = createContext();
 
-export const SwitchCompo = (activeButton, id, setActiveButton) => {
+export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Tests,selectedButtons_Difficulty) => {
+
 
     const [questionText, setQuestionText] = useState('');
+
     const [answers, setAnswers] = useState([
         { text: '', isCorrect: false },
         { text: '', isCorrect: false },
         { text: '', isCorrect: false },
         { text: '', isCorrect: false }
     ]);
+
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -38,27 +40,33 @@ export const SwitchCompo = (activeButton, id, setActiveButton) => {
 
     //id value is passed from "AddTest.js"... 
     //This function is to switch the AddQustion and AddAnswer Text fields...
+
     if (activeButton['addQuestions']) {
         return (
             <AnswerContext.Provider value={{ answers, setAnswers }}>
                 <QuestionContext.Provider value={{ questionText, setQuestionText }}>
-                    <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                        <TestIdComponent testid={id} />
-                        <AddQA index='addQuestions' />
-                        <div style={{ display: 'flex', justifyContent: 'end' }}>
+                    {/* <ButtonContext.Provider value={{ selectedButtons }}> */}
+                    {/* <ButtonContext.Provider value={{ selectedButtons }}> */}
 
-                            <CusButtonPurp
-                                disabled={questionText === ''}
-                                onClick={() => handleButtonClick('addAnswers', setActiveButton)}
-                                sx={{ width: '120px', fontWeight: '40px', }}
-                            >
-                                <Typography fontSize={16} sx={{ margin: '-2px -6px 0px 0px' }}>Answers</Typography>
-                                <NavigateNextIcon sx={{ marginRight: '-8px' }} />
-                            </CusButtonPurp>
+                        <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                            <TestIdComponent testid={id} />
+                            <AddQA index='addQuestions' />
+                            <div style={{ display: 'flex', justifyContent: 'end' }}>
 
-                        </div>
-                    </Stack>
+                                <CusButtonPurp
+                                    disabled={questionText === ''}
+                                    onClick={() => handleButtonClick('addAnswers', setActiveButton)}
+                                    sx={{ width: '120px', fontWeight: '40px', }}
+                                >
+                                    <Typography fontSize={16} sx={{ margin: '-2px -6px 0px 0px' }}>Answers</Typography>
+                                    <NavigateNextIcon sx={{ marginRight: '-8px' }} />
+                                </CusButtonPurp>
+
+                            </div>
+                        </Stack>
+                    {/* </ButtonContext.Provider/> */}
                 </QuestionContext.Provider>
+
             </AnswerContext.Provider>
 
         );
@@ -66,40 +74,45 @@ export const SwitchCompo = (activeButton, id, setActiveButton) => {
         return (
             <AnswerContext.Provider value={{ answers, setAnswers }}>
                 <QuestionContext.Provider value={{ questionText, setQuestionText }}>
-                    <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
-                        <TestIdComponent testid={id} />
-                        <AddQA index='addAnswers' />
-                        <Stack direction={'row'} justifyContent={'space-between'}>
-                            <CusButtonPurp
-                                onClick={() => handleButtonClick('addQuestions', setActiveButton)}
-                                sx={{
-                                    width: '120px',
-                                    fontWeight: '40px',
-                                }}
-                            >
-                                <NavigateBeforeIcon sx={{ margin: '0px 0 0 -10px' }} />
-                                <Typography fontSize={16} sx={{ margin: '0px 0px 0px -4px' }}>Question</Typography>
-                            </CusButtonPurp>
+                    <Test_ButtonContext.Provider value={{ selectedButton_Tests }}>
+                        <Difficulty_ButtonContext.Provider value={{selectedButtons_Difficulty}}>
+                        <Stack direction={'column'} spacing={1.5} sx={{ marginTop: '-45px' }}>
+                            <TestIdComponent testid={id} />
+                            <AddQA index='addAnswers' />
+                            <Stack direction={'row'} justifyContent={'space-between'}>
+                                <CusButtonPurp
+                                    onClick={() => handleButtonClick('addQuestions', setActiveButton)}
+                                    sx={{
+                                        width: '120px',
+                                        fontWeight: '40px',
+                                    }}
+                                >
+                                    <NavigateBeforeIcon sx={{ margin: '0px 0 0 -10px' }} />
+                                    <Typography fontSize={16} sx={{ margin: '0px 0px 0px -4px' }}>Question</Typography>
+                                </CusButtonPurp>
 
-                            <CusButtonPurp
-                                disabled={
-                                    questionText === '' ||
-                                    answers.some(answer => answer.text.trim() === '') ||
-                                    answers.every(answer => !answer.isCorrect)
-                                }
-                                sx={{
-                                    width: '100px',
-                                    fontWeight: '40px',
-                                }}
-                                onClick={handleClickOpen}
-                            >
-                                <CheckIcon sx={{ fontSize: '20px', margin: '-2px 0 0 -4px' }} />
-                                <Typography fontSize={16} sx={{ margin: '-1px 0px 0px 3px' }}>Save</Typography>
-                            </CusButtonPurp>
-                            <CustomizedDialogs state={open} setOpen={setOpen} />
+                                <CusButtonPurp
+                                    disabled={
+                                        questionText === '' ||
+                                        answers.some(answer => answer.text.trim() === '') ||
+                                        answers.every(answer => !answer.isCorrect)
+                                    }
+                                    sx={{
+                                        width: '100px',
+                                        fontWeight: '40px',
+                                    }}
+                                    onClick={handleClickOpen}
+                                >
+                                    <CheckIcon sx={{ fontSize: '20px', margin: '-2px 0 0 -4px' }} />
+                                    <Typography fontSize={16} sx={{ margin: '-1px 0px 0px 3px' }}>Save</Typography>
+                                </CusButtonPurp>
+
+                                <CustomizedDialogs state={open} setOpen={setOpen} />
+                            </Stack>
+
                         </Stack>
-
-                    </Stack>
+                        </Difficulty_ButtonContext.Provider>
+                    </Test_ButtonContext.Provider>
                 </QuestionContext.Provider>
             </AnswerContext.Provider>
         );

@@ -14,8 +14,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Item, CusBigButton } from "../../Components/Utils/StyledComponents";
 import { SwitchCompo } from "../../Components/Admin/Switch_Component";
 import { handleButtonClick } from "../../Components/Admin/Switch_Q&AField";
-import { TopButtons } from "../../Components/Admin/TopButtons";
+import { TopButton_Difficulty, TopButton_Tests} from "../../Components/Admin/TopButtons";
 import SideBar from "../../Components/Admin/SideBar";
+
 
 
 function AddTest() {
@@ -23,7 +24,22 @@ function AddTest() {
   const [activeButton, setActiveButton] = useState(
     { addQuestions: false, addAnswers: false, correctAnswer: false, timeSetting: false, removeTest: false }
   );
+  
 
+  const [selectedButton_Tests, setSelectedButtons_Tests] = React.useState();
+
+  const handleSelectedButtons_Tests = (selectedItem) => {
+      // Append the newly selected item to the existing selectedButtons array
+      setSelectedButtons_Tests(selectedItem);
+  };
+  
+  const [selectedButtons_Difficulty, setSelectedButtons_Difficulty] = React.useState();
+
+  const handleSelectedButtons_Difficulty = (selectedItem) => {
+      // Append the newly selected item to the existing selectedButtons array
+      setSelectedButtons_Difficulty(selectedItem);
+  };
+  
 
 
   const theme = useTheme();
@@ -52,7 +68,7 @@ function AddTest() {
             marginRight: '50px',
           }}
         >
-          <Grid container spacing='20px' sx={{ marginTop: '30px' }}>
+          <Grid container spacing='20px' sx={{ marginTop: '30px'}}>
 
             <Grid item lg='12' sx={{ marginBottom: '45px' }}>
               <Box
@@ -63,9 +79,15 @@ function AddTest() {
                   borderRadius: '20px',
                   backgroundColor: '#F0F2F7'
                 }}>
-                <TopButtons buttons={['Tests', 'Car', 'Commercial Vehicle', 'Motorbike']} sx={{ width: '250px' }} />
-                <TopButtons buttons={['Difficulty', 'Easy', 'Hard']} />
-                <TopButtons buttons={['User Type', 'Normal', 'Premium']} />
+                  
+
+                <TopButton_Tests buttons={['Tests', 'Car', 'Commercial Vehicle', 'Motorbike']} sx={{ width: '250px' }} handleSelectedButtons_Tests={handleSelectedButtons_Tests}/>
+               
+                <TopButton_Difficulty buttons={['Difficulty', 'Easy', 'Hard']} handleSelectedButtons_Difficulty={handleSelectedButtons_Difficulty}  />
+
+
+{/* <TopButtons buttons={['User Type', 'Normal', 'Premium']}/*/}
+
               </Box>
             </Grid>
 
@@ -152,8 +174,11 @@ function AddTest() {
             <Grid item lg='8' xs='12'>
 
               <Item elevation={0} sx={{ height: '493px', justifyContent: 'center' }}>
+
                 <Stack direction={'column'} spacing={1.5} sx={{ marginTop: 'px' }}>
-                  {SwitchCompo(activeButton, "CEG_023", setActiveButton)}
+
+                  {SwitchCompo(activeButton, "CEG_023", setActiveButton, selectedButton_Tests,selectedButtons_Difficulty)}
+
                 </Stack>
               </Item>
 

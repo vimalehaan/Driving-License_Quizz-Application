@@ -1,4 +1,7 @@
 import './App.css';
+
+import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
+import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
@@ -20,12 +23,9 @@ import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
 
 
-
-
 function App() {
   return (
     <div className="App">
-
     <Router>
       <Routes>
         <Route exact path="/login" element={<Login/>}/>
@@ -43,10 +43,13 @@ function App() {
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/return" element={<Return />} />
         <Route path="/quiz" element={<AttemptQuiz />} />
+        <Route path="/questions" element={<ViewQuestions />} />
+        <Route path="/quiz-dashboard" element={<Quizdashboard />} />
 
 
       </Routes>
     </Router>
+
     </div>
   );
 }

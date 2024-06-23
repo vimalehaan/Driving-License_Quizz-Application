@@ -84,8 +84,8 @@ function SideBar() {
             >
                 <Grid container marginTop={6} marginLeft={-2}>
                     <Stack direction={"row"} marginLeft={5.5} >
-                        <Avatar sx={{ bgcolor: '#323A6E' }}>L</Avatar>
-                        <Typography className={classes.NameTypo} color='#323A6E' variant="p" height={40} paddingTop={1.2} marginLeft={1.5}>Lehaan</Typography>
+                        <Avatar sx={{ bgcolor: '#323A6E' }}>F</Avatar>
+                        <Typography className={classes.NameTypo} color='#323A6E' variant="p" height={40} paddingTop={1.2} marginLeft={1.5}>Fathhy Ahamed</Typography>
                     </Stack>
 
                     <List sx={{ marginTop: '20px' }}>
