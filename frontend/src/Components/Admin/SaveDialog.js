@@ -19,6 +19,7 @@ import { CusButtonPurp } from '../Utils/StyledComponents';
 import { QuestionContext, AnswerContext, Test_ButtonContext ,Difficulty_ButtonContext } from './Switch_Component';
 import axios from 'axios';
 
+
 const CusDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -35,6 +36,7 @@ export default function CustomizedDialogs({ state, setOpen })
   const { answers } = useContext(AnswerContext);
   const {selectedButton_Tests} = useContext(Test_ButtonContext);
   const {selectedButtons_Difficulty} = useContext(Difficulty_ButtonContext);
+
 
   console.log("selectedButton_Tests, ",selectedButton_Tests)
   

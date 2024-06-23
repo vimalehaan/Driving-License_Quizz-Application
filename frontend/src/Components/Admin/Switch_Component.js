@@ -31,6 +31,7 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
         { text: '', isCorrect: false },
         { text: '', isCorrect: false }
     ]);
+
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -105,6 +106,7 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
                                     <CheckIcon sx={{ fontSize: '20px', margin: '-2px 0 0 -4px' }} />
                                     <Typography fontSize={16} sx={{ margin: '-1px 0px 0px 3px' }}>Save</Typography>
                                 </CusButtonPurp>
+
                                 <CustomizedDialogs state={open} setOpen={setOpen} />
                             </Stack>
 
