@@ -4,8 +4,6 @@ import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
 import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
-import Loginpg1 from './Pages/UserLogPage/Loginpg1';
-import Loginpg2 from './Pages/UserLogPage/Loginpg2';
 import CustomizedDialogs from './Components/Admin/SaveDialog';
 import NameCard from './Components/UserProfile/NameCard'
 import UserProfilePage from './Pages/UserProfile'
@@ -15,7 +13,12 @@ import StickyHeadTable from './Components/UserProfile/ExamTable';
 import ViewResultPage from './Pages/ViewResult';
 import CheckoutForm from './Components/Payment/CheckoutForm';
 import Return from './Components/Payment/Return';
+import Login from './Pages/UserLogPage/Login';
+import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
+import Signup from './Pages/UserLogPage/Signup';
+import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
+
 
 
 
@@ -25,8 +28,10 @@ function App() {
 
     <Router>
       <Routes>
-        <Route path="/loginpg1" element={<Loginpg1 />} />
-        <Route path="/loginpg2" element={<Loginpg2 />} />
+        <Route exact path="/login" element={<Login/>}/>
+        <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
+        <Route exact path="/signup" element={<Signup/>}></Route>
+        <Route exact path="/reset" element={<ResetPassword/>}></Route>
         <Route path="/addtest" element={<AddTest />} />
         <Route path="/customdialog" element={<CustomizedDialogs />} />
         <Route path="/carexamdb" element={<CarExamDashboard />} />
@@ -42,18 +47,6 @@ function App() {
 
       </Routes>
     </Router>
-      
-      {/* <Loginpg1 /> */}
-      {/* <Loginpg2 /> */}
-      {/* <AddTest /> */}
-      {/* <CustomizedDialogs /> */}
-      {/* <Payment /> */}
-      {/* <CarExamDashboard /> */}
-      {/* <UserProfilePage /> */}
-      {/* <BasicPie /> */}
-      {/* <PassRatioChart /> */}
-      {/* <StickyHeadTable /> */}
-
     </div>
   );
 }
