@@ -17,6 +17,8 @@ import Login from './Pages/UserLogPage/Login';
 import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
+import AttemptQuiz from './Pages/AttemptQuiz';
+
 
 
 
@@ -33,13 +35,15 @@ function App() {
         <Route path="/addtest" element={<AddTest />} />
         <Route path="/customdialog" element={<CustomizedDialogs />} />
         <Route path="/carexamdb" element={<CarExamDashboard />} />
-        <Route path="/userpropage" element={<UserProfilePage />} />
+        <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/piechart" element={<BasicPie />} />
         <Route path="/passratiochart" element={<PassRatioChart />} />
         <Route path="/stickyheadtable" element={<StickyHeadTable />} />
-        <Route path="/result" element={<ViewResultPage />} />
+        <Route path="/result/:attemptId" element={<ViewResultPage />} />
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/return" element={<Return />} />
+        <Route path="/quiz" element={<AttemptQuiz />} />
+
 
       </Routes>
     </Router>
