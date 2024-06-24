@@ -65,9 +65,31 @@ function QuizQuestions() {
                         justifyContent: 'space-between'
                     }}>
                     <Typography variant="inherit" fontSize={17} fontWeight={600}>
-                        Question {currentQuestionIndex + 1} 
+                        Question {currentQuestionIndex + 1}
                     </Typography>
                 </Stack>
+                <Box
+                    sx={{
+                        marginTop: '15px',
+                        width: '100%', // Width of the box
+                        height: "250px", // Height of the box
+                        overflow: 'hidden', // Ensures the image does not overflow the box
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: '20px', // Optional: Add border radius for rounded corners
+                        // backgroundColor: '#f9f9f9' // Optional: Background color
+                    }}
+                >
+                    <img src='https://firebasestorage.googleapis.com/v0/b/cobit-qimages.appspot.com/o/questions%2FScreenshot%202024-06-12%20at%2013.06.10.png?alt=media&token=b81cb4fe-79a4-4ccf-b448-c688a4b7dc4f' alt='sample'
+                        style={{
+                            width: '100%',
+                            height: '100%', //auto
+                            objectFit: 'contain', //cover
+                        }}
+                    />
+                </Box>
+
 
                 <Typography align='left' fontSize={20} fontWeight={700} sx={{ margin: '15px 0 0 0px', }}>
                     {currentQuestion.question_id.question_text}
@@ -77,7 +99,7 @@ function QuizQuestions() {
                         <Stack direction={"column"} spacing={1} sx={{ textAlign: 'left', margin: '15px 0 0 10px' }}>
                             {answersData && answersData.map((answer, answerIndex) => (
                                 <FormControlLabel
-                                    sx={{  width: '600px', borderRadius: '15px', "&:hover": {backgroundColor: '#f2f2f2'} }}
+                                    sx={{ width: '600px', borderRadius: '15px', "&:hover": { backgroundColor: '#f2f2f2' } }}
                                     value={answer._id}
                                     control={<Radio
                                         sx={{
@@ -91,7 +113,7 @@ function QuizQuestions() {
                         </Stack>
                     </RadioGroup>
                 </FormControl>
-                
+
             </Box>
 
             <Box xs={12} sx={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
