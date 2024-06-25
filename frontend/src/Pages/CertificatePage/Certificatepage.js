@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import CertificateTemplate from '../../Components/Certificate/CertificateTemplate';  // Ensure this path is correct
+import CertificateTemplate from '../../Components/Certificate/CertificateTemplate';
 import axios from 'axios';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import ShareIcon from '@mui/icons-material/Share';
@@ -9,9 +9,11 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import NavBarTop from '../../Components/Utils/NavBarTop';
 import Footer from '../../Components/Utils/Footer';
 import '../../App.css';
+
 const Certificate = ({ recipientName, courseName, completionDate, recipientEmail }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [certificateAppeared, setCertificateAppeared] = useState(false);
+  const [certificateFilePath, setCertificateFilePath] = useState(null); // State to hold certificate file path
 
   useEffect(() => {
     setCertificateAppeared(true);
@@ -32,11 +34,25 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
         courseName,
         completionDate,
       });
-      const certificateFilePath = response.data.certificateFilePath;
-      await sendCertificateByEmail(recipientEmail, certificateFilePath);
+      const filePath = response.data.certificateFilePath;
+      setCertificateFilePath(filePath); // Update certificateFilePath state
+      await sendCertificateByEmail(recipientEmail, filePath);
     } catch (error) {
       console.error('Error generating or sending certificate:', error);
       alert('Failed to generate or send certificate. Please try again.');
+    }
+  };
+
+  const downloadCertificate = async () => {
+    try {
+      if (!certificateFilePath) {
+        alert('Certificate file path is not available.');
+        return;
+      }
+      window.open(certificateFilePath, '_blank');
+    } catch (error) {
+      console.error('Error downloading certificate:', error);
+      alert('Failed to download certificate. Please try again.');
     }
   };
 
@@ -64,9 +80,9 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
       <div className={`certificate-container ${certificateAppeared ? 'certificate-appeared' : ''}`}>
         <h1 style={{ color: '#49108B', fontFamily: 'sans-serif', fontSize: '50px', textAlign: 'center' }}>Congratulations!</h1>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* <div style={{ boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)', padding: '20px', borderRadius: '10px', marginBottom: '20px', width: 'fit-content' }}>
+          <div style={{ boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.5)', padding: '20px', borderRadius: '10px', marginBottom: '20px', width: 'fit-content' }}>
             <CertificateTemplate recipientName={recipientName} courseName={courseName} completionDate={completionDate} />
-          </div> */}
+          </div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <IconButton onClick={generateCertificate} style={{ marginRight: '20px' }}>
