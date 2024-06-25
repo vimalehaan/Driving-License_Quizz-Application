@@ -24,6 +24,7 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
 
 
     const [questionText, setQuestionText] = useState('');
+    
 
     const [answers, setAnswers] = useState([
         { text: '', isCorrect: false },
@@ -31,6 +32,13 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
         { text: '', isCorrect: false },
         { text: '', isCorrect: false }
     ]);
+
+    const resetAnswers = () => setAnswers([
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false }
+      ]);
 
     const [open, setOpen] = useState(false);
 
@@ -43,7 +51,7 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
 
     if (activeButton['addQuestions']) {
         return (
-            <AnswerContext.Provider value={{ answers, setAnswers }}>
+            <AnswerContext.Provider value={{ answers, setAnswers, resetAnswers }}>
                 <QuestionContext.Provider value={{ questionText, setQuestionText }}>
                     {/* <ButtonContext.Provider value={{ selectedButtons }}> */}
                     {/* <ButtonContext.Provider value={{ selectedButtons }}> */}
