@@ -33,20 +33,20 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   backgroundColor: '#6070D4',
   color: 'black',
   borderBottom: 'none',
-  padding: '10px 15px', // Adjusted padding for header cells
+  padding: '10px 15px', 
   margin: 0,
-  boxSizing: 'border-box', // Ensure padding is included in width/height calculations
-  justifyContent: 'space-between', // Ensure content is spaced between
-  alignItems: 'center', // Center align items vertically
+  boxSizing: 'border-box', 
+  justifyContent: 'space-between', 
+  alignItems: 'center', 
 }));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
-  minHeight: '20px', // Minimum height for selection buttons
-  fontSize: '0.875rem', // Adjust font size
-  padding: '0 10px', // Adjust padding to fit text
+  minHeight: '20px', 
+  fontSize: '0.875rem', 
+  padding: '0 10px', 
   display: 'flex',
   alignItems: 'center',
-  lineHeight: '1.2', // Adjust line height for better text fit
+  lineHeight: '1.2', 
 }));
 
 const UserActivityLogPage = () => {
