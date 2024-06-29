@@ -15,9 +15,7 @@ const NavBarBottom = () => {
             Commercial Test
           </Button>
 
-          <Button variant="text" color="inherit" sx={{ marginRight: 2, color: 'rgba(50, 58, 110, 0.5)', '&:hover': { backgroundColor: '#6070D4', color: 'white' } }}>
-            Motorcycle Test
-          </Button>
+          
         </div>
       </Toolbar>
     </AppBar>

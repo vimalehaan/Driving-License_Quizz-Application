@@ -3,7 +3,7 @@ import './App.css';
 // import Payment from './Pages/PaymentPage/Payment';
 // import QuestionTextField from './Components/Admin/QuestionTextField';
 // import TestIdComponent from './Components/Admin/TestIDContainer';
-// import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
+import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
 // import Loginpg1 from './Pages/UserLogPage/Loginpg1';
 // import Loginpg2 from './Pages/UserLogPage/Loginpg2';
 // import CustomizedDialogs from './Components/Admin/SaveDialog';
@@ -13,7 +13,7 @@ import './App.css';
 // import PassRatioChart from './Components/UserProfile/PassRatioChart';
 // import StickyHeadTable from './Components/UserProfile/ExamTable';
 
-import Certificate from './Pages/CertificatePage/Certificatepage';
+// import Certificate from './Pages/CertificatePage/Certificatepage';
 
 function App() {
   return (
@@ -24,13 +24,13 @@ function App() {
       {/* <AddTest /> */}
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
-      {/* <CarExamDashboard /> */}
+      <CarExamDashboard />
       {/* <UserProfilePage /> */}
       {/* <BasicPie /> */}
       {/* <PassRatioChart /> */}
       {/* <StickyHeadTable /> */}
       
-   <Certificate />
+   {/* <Certificate /> */}
     </div>
   );
 }
