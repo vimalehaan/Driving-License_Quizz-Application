@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -16,6 +16,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
 
+import axios from 'axios';
+
 function Signup() {
 
     const classes = useStyle();
@@ -32,19 +34,28 @@ function Signup() {
             }
         },
     });
-
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
+    const validatePassword = (password) => {
+        // Password must be at least 8 characters and satisfy the following rules
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        return passwordRegex.test(password);
+    };
 
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
 
         event.preventDefault();
 
@@ -56,28 +67,53 @@ function Signup() {
         } else {
             setEmailError('');
         }
-
-        if (password.length < 6) {
-            setPasswordError('Password must be at least 6 characters');
+        if (!validatePassword(password)) {
+            setPasswordError('Password must contain at least 8 characters including 1 uppercase, 1 lowercase, 1 number, and 1 special character');
             isValid = false;
         } else {
             setPasswordError('');
         }
 
-        if (isValid) {
-            // Add form submission logic here
-            console.log('Form submitted');
+        if (password !== confirmPassword) {
+            setConfirmPasswordError('Passwords do not match');
+            isValid = false;
+        } else {
+            setConfirmPasswordError('');
         }
-        // Add form submission logic here
+
+        if (firstName.trim() === '' || lastName.trim() === '') {
+            // Display error message or handle as appropriate
+            isValid = false;
+        }
+
+        if (isValid) {
+
+            try {
+                const response = await axios.post('http://localhost:3001/api/auth/create', {
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                });
+                console.log('User registered successfully:', response.data);
+                // Handle successful registration, e.g., navigate to login page or show a success message
+            } catch (error) {
+                console.error('Error registering user:', error);
+                // Handle error, e.g., show an error message
+            }
+        }
+
     };
+
+
 
     return (
 
         <div className='SignupPage'>
 
             <Grid container className={classes.gridContainer} >
-                <Grid item lg={12}>
-                    <Appbar />
+                <Grid item lg={12} sx={{ marginTop: '40px' }}>
+                    < Appbar />
                 </Grid>
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
@@ -92,6 +128,8 @@ function Signup() {
                                         required
                                         label="FirstName"
                                         name="FirstName"
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
@@ -99,6 +137,8 @@ function Signup() {
                                         required
                                         label="LastName "
                                         name="LastName"
+                                        value={lastName}
+                                        onChange={(e) => setLastName(e.target.value)}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
                                     <TextField className={classes.textField}
@@ -106,9 +146,9 @@ function Signup() {
                                         label="Email "
                                         name="Email"
                                         value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    error={!!emailError}
-                                    helperText={emailError}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        error={!!emailError}
+                                        helperText={emailError}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
@@ -118,9 +158,22 @@ function Signup() {
                                         label="Password"
                                         name="Password"
                                         value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    error={!!passwordError}
-                                    helperText={passwordError}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        error={!!passwordError}
+                                        helperText={passwordError}
+                                        InputProps={{ sx: { borderRadius: '20px' } }}
+                                    /> <br></br>
+
+                                    <TextField
+                                        className={classes.textField}
+                                        required
+                                        type="password"
+                                        label="Confirm Password"
+                                        name="ConfirmPassword"
+                                        value={confirmPassword}
+                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                        error={!!confirmPasswordError}
+                                        helperText={confirmPasswordError}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
