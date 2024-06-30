@@ -14,7 +14,7 @@ import { Appbar } from '../../Components/UserLog/AppBar.js';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 
 function SocialSignIn() {
 
@@ -64,25 +64,28 @@ function SocialSignIn() {
                         <Stack className={classes.formContainer} direction="column" spacing={0}>
                             <form onSubmit={handleSubmit}>
                                 <Stack direction="column" spacing={4}>
-                                    {/* <TextField className={classes.textField}
-                                        required
-                                       label="User Name"
-                                        InputProps={{ sx: { borderRadius: '20px' } }}
-                                    />
-
-                                    <TextField className={classes.textField}
-                                        type='password'
-                                       label="Password"
-                                        InputProps={{ sx: { borderRadius: '20px' } }}
-                                    /> */}
+                                   
                                     <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'> <img src='\Images\google icon.png' style={{marginRight:'20px'}}></img>Signup with Google</Button>
                                     <FacebookLogin
                                         appId="2855786357905495"
                                         autoLoad={true}
                                         fields="name,email"
                                         onClick={componentClicked}
-                                        callback={responseFacebook} />,
-                                    {/* <Button sx={{ borderRadius: '20px' , textTransform: 'none' , color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }} className={classes.signButton} variant="contained" color='secondary'> <img src='\Images\facebook icon.png' style={{marginRight:'20px'}}></img>Signup with Facebook</Button> */}
+                                        callback={responseFacebook} 
+                                        render={renderProps => (
+                                            <Button
+                                                onClick={renderProps.onClick}
+                                                sx={{ borderRadius: '20px', textTransform: 'none', color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
+                                                className={classes.signButton}
+                                                variant="contained"
+                                                color='secondary'
+                                            >
+                                                 <img src='\Images\facebook icon.png' style={{ marginRight: '20px' }} alt="Facebook icon" />
+                                                 Signup with Facebook
+                                            </Button> 
+                                        )}
+                                        />
+                                    
 
                                 </Stack>
                             </form>

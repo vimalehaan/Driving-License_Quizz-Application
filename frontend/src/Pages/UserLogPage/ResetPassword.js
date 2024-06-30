@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState } from 'react';
+import { useLocation,useNavigate } from 'react-router-dom';
 import { AppBar, Typography , Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -15,10 +16,16 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
+import axios from 'axios';
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 function ResetPassword() {
 
     const classes = useStyle();
+    const navigate = useNavigate();
 
     const outerTheme = createTheme({
         palette: {
@@ -40,12 +47,24 @@ function ResetPassword() {
     const [success, setSuccess] = useState(false);
     const [open, setOpen] = useState(false);
     const [showSignIn, setShowSignIn] = useState(false);
+    const query = useQuery();
+    const token = query.get('token');
 
-    const validatePassword = () => {
+
+    const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        return passwordRegex.test(password);
+    };
+
+    
+
+    const handleSubmit = async(event) => {
+
+        event.preventDefault();
         let isValid = true;
 
-        if (newPassword.length < 6) {
-            setPasswordError('Password must be at least 6 characters');
+        if (!validatePassword(newPassword)) {
+            setPasswordError('Password must be at least 8 characters, contain at least one lowercase letter, one uppercase letter, one digit, and one special character');
             isValid = false;
         } else {
             setPasswordError('');
@@ -58,28 +77,36 @@ function ResetPassword() {
             setConfirmPasswordError('');
         }
 
-        return isValid;
-    };
+        if (isValid) {
+            try {
+                console.log("Sending request with password and token:" , newPassword, token);
+                const response = await axios.post('http://localhost:3001/api/auth/new-password', {
+                    password: newPassword,
+                    
+                    token: token
+                });
 
-    const handleSubmit = (event) => {
-
-        event.preventDefault();
-        // Add form submission logic here
-        if (validatePassword()) {
-            // Simulate a successful or unsuccessful update
-            const isUpdateSuccessful = true; // Change to false to simulate unsuccessful update
-
-            setSuccess(isUpdateSuccessful);
-            setOpen(true);
-
-            if (isUpdateSuccessful) {
-                setShowSignIn(true);
+                if (response.status === 200) {
+                    setSuccess(true);
+                    setShowSignIn(true);
+                } else {
+                    setSuccess(false);
+                }
+                setOpen(true);
+            } catch (error) {
+                console.error('Error updating password:', error);
+                setSuccess(false);
+                setOpen(true);
             }
         }
     };
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleSignIn = () => {
+        navigate('/login');
     };
 
     return (
@@ -123,7 +150,7 @@ function ResetPassword() {
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
                                   
-                                  {!showSignIn && (
+                                  
                                         <Button
                                             sx={{ borderRadius: '20px', textTransform: 'none' }}
                                             className={classes.signButton}
@@ -133,7 +160,7 @@ function ResetPassword() {
                                         >
                                             Update
                                         </Button>
-                                    )}
+                                   
 
                                     {/* <Button type='submit' sx={{ borderRadius: '20px', textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Update</Button> */}
 
@@ -143,16 +170,14 @@ function ResetPassword() {
                                             className={classes.signButton}
                                             variant="contained"
                                             color='secondary'
-                                            href="#"
+                                            onClick={handleSignIn}
                                         >
                                             Sign in
                                         </Button>
                                     )}
                                 </Stack>
                             </form>
-                            {/* <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
-                                Want to login again? <Link href="#" underline="none" color='#09BCE0'> {'Login'} </Link>
-                            </Typography>  */} <br />
+                            <br />
                             <Divider className={classes.divider} > or </Divider><br />
                             <Stack direction={'row'} spacing={1.5} marginTop={-1} >
                                 <IconButton variant='outlined' size='large'><GoogleIcon color='primary' fontSize='large' /></IconButton>

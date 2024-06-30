@@ -3,6 +3,7 @@ import './App.css';
 import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
 import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
@@ -23,6 +24,7 @@ import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
 
 
+
 function App() {
   return (
     <div className="App">
@@ -32,6 +34,7 @@ function App() {
         <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
         <Route exact path="/signup" element={<Signup/>}></Route>
         <Route exact path="/reset" element={<ResetPassword/>}></Route>
+        
         <Route path="/addtest" element={<AddTest />} />
         <Route path="/customdialog" element={<CustomizedDialogs />} />
         <Route path="/carexamdb" element={<CarExamDashboard />} />
