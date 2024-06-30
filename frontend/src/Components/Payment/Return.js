@@ -11,12 +11,6 @@ const Return = () => {
     const urlParams = new URLSearchParams(queryString);
     const sessionId = urlParams.get('session_id');
 
-    // fetch(`http://localhost:3000/session-status?session_id=${sessionId}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setStatus(data.status);
-    //     setCustomerEmail(data.customer_email);
-    //   });
     const fetchData = async () => {
       try{
         const response = await axios.get(`http://localhost:3000/session-status?session_id=${sessionId}`);
