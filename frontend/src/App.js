@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
         <Route exact path="/signup" element={<Signup/>}></Route>
         <Route exact path="/reset" element={<ResetPassword/>}></Route>
-        
+
         <Route path="/addtest" element={<AddTest />} />
         <Route path="/customdialog" element={<CustomizedDialogs />} />
         <Route path="/carexamdb" element={<CarExamDashboard />} />
@@ -48,7 +48,6 @@ function App() {
         <Route path="/quiz" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
-
 
       </Routes>
     </Router>
