@@ -13,7 +13,7 @@ import CarExamDashboard from './Pages/QuizzDashboardPage/CarExamDashboard';
 // import PassRatioChart from './Components/UserProfile/PassRatioChart';
 // import StickyHeadTable from './Components/UserProfile/ExamTable';
 
-// import Certificate from './Pages/CertificatePage/Certificatepage';
+import Certificate from './Pages/CertificatePage/Certificatepage';
 
 function App() {
   return (
@@ -24,13 +24,13 @@ function App() {
       {/* <AddTest /> */}
       {/* <CustomizedDialogs /> */}
       {/* <Payment /> */}
-      <CarExamDashboard />
+      {/* <CarExamDashboard /> */}
       {/* <UserProfilePage /> */}
       {/* <BasicPie /> */}
       {/* <PassRatioChart /> */}
       {/* <StickyHeadTable /> */}
       
-   {/* <Certificate /> */}
+   <Certificate />
     </div>
   );
 }
