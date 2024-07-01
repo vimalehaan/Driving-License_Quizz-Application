@@ -64,11 +64,11 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
                 variant="outlined"
                 startIcon={<DownloadIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} />}
                 sx={{
-                  border: '2px solid #6070D4', // Border color and width
-                  color: '#6070D4', // Text color
+                  border: '2px solid #6070D4', 
+                  color: '#6070D4', 
                   '&:hover': {
-                    border: '2px solid #323A6E', // Border color on hover
-                    color: '#323A6E', // Text color on hover
+                    border: '2px solid #323A6E', 
+                    color: '#323A6E', 
                   },
                 }}
                 
