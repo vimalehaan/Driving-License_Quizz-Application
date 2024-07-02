@@ -14,6 +14,7 @@ import UserProfilePage from './Pages/UserProfile'
 import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
+import UserActivityLogPage from './Pages/UserActivityLogPage/UserActivityLogPage';
 import ViewResultPage from './Pages/ViewResult';
 import CheckoutForm from './Components/Payment/CheckoutForm';
 import Return from './Components/Payment/Return';
