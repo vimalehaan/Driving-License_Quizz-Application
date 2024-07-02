@@ -22,10 +22,12 @@ import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
 import FileUploadSample from './FileUpload';
+import Certificate from './Pages/CertificatePage/Certificatepage';
 
 function App() {
   return (
     <div className="App">
+
     <Router>
       <Routes>
         <Route exact path="/login" element={<Login/>}/>
@@ -50,7 +52,6 @@ function App() {
 
       </Routes>
     </Router>
-
     </div>
   );
 }
