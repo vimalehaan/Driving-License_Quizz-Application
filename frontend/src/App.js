@@ -22,6 +22,7 @@ import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
+import TransactionTable from './Components/TransactionLog/transaction-table';
 
 
 
@@ -48,6 +49,8 @@ function App() {
         <Route path="/quiz" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+        <Route path="/transaction" element={<TransactionTable />} />
+
 
       </Routes>
     </Router>
