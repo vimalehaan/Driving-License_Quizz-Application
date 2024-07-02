@@ -35,7 +35,7 @@ function QuizQuestions() {
         const newAnswers = [...userAnswer];
         newAnswers[currentQuestionIndex] = event.target.value;
         setUserAnswer(newAnswers);
-      };
+    };
 
     const handlePrevQuestion = () => {
         if (currentQuestionIndex > 0) {
@@ -48,6 +48,7 @@ function QuizQuestions() {
             setCurrentQuestionIndex(prevIndex => prevIndex + 1);
         }
     };
+    console.log("image::", currentQuestion)
 
     return (
         <div>
@@ -68,27 +69,32 @@ function QuizQuestions() {
                         Question {currentQuestionIndex + 1}
                     </Typography>
                 </Stack>
-                <Box
-                    sx={{
-                        marginTop: '15px',
-                        width: '100%', // Width of the box
-                        height: "250px", // Height of the box
-                        overflow: 'hidden', // Ensures the image does not overflow the box
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: '20px', // Optional: Add border radius for rounded corners
-                        // backgroundColor: '#f9f9f9' // Optional: Background color
-                    }}
-                >
-                    <img src='https://firebasestorage.googleapis.com/v0/b/cobit-qimages.appspot.com/o/questions%2FScreenshot%202024-06-12%20at%2013.06.10.png?alt=media&token=b81cb4fe-79a4-4ccf-b448-c688a4b7dc4f' alt='sample'
-                        style={{
-                            width: '100%',
-                            height: '100%', //auto
-                            objectFit: 'contain', //cover
+                {currentQuestion.question_id.imageUrl ?
+                    <Box
+                        sx={{
+                            marginTop: '15px',
+                            width: '100%', // Width of the box
+                            height: "250px", // Height of the box
+                            overflow: 'hidden', // Ensures the image does not overflow the box
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: '20px', // Optional: Add border radius for rounded corners
+                            // backgroundColor: '#f9f9f9' // Optional: Background color
                         }}
-                    />
-                </Box>
+                    >
+
+                        <img src={currentQuestion.question_id.imageUrl}
+                            style={{
+                                width: '100%',
+                                height: '100%', //auto
+                                objectFit: 'contain', //cover
+                            }}
+                        />
+                    </Box>
+                    : null
+
+                }
 
 
                 <Typography align='left' fontSize={20} fontWeight={700} sx={{ margin: '15px 0 0 0px', }}>

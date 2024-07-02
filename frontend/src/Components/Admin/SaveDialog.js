@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext, useState } from 'react';
 
 import { styled } from '@mui/material/styles';
-import { Slide } from "@mui/material";
+import { Box, Slide } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -20,9 +20,9 @@ import UnpublishedIcon from '@mui/icons-material/Unpublished';
 
 import { CusButtonPurp } from '../Utils/StyledComponents';
 import { QuestionContext, AnswerContext, Test_ButtonContext, Difficulty_ButtonContext } from './Switch_Component';
-import { rerenderContext } from '../../Pages/AdminPage/AddTest';
+import { rerenderContext, imageHandleContext } from '../../Pages/AdminPage/AddTest';
 import axios from 'axios';
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const CusDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -39,8 +39,9 @@ export default function CustomizedDialogs({ state, setOpen }) {
   const { answers } = useContext(AnswerContext);
   const { selectedButton_Tests } = useContext(Test_ButtonContext);
   const { selectedButtons_Difficulty } = useContext(Difficulty_ButtonContext);
-  const handleRefresh= useContext(rerenderContext)
+  const { image, preview } = useContext(imageHandleContext);
 
+  const handleRefresh = useContext(rerenderContext)
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [snackBarState, setSnackBarState] = useState({ open: false, message: '', alert: 'success' });
 
@@ -52,13 +53,13 @@ export default function CustomizedDialogs({ state, setOpen }) {
 
   const handleSnackBarClose = (event, reason) => {
     if (reason === 'clickaway') {
-        return;
+      return;
     }
     setSnackBarState({
-        ...snackBarState,
-        open: false,
+      ...snackBarState,
+      open: false,
     });
-};
+  };
 
 
   const handleSaveChanges = async () => {
@@ -68,11 +69,20 @@ export default function CustomizedDialogs({ state, setOpen }) {
         isCorrect: answer.isCorrect, // Change 'isCorrect' to 'isCorrect'
       }));
 
+      let imageUrl = '';
+      if (image) {
+        const storage = getStorage();
+        const imageRef = ref(storage, `questions/${image.name}`);
+        await uploadBytes(imageRef, image);
+        imageUrl = await getDownloadURL(imageRef);
+      }
+
       const data = {
         question_text: questionText,
         answers: formattedAnswers,
         questionType: selectedButton_Tests === 'Car' ? true : false,
-        difficulty: selectedButtons_Difficulty
+        difficulty: selectedButtons_Difficulty,
+        imageUrl
       };
 
       console.log(data);
@@ -96,10 +106,10 @@ export default function CustomizedDialogs({ state, setOpen }) {
       }
 
       console.log('test2');
-      
+
       setIsSubmitted(true);
       handleClose()
-      setSnackBarState({open: true, message: "Question added Successfully", alert: 'success'})
+      setSnackBarState({ open: true, message: "Question added Successfully", alert: 'success' })
       handleRefresh();
 
     } catch (error) {
@@ -115,7 +125,7 @@ export default function CustomizedDialogs({ state, setOpen }) {
         aria-labelledby="customized-dialog-title"
         open={state}
         maxWidth={false}
-        PaperProps={{ sx: { backgroundColor: '#F0F2F7', borderRadius: '20px', width: '750px' } }}
+        PaperProps={{ sx: { backgroundColor: '#F0F2F7', borderRadius: '20px', padding: '0 30px 0 30px', maxWidth: '600px', minWidth: '500px' } }}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Are you sure to add this Question?
@@ -134,39 +144,62 @@ export default function CustomizedDialogs({ state, setOpen }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Stack direction={'column'} >
+          <Stack direction={'column'} spacing={0}>
 
-            <Typography fontWeight={'bold'}>Tests:</Typography>
+            <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography >Test type: </Typography>
+              <Typography fontWeight={600} sx={{ marginLeft: '10px' }}>{selectedButton_Tests}</Typography>
+            </Stack>
 
-            <Typography variant='h5' fontWeight={'bold'} sx={{ margin: "10px 30px 20px 30px" }}>{selectedButton_Tests}</Typography>
-
-            <Typography fontWeight={'bold'} > Difficulty: </Typography>
-
-            <Typography variant='h5' fontWeight={'bold'} sx={{ margin: "10px 30px 20px 30px" }} >  {selectedButtons_Difficulty} </Typography>
-
-            <Typography fontWeight={'bold'}>Question:</Typography>
-
-            <Typography variant='h5' fontWeight={'bold'} sx={{ margin: "10px 30px 20px 30px" }}>{questionText}</Typography>
-
-            <Typography fontWeight={'bold'}>Answers:</Typography>
-
-            {answers.map((answer, index) => (
-              <Typography
-                sx={{
-                  margin: "10px 30px 15px 90px", display: 'flex', alignItems: 'center',
-                  textDecoration: answer.isCorrect ? 'none' : 'line-through',
-                  textDecorationColor: 'red',
-                }}
-                key={index} >
-                {answer.isCorrect ? <CheckCircleIcon sx={{ color: 'green', marginRight: '10px' }} /> : <UnpublishedIcon sx={{ color: 'red', marginRight: '10px' }} />}
-                {answer.text}
-              </Typography>
-            ))}
+            <Stack direction={'row'} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography >Difficulty: </Typography>
+              <Typography fontWeight={600} sx={{ marginLeft: '10px' }}>{selectedButtons_Difficulty}</Typography>
+            </Stack>
 
           </Stack>
 
+
+          <Stack direction={'column'} spacing={0.2} sx={{ display: 'flex', alignItems: 'left ', marginTop: '15px' }}>
+            <Typography >Question: </Typography>
+            <Box sx={{ maxWidth: '500px' }}>
+              <Typography fontWeight={600} sx={{ marginLeft: '10px' }}>{questionText}</Typography>
+            </Box>
+          </Stack>
+
+
+
+          {preview && (
+            <Box sx={{ marginTop: '20px', display: 'flex', alignItems: 'center' }}>
+              <img src={preview} alt="Selected" style={{ width: 'auto', height: '250px', borderRadius: '20px' }} />
+            </Box>
+          )}
+
+          <Stack direction={'column'} spacing={0.2} sx={{ display: 'flex', alignItems: 'left', marginTop: '15px' }}>
+            <Typography >Answers:</Typography>
+            <Box>
+              {answers.map((answer, index) => (
+                <Typography
+                  sx={{
+                    margin: "10px 30px 15px 15px", display: 'flex', alignItems: 'center',
+                    textDecoration: answer.isCorrect ? 'none' : 'line-through',
+                    textDecorationColor: 'red',
+                  }}
+                  key={index} >
+                  {answer.isCorrect ? <CheckCircleIcon sx={{ color: 'green', marginRight: '10px' }} /> : <UnpublishedIcon sx={{ color: 'red', marginRight: '10px' }} />}
+                  {answer.text}
+                </Typography>
+              ))}
+
+            </Box>
+
+          </Stack>
+
+
+
+
+
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{}}>
           <CusButtonPurp onClick={handleSaveChanges} sx={{ width: '150px', fontWeight: '40px', }}>
             <Typography fontSize={16} sx={{ margin: '-2px 5px 0px 0px' }}>Save changes</Typography>
             <CheckCircleOutlinedIcon sx={{ marginRight: '-8px', fontSize: '17px' }} />
