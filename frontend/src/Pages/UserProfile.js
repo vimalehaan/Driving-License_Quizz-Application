@@ -24,6 +24,8 @@ import SimpleLineChart from '../Components/UserProfile/LineChart';
 
 import { QuizData } from '../Components/UserProfile/ExamTable';
 
+import { SpecificQuizContext } from '../Components/Utils/Contexts';
+
 
 
 export const RatioChartContext = createContext();
@@ -31,7 +33,7 @@ export const ChartDataContext = createContext();
 export const ExamViewContext = createContext();
 export const QuestionViewContext = createContext();
 export const QuizDataContext = createContext();
-export const SpecificQuizContext = createContext();
+// export const SpecificQuizContext = createContext();
 
 
 
@@ -40,6 +42,7 @@ function UserProfilePage() {
     const [questionViewData, setQuestionViewData] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     console.log('questionViewData:: ' + questionViewData._id)
+    console.log('dataQst: ' +questionViewData.questions)
 
     const attempts = attemptsData.length;
     const completed = attemptsData.filter(data => data.result).length;
@@ -68,11 +71,9 @@ function UserProfilePage() {
     console.log("attempt Data length: " + attemptsData.length)
     {
         attemptsData.map(attempts => (
-            console.log("attempt Data: " + attempts.difficulty)
+            console.log("attempt Data: " + attempts.quiz_id.difficulty)
         ))
     }
-
-
 
     useEffect(() => {
         if (showExamView && userExamViewRef.current) {
@@ -105,7 +106,7 @@ function UserProfilePage() {
                         >
                             <Grid container spacing='30px' sx={{ marginTop: '0px', justifyContent: 'center', }}>
                                 <Grid item lg='12' xs='12' sx={{ marginBottom: '5px' }}>
-                                    <Typography fontSize={'25px'} fontWeight={600} textAlign={'left'}>Progress</Typography>
+                                    <Typography fontSize={'25px'} fontWeight={600} textAlign={'left'}>Profile</Typography>
                                 </Grid>
                                 <Grid item lg='12' xs='12'>
                                     <Namecard />

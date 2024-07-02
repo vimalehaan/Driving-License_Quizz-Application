@@ -77,3 +77,14 @@ th, td {
   padding: 8px;
   text-align: left;
 }
+
+.certificate-container {
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+
+.certificate-appeared {
+  opacity: 1;
+}
+/* styles.css */
+

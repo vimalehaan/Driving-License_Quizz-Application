@@ -10,13 +10,13 @@ import { ChartDataContext } from '../../Pages/UserProfile';
 function PassRatioChart({ difficulty }) {
 
   const { attemptsData } = useContext(ChartDataContext);
-  const easyValue = attemptsData.filter(data => data.difficulty === 'Easy').length;
-  const hardValue = attemptsData.filter(data => data.difficulty === 'Hard').length;
-  const hardestValue = attemptsData.filter(data => data.difficulty === 'Hardest').length;
+  const easyValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Easy').length;
+  const hardValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Hard').length;
+  const hardestValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Hardest').length;
 
-  const easyPassValue = attemptsData.filter(data => data.difficulty === 'Easy' && data.result).length;
-  const hardPassValue = attemptsData.filter(data => data.difficulty === 'Hard'  && data.result).length;
-  const hardestPassValue = attemptsData.filter(data => data.difficulty === 'Hardest'  && data.result).length;
+  const easyPassValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Easy' && data.result).length;
+  const hardPassValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Hard'  && data.result).length;
+  const hardestPassValue = attemptsData.filter(data => data.quiz_id.difficulty === 'Hardest'  && data.result).length;
 
   const value = {
     'easy': easyPassValue,

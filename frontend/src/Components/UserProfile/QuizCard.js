@@ -73,13 +73,13 @@ function QuizCard() {
                                 display: 'flex',
                                 alignItems: 'center'
                             }}>
-                            {data.quizName}
+                            {data.quiz_id.quizName}
                             <LocalFireDepartmentIcon
                                 sx={{
                                     color:
-                                        data.difficulty === 'Easy' ? '#09BCE0' :
-                                            data.difficulty === 'Hard' ? '#9F69D5' :
-                                                data.difficulty === 'Hardest' ? '#6070D4' : null,
+                                        data.quiz_id.difficulty === 'Easy' ? '#09BCE0' :
+                                            data.quiz_id.difficulty === 'Hard' ? '#9F69D5' :
+                                                data.quiz_id.difficulty === 'Hardest' ? '#6070D4' : null,
                                     marginLeft: '1px',
                                     fontSize: '19px'
                                 }} />
@@ -94,7 +94,7 @@ function QuizCard() {
                             <CalendarMonthIcon sx={{ fontSize: '17px', marginRight: '5px' }} />
                             {data.quiz_date.split("T")[0]}
                         </Typography>
-                        {data.quizType ? <DirectionsCarIcon sx={{ fontSize: '80px' }} /> :
+                        {data.quiz_id.quizType ? <DirectionsCarIcon sx={{ fontSize: '80px' }} /> :
                             <DirectionsBusIcon sx={{ fontSize: '80px' }} />}
                     </Stack>
                     <Box sx={{ display: 'flex', justifyContent: 'start', marginTop: '10px' }}>
