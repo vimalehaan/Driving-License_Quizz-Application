@@ -89,7 +89,7 @@ function Signup() {
         if (isValid) {
 
             try {
-                const response = await axios.post('http://localhost:3001/api/auth/create', {
+                const response = await axios.post('http://localhost:3000/api/auth/create', {
                     firstName,
                     lastName,
                     email,

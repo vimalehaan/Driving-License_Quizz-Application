@@ -4,9 +4,17 @@ import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
+
+import { jwtDecode } from "jwt-decode";
+
 import Return from "./Return";
 
+
 const stripePromise = loadStripe("pk_test_51P0HbhKqUCwilBKS4TxXgjQwtEn6vXTEmsyIEKLUSrcfGADWKkl27RZErtHgD4zpJmoXSWZH6HJaBNKl95nytOlA0087HAynlO");
+
+const userToken=localStorage.getItem("token");
+const decoded = jwtDecode(userToken);
+console.log(decoded?.userId);
 
 const CheckoutForm = () => {
 

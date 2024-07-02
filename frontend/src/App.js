@@ -3,7 +3,6 @@ import './App.css';
 import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
 import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
@@ -22,8 +21,7 @@ import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
-
-
+import FileUploadSample from './FileUpload';
 
 function App() {
   return (
@@ -48,6 +46,7 @@ function App() {
         <Route path="/quiz" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+        <Route path="/upload" element={<FileUploadSample />} />
 
       </Routes>
     </Router>
