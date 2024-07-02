@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import CertificateTemplate from '../../Components/Certificate/Certificatetemplate';
 import axios from 'axios';
-import { IconButton, Button } from '@mui/material';
+import {  Button } from '@mui/material';
 import ReactToPrint from 'react-to-print';
 import { Download as DownloadIcon } from '@mui/icons-material';
-import EmailIcon from '@mui/icons-material/Email';
+
 import NavBarTop from '../../Components/Utils/NavBarTop';
 import Footer from '../../Components/Utils/Footer';
 import '../../App.css';
@@ -16,6 +16,7 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
 
   useEffect(() => {
     setCertificateAppeared(true);
+    generateCertificate();
   }, []);
 
   const generateCertificate = async () => {
@@ -24,6 +25,7 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
         recipientName,
         courseName,
         completionDate,
+        recipientEmail,
       });
       const filePath = response.data.certificateFilePath;
       setCertificateFilePath(filePath);
@@ -79,23 +81,7 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
             content={() => componentRef.current}
             documentTitle={`Certificate_${recipientName}`}
           />
-          <Button
-  variant="outlined"
-  onClick={() => sendCertificateByEmail(recipientEmail, certificateFilePath)}
-  sx={{
-    border: '2px solid #6070D4', 
-    color: '#6070D4', 
-    borderColor: '#6070D4', 
-    marginLeft: '20px', 
-    '&:hover': {
-      border: '2px solid #323A6E', 
-      color: '#323A6E', 
-    },
-  }}
->
-  <EmailIcon style={{ fill: 'url(#gradient1)', fontSize: '30px' }} /> 
-  <b>Email</b>
-</Button>
+          
         </div>
       </div>
       <Footer />
