@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import Container from '@mui/material/Container';
+import { styled } from '@mui/material/styles';
+import { Grid } from "@mui/material";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent';
@@ -17,13 +19,27 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LockIcon from '@mui/icons-material/Lock';
+import SaveIcon from '@mui/icons-material/Save';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 
 
 import DiamondIcon from '@mui/icons-material/Diamond';
+
+const CustomTextField = styled(TextField)({
+    "& .MuiOutlinedInput-root": {
+        "&.Mui-focused fieldset": {
+            border: "1.5px solid #6070D4", // Styles the input border when focused
+            color: '#6070D4'
+        },
+    },
+    '& label.Mui-focused': {
+        color: '#6070D4',
+    },
+  });
 
 
 export default function ImgMediaCard() {
@@ -32,6 +48,8 @@ export default function ImgMediaCard() {
     const [profilePicture, setProfilePicture] = useState('/Images/avatar-placeholder.png');
     const [firstName, setFirstName] = useState('Lehaananth');
     const [lastName, setLastName] = useState('Vimalanathan');
+    const [tempFirstName, setTempFirstName] = useState(firstName);
+    const [tempLastName, setTempLastName] = useState(lastName);
     const [email, setEmail] = useState('lehaan@example.com');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -60,6 +78,8 @@ export default function ImgMediaCard() {
 
     const handleSave = () => {
         // Save changes logic here
+        setFirstName(tempFirstName);
+        setLastName(tempLastName);
         handleClose();
     };
 
@@ -79,13 +99,13 @@ export default function ImgMediaCard() {
                 <CardMedia
                     component="img"
                     alt="cover image"
-                    height="240px"
+                    height="220px"
                     image="/Images/Rectangle 60.png"
                 />
                 <CardContent>
 
                     <Stack direction={'row'} spacing={3} sx={{ alignItems: 'center', margin: '-130px 0 0 30px' }}>
-                        <Avatar sx={{ width: '130px', height: '130px', bgcolor: '#323A6E', fontSize: '40px', border: '2px solid white' }} src={profilePicture}/>
+                        <Avatar sx={{ width: '130px', height: '130px', bgcolor: '#323A6E', fontSize: '40px', border: '2px solid white' }} src={profilePicture} />
                         <Stack direction={'column'} spacing={1} sx={{ alignItems: 'flex-start', }}>
                             <Typography fontWeight='700' sx={{ color: 'white', fontSize: '22px', }}>{firstName} {lastName}</Typography>
                             {/* <Typography sx={{ color: 'white', fontSize: '14px', }}>lehaan1234</Typography> */}
@@ -93,73 +113,106 @@ export default function ImgMediaCard() {
                     </Stack>
 
                 </CardContent>
-                <CardActions sx={{ height: '1px', justifyContent: 'flex-end' }}>
-                    <Button onClick={handleEditClickOpen} startIcon={<EditIcon />}>Edit</Button>
-                    <Button onClick={handlePasswordClickOpen} startIcon={<LockIcon />}>Change Password</Button>
+                <CardActions sx={{ height: '40px', justifyContent: 'flex-end', alignItems: 'center', marginTop: '-35px' }}>
+                    <Button onClick={handleEditClickOpen} startIcon={<EditIcon />}
+                        sx={{
+                            textTransform: 'capitalize',
+                            color: '#6070D4',
+                            borderRadius: '20px'
+                        }}>Edit</Button>
+                    <Button onClick={handlePasswordClickOpen} startIcon={<LockIcon />}
+                        sx={{
+                            textTransform: 'capitalize',
+                            color: '#6070D4',
+                            borderRadius: '20px'
+                        }}>Change Password</Button>
                     {/* <Chip variant="outlined" sx={{marginBottom: '30px', border: '2px solid #ffc400',color:'#ffc400'}} icon={<DiamondIcon sx={{color:'#ffc400'}} color='#ffc400' />} label="Premium" /> */}
                 </CardActions>
             </Card>
 
             {/* //Edit profile dialog */}
-            <Dialog open={editOpen} onClose={handleClose}>
+            <Dialog open={editOpen} onClose={handleClose}
+                sx={{
+                    ".MuiDialog-paper": {
+                        borderRadius: '20px'
+                    }
+                }}>
                 <DialogTitle>Edit Profile</DialogTitle>
                 <DialogContent>
-                    <Stack direction="column" spacing={2} alignItems="center">
-                        <Box display="flex" justifyContent="center" alignItems="center" mb={2}>
-                            <input
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                id="profile-picture-upload"
-                                type="file"
-                                onChange={handleProfilePictureChange}  
-                              
+                    <Grid container sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Grid item lg={4} xs={4}>
+                            <Box display="flex" justifyContent="center" alignItems="center" >
+                                <input
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    id="profile-picture-upload"
+                                    type="file"
+                                    onChange={handleProfilePictureChange}
+
+                                />
+                                <label htmlFor="profile-picture-upload">
+                                    <IconButton component="span">
+                                        <Avatar
+                                            src={profilePicture}
+                                            sx={{ width: 140, height: 140 }}
+                                        />
+                                    </IconButton>
+                                </label>
+                            </Box>
+                        </Grid>
+                        <Grid item lg={8} xs={8}>
+                            <CustomTextField
+                                autoFocus
+                                margin="dense"
+                                id="firstName"
+                                label="FirstName *"
+                                type="text"
+                                fullWidth
+                                value={tempFirstName}
+                                onChange={(e) => setTempFirstName(e.target.value)}
+                                InputProps={{ sx: { borderRadius: '20px', } }}
                             />
-                            <label htmlFor="profile-picture-upload">
-                                <IconButton component="span">
-                                    <Avatar
-                                        src={profilePicture}
-                                        sx={{ width: 80, height: 80 }}
-                                    />
-                                </IconButton>
-                            </label>
-                        </Box>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="firstName"
-                            label="FirstName *"
-                            type="text"
-                            fullWidth
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            InputProps={{ sx: { borderRadius: '20px' } }}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="lastName"
-                            label="LastName *"
-                            type="text"
-                            fullWidth
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            InputProps={{ sx: { borderRadius: '20px' } }}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="email"
-                            label="Email *"
-                            type="email"
-                            fullWidth
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            InputProps={{ sx: { borderRadius: '20px' } }}
-                        />
-                        
-                    </Stack>
+                            <CustomTextField
+                                margin="dense"
+                                id="lastName"
+                                label="LastName *"
+                                type="text"
+                                fullWidth
+                                value={tempLastName}
+                                onChange={(e) => setTempLastName(e.target.value)}
+                                InputProps={{ sx: { borderRadius: '20px' } }}
+                            />
+                            {/* <TextField
+                                    margin="dense"
+                                    id="email"
+                                    label="Email *"
+                                    type="email"
+                                    fullWidth
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    InputProps={{ sx: { borderRadius: '20px' } }}
+                                /> */}
+                        </Grid>
+                    </Grid>
+
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} startIcon={<ArrowBackIcon />}>Back</Button>
-                    <Button onClick={handleSave} startIcon={<EditIcon />}>Save</Button>
+                <DialogActions sx={{ marginTop: '-10px', marginRight: '10px' }}>
+                    <Button onClick={handleClose} startIcon={<ArrowBackIcon />}
+                        sx={{
+                            textTransform: 'capitalize',
+                            fontSize: '16px',
+                            borderRadius: '20px',
+                            width: '100px',
+                            color: '#6070D4',
+                        }}>Back</Button>
+                    <Button onClick={handleSave} startIcon={<SaveIcon />}
+                        sx={{
+                            textTransform: 'capitalize',
+                            fontSize: '16px',
+                            borderRadius: '20px',
+                            width: '100px',
+                            color: '#6070D4',
+                        }}>Save</Button>
                 </DialogActions>
             </Dialog>
 
@@ -167,8 +220,7 @@ export default function ImgMediaCard() {
             <Dialog open={passwordOpen} onClose={handleClose}>
                 <DialogTitle>Change Password</DialogTitle>
                 <DialogContent>
-                    <Stack direction="column" spacing={2} alignItems="center">
-                        <TextField
+                        <CustomTextField
                             autoFocus
                             margin="dense"
                             id="currentPassword"
@@ -179,7 +231,7 @@ export default function ImgMediaCard() {
                             onChange={(e) => setCurrentPassword(e.target.value)}
                             InputProps={{ sx: { borderRadius: '20px' } }}
                         />
-                        <TextField
+                        <CustomTextField
                             margin="dense"
                             id="newPassword"
                             label="New Password *"
@@ -189,7 +241,7 @@ export default function ImgMediaCard() {
                             onChange={(e) => setNewPassword(e.target.value)}
                             InputProps={{ sx: { borderRadius: '20px' } }}
                         />
-                        <TextField
+                        <CustomTextField
                             margin="dense"
                             id="confirmPassword"
                             label="Confirm Password *"
@@ -199,7 +251,7 @@ export default function ImgMediaCard() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             InputProps={{ sx: { borderRadius: '20px' } }}
                         />
-                    </Stack>
+                    
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} startIcon={<ArrowBackIcon />}>Back</Button>

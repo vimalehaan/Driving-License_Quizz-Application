@@ -106,7 +106,7 @@ function UserProfilePage() {
                         >
                             <Grid container spacing='30px' sx={{ marginTop: '0px', justifyContent: 'center', }}>
                                 <Grid item lg='12' xs='12' sx={{ marginBottom: '5px' }}>
-                                    <Typography fontSize={'25px'} fontWeight={600} textAlign={'left'}>Progress</Typography>
+                                    <Typography fontSize={'25px'} fontWeight={600} textAlign={'left'}>Profile</Typography>
                                 </Grid>
                                 <Grid item lg='12' xs='12'>
                                     <Namecard />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -24,6 +25,7 @@ import axios from 'axios';
 function Login() {
 
     const classes = useStyle();
+    const navigate = useNavigate();
 
     const outerTheme = createTheme({
         palette: {
@@ -75,21 +77,39 @@ function Login() {
         if (!validatePassword(password)) {
             setPasswordError('Password must contain at least 8 characters including 1 uppercase, 1 lowercase, 1 number, and 1 special character');
             isValid = false;
-        } else {
+        } else { //
             setPasswordError('');
         }
+        console.log(isValid)
 
         if (isValid) {
             try {
-                const response = await axios.post('http://localhost:3001/api/auth/password', {
+                const response = await axios.post('http://localhost:3000/api/auth/password', {
                     email,
                     password
                 });
 
-                if (response.data.token) {
-                //    login(response.data.token);
+                if (response.data.data.accessToken) {
+                 localStorage.setItem("token",response.data.data.accessToken)
+                   console.log("reT", response.data.data.refreshToken)
+                  
                 //    navigate('./payment'); //Redirect to  a protected page after login
                 }
+
+                const userToken=localStorage.getItem("token")
+                const decodedToken = jwtDecode(userToken);
+                const userID = decodedToken.userId;
+
+                console.log("userToken:::::::",userToken)
+                console.log(decodedToken.userRole)
+
+                if(decodedToken.userRole === "user"){
+                    navigate('/carexamdb');
+                   } else{
+                    navigate('/addTest');
+                   }
+
+               
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);
