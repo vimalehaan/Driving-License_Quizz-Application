@@ -21,8 +21,10 @@ import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
+import TransactionTable from './Components/TransactionLog/transaction-table';
 import FileUploadSample from './FileUpload';
 import Certificate from './Pages/CertificatePage/Certificatepage';
+
 
 function App() {
   return (
@@ -48,7 +50,9 @@ function App() {
         <Route path="/quiz" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+        <Route path="/transaction" element={<TransactionTable />} />
         <Route path="/upload" element={<FileUploadSample />} />
+
 
       </Routes>
     </Router>
