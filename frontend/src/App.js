@@ -3,6 +3,7 @@ import './App.css';
 import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
 import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
@@ -24,7 +25,7 @@ import AttemptQuiz from './Pages/AttemptQuiz';
 import TransactionTable from './Components/TransactionLog/transaction-table';
 import FileUploadSample from './FileUpload';
 import Certificate from './Pages/CertificatePage/Certificatepage';
-
+import Invoice from './Pages/InvoicePage/Invoice';
 
 function App() {
   return (
@@ -52,7 +53,7 @@ function App() {
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
         <Route path="/transaction" element={<TransactionTable />} />
         <Route path="/upload" element={<FileUploadSample />} />
-
+        <Route path="/invoice" element={<Invoice />} />
 
       </Routes>
     </Router>
