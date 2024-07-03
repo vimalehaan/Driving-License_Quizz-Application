@@ -18,7 +18,7 @@ function ExamViewCauge() {
             height={120}
             outerRadius={80}
             innerRadius={55}
-            value={Math.round(questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id.isCorrect).length / questionViewData.selectedAnswers.length *100)}
+            value={Math.round(questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id &&question.selectedAnswer_id.isCorrect).length / questionViewData.selectedAnswers.length *100)}
             cornerRadius={'20px'}
             startAngle={-110}
             endAngle={110}

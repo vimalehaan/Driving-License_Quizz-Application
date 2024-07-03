@@ -11,9 +11,7 @@ export default function QuestionTextField({ initialValue, onChange }) {
         onChange(newText); // Notify parent component of the change
     };
 
-
-
-
+    
     return (
         <div>
             <TextField className={classes.bigTextField}

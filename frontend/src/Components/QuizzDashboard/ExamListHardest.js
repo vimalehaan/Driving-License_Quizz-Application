@@ -8,16 +8,13 @@ import LockIcon from '@mui/icons-material/Lock';
 
 const ExamListH2 = () => {
   const [open, setOpen] = useState(false);
-  const [showPremiumMessage, setShowPremiumMessage] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
-    setShowPremiumMessage(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setShowPremiumMessage(false);
   };
 
   const handlePremiumClick = () => {
@@ -105,9 +102,6 @@ const ExamListH2 = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      
-      
     </Box>
   );
 };

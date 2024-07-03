@@ -1,4 +1,7 @@
 import './App.css';
+
+import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
+import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
@@ -12,6 +15,7 @@ import UserProfilePage from './Pages/UserProfile'
 import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
+import UserActivityLogPage from './Pages/UserActivityLogPage/UserActivityLogPage';
 import ViewResultPage from './Pages/ViewResult';
 import CheckoutForm from './Components/Payment/CheckoutForm';
 import Return from './Components/Payment/Return';
@@ -19,9 +23,11 @@ import Login from './Pages/UserLogPage/Login';
 import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
-
-
-
+import AttemptQuiz from './Pages/AttemptQuiz';
+import TransactionTable from './Components/TransactionLog/transaction-table';
+import FileUploadSample from './FileUpload';
+import Certificatepage from './Pages/CertificatePage/Certificatepage';
+import Invoice from './Pages/InvoicePage/Invoice';
 
 function App() {
   return (
