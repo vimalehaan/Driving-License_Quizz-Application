@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid } from '@mui/x-data-grid';
 import Typography from '@mui/material/Typography';
 import { CusButtonPurp } from "../../Utils/StyledComponents";
@@ -6,52 +6,80 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import DeleteBox from "./DeleteBox";
 import AddQuiz from './addquiz';
 import UpdateBox from './UpdateBox';
+import axios from 'axios';
 
-const initialRows = [
-  { id: '8', firstName: 'Who discovered penicillin?', age: 'Motor-Bike', questionType: 'Science' },
-  { id: '9', firstName: 'What is the smallest prime number?', age: 'Van', questionType: 'Mathematics' },
-  { id: '10', firstName: 'What is the main ingredient in guacamole?', age: 'Car', questionType: 'Food' },
-  { id: '11', firstName: 'What is the square root of 64?', age: 'Motor-Bike', questionType: 'Mathematics' },
-  { id: '12', firstName: 'Who developed the theory of relativity?', age: 'Van', questionType: 'Science' },
-  { id: '13', firstName: 'What is the largest ocean on Earth?', age: 'Car', questionType: 'Geography' },
-  { id: '14', firstName: 'Who is known as the father of computers?', age: 'Van', questionType: 'Technology' },
-  { id: '15', firstName: 'What is the capital of Japan?', age: 'Car', questionType: 'Geography' },
-  { id: '16', firstName: 'What is the primary ingredient in hummus?', age: 'Car', questionType: 'Food' },
-  { id: '17', firstName: 'Who invented the telephone?', age: 'Motor-Bike', questionType: 'Technology' },
-];
-
-export default function DataTable() {
-  const [rows, setRows] = useState(initialRows);
+const DataTable = () => {
+  const [rows, setRows] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [open, setOpen] = useState(false);
   const [openQuiz, setOpenQuiz] = useState(false);
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   const [openUpdateBox, setOpenUpdateBox] = useState(false);
-  const [newQuestion, setNewQuestion] = useState(''); // State for the new question text
+  const [newQuestion, setNewQuestion] = useState('');
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/questions/listOfQuestions');
+        setRows(response.data.map((question, index) => ({
+          id: question._id,
+          tableId: index + 1,
+          Questions: question.question_text,
+          difficulty: question.difficulty,
+          questionType: question.questionType ? 'Car' : 'Commercial Vehicle'
+        })));
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
 
   const handleSelectionChange = (newSelection) => {
-    setSelectedRows(newSelection.map(id => rows.find(row => row.id === id)));
-  };
-
-  const handleDelete = () => {
-    setOpen(true);
+    setSelectedRows(newSelection.map(id => {
+      const selectedRow = rows.find(row => row.id === id);
+      return {
+        id: selectedRow.id,
+        questionText: selectedRow.Questions
+      };
+    }));
   };
 
   const handleQuiz = () => {
     setOpenQuiz(true);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDelete = () => {
+    setOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+
+    try {
+      await Promise.all(selectedRows.map(async (selectedRow) => {
+        await axios.delete(`http://localhost:3000/questions/deleteQuestion/${selectedRow.id}`);
+      }));
+
+      const remainingRows = rows.filter(row => !selectedRows.some(selected => selected.id === row.id));
+      setRows(remainingRows);
+      setSelectedRows([]);
+      setOpen(false);
+    } catch (error) {
+      console.error('Error deleting questions:', error);
+    }
+
     const remainingRows = rows.filter(row => !selectedRows.some(selected => selected.id === row.id));
     setRows(remainingRows);
     setSelectedRows([]);
     setOpen(false);
   };
 
+
   const handleUpdate = () => {
     if (selectedRows.length === 1) {
       const updatedRows = rows.map(row =>
-        row.id === selectedRows[0].id ? { ...row, firstName: newQuestion } : row
+        row.id === selectedRows[0].id ? { ...row, Questions: newQuestion } : row
       );
       setRows(updatedRows);
       setSelectedRows([]);
@@ -62,33 +90,15 @@ export default function DataTable() {
   const handleQuestionClick = (questionId) => {
     setExpandedQuestion(questionId === expandedQuestion ? null : questionId);
   };
-
+ 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'tableId', headerName: 'ID', width: 250 },
     {
-      field: 'firstName',
+      field: 'Questions',
       headerName: 'Questions',
-      width: 650,
-      renderCell: (params) => (
-        <div>
-          <Typography
-            onClick={() => handleQuestionClick(params.row.id)}
-            style={{ cursor: 'pointer'}}
-          >
-            {params.value}
-          </Typography>
-          {expandedQuestion === params.row.id && (
-            <ul>
-              <li>answer 1</li>
-              <li>answer 2</li>
-              <li>answer 3</li>
-              <li>answer 4</li>
-            </ul>
-          )}
-        </div>
-      ),
+      width: 500,
     },
-    { field: 'age', headerName: 'Vehicle Type', width: 120 },
+    { field: 'difficulty', headerName: 'Difficulty', width: 120 },
     { field: 'questionType', headerName: 'Question Type', width: 120 }
   ];
 
@@ -109,7 +119,6 @@ export default function DataTable() {
             state={openQuiz}
             setOpen={setOpenQuiz}
             selectedRows={selectedRows}
-            handleDeleteConfirm={handleDeleteConfirm}
           />
         </div>
 
@@ -165,4 +174,6 @@ export default function DataTable() {
       </div>
     </div>
   );
-}
+};
+
+export default DataTable;

@@ -103,7 +103,7 @@ export const SwitchCompo = (activeButton, id, setActiveButton, selectedButton_Te
                                     disabled={
                                         questionText === '' ||
                                         answers.some(answer => answer.text.trim() === '') ||
-                                        answers.every(answer => !answer.isCorrect)
+                                        answers.every(answer => !answer.isCorrect) || selectedButton_Tests === '' || selectedButtons_Difficulty === ''
                                     }
                                     sx={{
                                         width: '100px',
