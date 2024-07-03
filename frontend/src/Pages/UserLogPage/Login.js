@@ -104,7 +104,6 @@ function Login() {
                     console.error('No token received');
                     setErrorOpen(true);
                 }
-
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);

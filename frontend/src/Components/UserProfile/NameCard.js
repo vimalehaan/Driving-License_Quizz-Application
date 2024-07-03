@@ -94,6 +94,9 @@ export default function ImgMediaCard() {
         setFirstName(newFirstName);
         setLastName(newLastName);
         setEmail(newEmail);
+        // Save changes logic here
+        setFirstName(tempFirstName);
+        setLastName(tempLastName);
 
         handleClose();
     };

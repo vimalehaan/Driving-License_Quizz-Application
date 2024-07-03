@@ -36,7 +36,7 @@ function App() {
     
     <GoogleOAuthProvider clientId="345006772496-uvo2kh85h9sn1g4pef686hgv180re52c">
       <Router>
-      <Routes>
+        <Routes>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
         <Route exact path="/signup" element={<Signup/>}></Route>
