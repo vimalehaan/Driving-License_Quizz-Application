@@ -4,6 +4,7 @@ import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
 import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
@@ -32,7 +33,9 @@ function App() {
   return (
     <div className="App">
 
-    <Router>
+    
+    <GoogleOAuthProvider clientId="345006772496-uvo2kh85h9sn1g4pef686hgv180re52c">
+      <Router>
       <Routes>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
@@ -60,6 +63,8 @@ function App() {
 
       </Routes>
     </Router>
+    </GoogleOAuthProvider>
+
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 // import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
+
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -46,7 +48,7 @@ function Login() {
     const [passwordError, setPasswordError] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
-  
+
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -89,27 +91,20 @@ function Login() {
                     password
                 });
 
-                if (response.data.data.accessToken) {
-                 localStorage.setItem("token",response.data.data.accessToken)
-                   console.log("reT", response.data.data.refreshToken)
-                  
-                //    navigate('./payment'); //Redirect to  a protected page after login
+                if (response.data.data.accessToken && response.data.data.refreshToken) {
+                    localStorage.setItem("token", response.data.data.accessToken)
+                    console.log(response.data.data.accessToken);
+                    navigate('/carexamdb');
+
+                    const userToken = localStorage.getItem("token");
+                    console.log("userToken----", userToken)
                 }
 
-                const userToken=localStorage.getItem("token")
-                const decodedToken = jwtDecode(userToken);
-                const userID = decodedToken.userId;
+                else {
+                    console.error('No token received');
+                    setErrorOpen(true);
+                }
 
-                console.log("userToken:::::::",userToken)
-                console.log(decodedToken.userRole)
-
-                if(decodedToken.userRole === "user"){
-                    navigate('/carexamdb');
-                   } else{
-                    navigate('/addTest');
-                   }
-
-               
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);
