@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -24,6 +24,7 @@ import axios from 'axios';
 function Login() {
 
     const classes = useStyle();
+    const navigate = useNavigate();
 
     const outerTheme = createTheme({
         palette: {
@@ -44,7 +45,7 @@ function Login() {
     const [passwordError, setPasswordError] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
-  
+
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,10 +87,22 @@ function Login() {
                     password
                 });
 
-                if (response.data.token) {
-                //    login(response.data.token);
-                //    navigate('./payment'); //Redirect to  a protected page after login
+                if (response.data.data.accessToken && response.data.data.refreshToken) {
+                    localStorage.setItem("token", response.data.data.accessToken)
+                    console.log(response.data.data.accessToken);
+                    navigate('/carexamdb');
+
+                    const userToken = localStorage.getItem("token");
+                    console.log("userToken----", userToken)
                 }
+
+                else {
+                    console.error('No token received');
+                    setErrorOpen(true);
+                }
+
+
+
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);
