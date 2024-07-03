@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
+// import Cookies from 'js-cookie';
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -20,12 +21,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
 import axios from 'axios';
+import { useAuth } from '../../Components/AuthContext_Handle/AuthContext.js';
 
 
 function Login() {
 
     const classes = useStyle();
     const navigate = useNavigate();
+    const {isAuthenticated,setIsAuthenticated,login} = useAuth();
 
     const outerTheme = createTheme({
         palette: {
@@ -90,24 +93,29 @@ function Login() {
                 });
 
                 if (response.data.data.accessToken) {
-                 localStorage.setItem("token",response.data.data.accessToken)
-                   console.log("reT", response.data.data.refreshToken)
-                  
-                //    navigate('./payment'); //Redirect to  a protected page after login
+                    localStorage.setItem('auth-token', response.data.data.accessToken, {
+                        expires: 1, // 1 day
+                        secure: true,
+                        sameSite: 'Strict'
+                    });
+                    login(response.data.data.accessToken)
+                    // setIsAuthenticated(true);
                 }
 
-                const userToken=localStorage.getItem("token")
+                const userToken = localStorage.getItem('auth-token');
                 const decodedToken = jwtDecode(userToken);
                 const userID = decodedToken.userId;
 
                 console.log("userToken:::::::",userToken)
-                console.log(decodedToken.userRole)
+                console.log(decodedToken.userID)
 
-                if(decodedToken.userRole === "user"){
-                    navigate('/carexamdb');
-                   } else{
-                    navigate('/addTest');
-                   }
+                if(isAuthenticated){
+                    if(decodedToken.userRole === "user"){
+                        navigate('/carexamdb');
+                       } else if (decodedToken.userRole = "admin"){
+                        navigate('/addTest');
+                       }
+                }
 
                
             } catch (error) {
