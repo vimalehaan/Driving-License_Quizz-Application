@@ -24,9 +24,10 @@ import AttemptQuiz from './Pages/AttemptQuiz';
 import FileUploadSample from './FileUpload';
 import Certificate from './Pages/CertificatePage/Certificatepage';
 
+
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
 
     <Router>
       <Routes>
@@ -45,7 +46,7 @@ function App() {
         <Route path="/result/:attemptId" element={<ViewResultPage />} />
         <Route path="/checkout" element={<CheckoutForm />} />
         <Route path="/return" element={<Return />} />
-        <Route path="/quiz" element={<AttemptQuiz />} />
+        <Route path="/quiz/:attemptId" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
         <Route path="/upload" element={<FileUploadSample />} />

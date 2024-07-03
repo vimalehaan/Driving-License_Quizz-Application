@@ -54,10 +54,18 @@ function UserProfilePage() {
         // Define a function to fetch attempted quizzes
         const fetchAttempts = async () => {
             try {
-                // Make a GET request to your backend endpoint
-                const response = await axios.get('http://localhost:3000/getattempts'); // Adjust the URL if your backend is hosted on a different domain
+                const response = await axios.get('http://localhost:3000/getattempts');
                 console.log('Response from backend:', response.data);
-                // Set the fetched attempted quizzes in state
+                
+                // Check for null values in quiz_id
+                response.data.forEach(attempt => {
+                    if (attempt.quiz_id) {
+                        console.log("attempt Data: " + attempt.quiz_id.difficulty);
+                    } else {
+                        console.log("attempt Data: quiz_id is null");
+                    }
+                });
+                
                 setAttemptsData(response.data);
             } catch (error) {
                 console.error('Error fetching attempted quizzes:', error);

@@ -1,105 +1,212 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useRef } from 'react';
+import axios from 'axios';
+
+import { ThemeProvider } from '@emotion/react';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+
+import DiamondIcon from '@mui/icons-material/Diamond';
+import KeyIcon from '@mui/icons-material/Key';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+
 import IntroductionSection1 from '../../Components/QuizzDashboard/intro1';
 import IntroductionSection2 from '../../Components/QuizzDashboard/intro2';
 import NavBarBottom from '../../Components/QuizzDashboard/NavBarBottom';
 import ExamListE from '../../Components/QuizzDashboard/ExamListEasy';
-import ExamListH1 from '../../Components/QuizzDashboard/ExamListHard';
-import ExamListH2 from '../../Components/QuizzDashboard/ExamListHardest';
-import IntroductionSection3 from '../../Components/QuizzDashboard/intro3';
-import SimuE from '../../Components/QuizzDashboard/simuEasy';
-import SimuH1 from '../../Components/QuizzDashboard/simuHard';
-import SimuH2 from '../../Components/QuizzDashboard/simuHardest';
+
 import '../../Components/QuizzDashboard/ContainerStyles.css'
 import NavBarTop from '../../Components/Utils/NavBarTop';
+import Footer from '../../Components/Utils/Footer';
+import QuizDialog from '../../Components/QuizzDashboard/QuizDialog';
+
+import { Box, Grid } from '@mui/material';
+import { typographyTheme } from '../../Components/Utils/TypographyTheme';
+
+export const QuizCardContext = createContext();
+export const QuizCardContext2 = createContext();
+
+
+function QuizSection({ title, quizzes }) {
+  const scrollRef = useRef(null);
+  const cardWidth = 300; // Set the card width to your card's actual width
+  const cardsToShow = 3;
+  
+  // console.log("id", clickedQuiz)
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { scrollLeft } = scrollRef.current;
+      const scrollAmount = cardWidth * cardsToShow;
+      scrollRef.current.scrollTo({
+        left: scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount),
+        behavior: 'smooth',
+      });
+    }
+  };
+  return (
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ width: '95%' }}>
+        <Stack direction={'row'} sx={{ display: 'glow', alignItems: 'center', margin: '0 0 -17px 40px' }}>
+
+          <Typography align='left' fontSize='26px' fontWeight={'bold'}> {title}</Typography>
+          {/* <DiamondIcon sx={{ color: '#37407b' }} /> */}
+        </Stack>
+        <Stack direction={'row'} spacing={2} sx={{ justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+          {quizzes.length > 3
+            ? <IconButton sx={{ color: '#6070D4' }} onClick={() => scroll('left')}> <NavigateBeforeIcon fontSize='large' /> </IconButton>
+            : <IconButton></IconButton>}
+          {/* <Button onClick={() => scroll('left')}>Prev</Button> */}
+          <Box
+            ref={scrollRef}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              overflow: 'hidden',
+              width: `${(cardWidth * cardsToShow) + 60}px`,
+              height: '420px'
+            }}
+          >
+            <Stack direction={'row'} spacing={'30px'}>
+              {quizzes.map((quiz, index) => (
+                <Box key={index} sx={{ minWidth: `${cardWidth}px` }}>
+                  <QuizCardContext.Provider value={{ quiz }}>
+                    <ExamListE />
+                  </QuizCardContext.Provider>
+                </Box>
+              ))}
+            </Stack>
+          </Box>
+          {quizzes.length > 3
+            ? <IconButton sx={{ color: '#6070D4' }} onClick={() => scroll('right')}> <NavigateNextIcon fontSize='large' /> </IconButton>
+            : <IconButton></IconButton>}
+
+          {/* <Button onClick={() => scroll('right')}>Next</Button> */}
+        </Stack>
+      </Box>
+    </Box>
+  );
+}
 
 function CarExamDashboard() {
-    const [exams, setExams] = useState([]);
+  const [quizSet, setQuizSet] = useState([]);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [clickedQuiz, setClickedQuiz] = useState(null);
+  console.log('IIIIID', clickedQuiz);
 
-  const Item = styled(Paper)(({ theme }) => ({
-    // Styles...
-    
-  }));
+  const easyQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Easy');
+  const hardQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hard');
+  const hardestQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hardest');
+
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
 
   useEffect(() => {
-    const fetchExams = async () => {
-      const dummyExams = [
-        { _id: 1, name: 'Easy Exam 1', level: 'easy' },
-        { _id: 2, name: 'Easy Exam 2', level: 'easy' },
-        { _id: 3, name: 'Hard Exam 1', level: 'hard' },
-        { _id: 4, name: 'Hardest Exam 1', level: 'hardest' },
-        // Add more exams with different difficulty levels
-      ];
-      setExams(dummyExams);
+    const fetchAttempts = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/allquizzes');
+        console.log('Response from backend:', response.data);
+        setQuizSet(response.data);
+      } catch (error) {
+        console.error('Error fetching attempted quizzes:', error);
+      }
     };
-
-    fetchExams();
+    fetchAttempts();
   }, []);
 
-    return (
-        <div>
-            
+
+
+  return (
+    <div style={{ backgroundColor: '#F0F2F7' }}>
+      <ThemeProvider theme={typographyTheme}>
+
+
+
+        {/* <NavBarTop /> */}
+
+
+        <Container sx={{}}>
+
+
+          <div style={{ marginTop: '100px' }}>
+
+
             <NavBarBottom />
 
-            <IntroductionSection1 title="Introduction 1" content="This is the first introduction section." />
-            <IntroductionSection2 title="Introduction 2" content="This is the second introduction section." /> 
+            <Grid container sx={{ marginTop: '50px' }}>
+              <Grid Item lg={12} xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
 
 
-            <div className="container" style={{ marginTop: '80px' }}>
-          <Stack spacing={2}>
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Easy</h3>
-                <ExamListE exams={exams.filter((exam) => exam.level === 'easy')} />
-              </div>
-            </Item>
+                <Box sx={{ width: '90%', padding: '10px' }}>
+                  <Typography textAlign={'left'} fontSize={'30px'} fontWeight={'bold'}>Welcome to Your Ultimate License Practice Quiz!</Typography>
+                  <Stack direction={'row'} spacing={1} sx={{ marginTop: '10px', }}>
+                    <Typography textAlign={'left'} sx={{ maxWidth: '700px', color: '#7c7c91' }}>
+                      Before getting your learner driver's licence (Class 7 Licence) in Alberta, you will need to take a knowledge exam that tests your knowledge of Alberta’s traffic laws. The official 30-question multiple-choice test can be taken at any registry agent office (no appointment is required) and costs $17. The test will be completed on a computer and you are expected to complete it within 60 minutes. You must score a minimum of 25 questions to pass. If you fail the knowledge test, you'll need to wait 24h before you are allowed to retake it. Once you've successfully passed the knowledge exam and the vision test, you'll have to pay an additional fee to purchase your actual Class 7 learner’s licence card.
+                      These driving practice tests have been updated for July 2024 and will help you prepare for the real thing from the comfort of your home. Once you've passed the knowledge exam, you'll be ready for the final step: your Alberta road test.
+                    </Typography>
+                    <img src="/images/dri.jpg" alt='driving' style={{ width: '100%', height: '100%', borderRadius: '20px' }} />
 
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Hard</h3>
-                <ExamListH1 exams={exams.filter((exam) => exam.level === 'hard')} />
-              </div>
-            </Item>
+                  </Stack>
 
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Hardest</h3>
-                <ExamListH2 exams={exams.filter((exam) => exam.level === 'hardest')} />
-              </div>
-            </Item>
-          </Stack>
-        </div>
+                  <Button variant="contained"
+                   
+                    endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
+                    sx={{
+                      display: 'flex',
+                      borderRadius: "20px",
+                      height: '40px',
+                      width: '250px',
+                      backgroundColor: '#6070D4',
+                      marginTop: '20px',
+                      transition: 'transform 0.4s, box-shadow 0.4s',
+                      ":hover": {
+                        zIndex: 1,
+                        transform: 'translateY(-2px)',
+                        backgroundColor: '#6070D4',
+                        '.key-icon': {
+                          transform: 'rotate(-180deg)',
+                        }
+                      }
+                    }}> Get full access now
+                  </Button>
+                </Box>
 
-        <IntroductionSection3 title="Introduction 3" content="This is the third introduction section." />
+                
+              </Grid>
+              <Grid Item lg={4} xs={4} >
 
-        <div className="container" style={{ marginTop: '80px' }}>
-          <Stack spacing={2}>
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Easy</h3>
-                <SimuE exams={exams.filter((exam) => exam.level === 'easy')} />
-              </div>
-            </Item>
+              </Grid>
 
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Hard</h3>
-                <SimuH1 exams={exams.filter((exam) => exam.level === 'hard')} />
-              </div>
-            </Item>
+              <Grid Item lg={12} xs={12} spacing={2} sx={{ marginTop: '20px' }}>
 
-            <Item>
-              <div className="difficulty-container">
-                <h3 style={{ textAlign: 'center', backgroundColor: 'lavender', borderRadius: '80%', padding: '10px', width: '80px' }}>Hardest</h3>
-                <SimuH2 exams={exams.filter((exam) => exam.level === 'hardest')} />
-              </div>
-            </Item>
-          </Stack>
-        </div>
-        </div>
-    )
+                <QuizCardContext2.Provider value={ {clickedQuiz, setClickedQuiz, setDialogOpen} }>
+                  <QuizSection title="Easy" quizzes={easyQuizzes} />
+                  <QuizSection title="Hard" quizzes={hardQuizzes} />
+                  <QuizSection title="Hardest" quizzes={hardestQuizzes} />
+
+                  <QuizDialog open={dialogOpen} close={handleClose} />
+                </QuizCardContext2.Provider>
+
+              </Grid>
+
+            </Grid>
+          </div>
+        </Container>
+        <Footer />
+      </ThemeProvider>
+    </div>
+  )
 }
 
 export default CarExamDashboard;

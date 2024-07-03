@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Container from '@mui/material/Container';
@@ -44,11 +44,11 @@ function AttemptQuiz() {
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const navigate = useNavigate();
-
+    const { attemptId } = useParams();
     const areAllQuestionsAnswered = userAnswer.every(answer => answer !== '');
     const noQuestionsAnswered = userAnswer.every(answer => answer === '');
 
-    const attemptId = '6683bd11eb3913fb96e385db';
+    // const attemptId = '6683bd11eb3913fb96e385db';
 
     console.log(userAnswer.length)
 
