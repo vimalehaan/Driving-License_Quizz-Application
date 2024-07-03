@@ -16,9 +16,9 @@ const columns = [
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   width: '100%',
+  height: '100%',
   overflow: 'hidden',
   borderRadius: '10px',
-  border: '2px solid',
   borderColor: 'transparent',
   boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
   marginBottom: '20px',
@@ -28,25 +28,26 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  minWidth: 150,
+  minWidth: 60,
   fontWeight: 'bold',
   backgroundColor: '#6070D4',
   color: 'black',
   borderBottom: 'none',
-  padding: '10px 15px', 
+  padding: '10px 15px',
   margin: 0,
-  boxSizing: 'border-box', 
-  justifyContent: 'space-between', 
-  alignItems: 'center', 
+  boxSizing: 'border-box',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  border: '1px solid black', // Black border for table cells
 }));
 
 const StyledSelect = styled(Select)(({ theme }) => ({
-  minHeight: '20px', 
-  fontSize: '0.875rem', 
-  padding: '0 10px', 
+  minHeight: '20px',
+  fontSize: '0.875rem',
+  padding: '0 10px',
   display: 'flex',
   alignItems: 'center',
-  lineHeight: '1.2', 
+  lineHeight: '1.2',
 }));
 
 const UserActivityLogPage = () => {
@@ -173,7 +174,7 @@ const UserActivityLogPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="container" style={{ padding: '20px', backgroundColor: '#f9f9f9' }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '90%', padding: '20px', backgroundColor: '#f9f9f9', border: 'none',margin:'0 auto',marginTop:'100px'  }}>
         <Typography
           variant="h4"
           align="center"
@@ -190,7 +191,7 @@ const UserActivityLogPage = () => {
           User Activity Log
         </Typography>
 
-        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ margin: '20px auto', width: '80%' }}>
+        <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ margin: '20px auto', width: '100%' }}>
           <Grid item xs={12} sm={8} md={6} style={{ display: 'flex', justifyContent: 'center' }}>
             <TextField
               variant="outlined"
@@ -210,8 +211,8 @@ const UserActivityLogPage = () => {
           </Grid>
         </Grid>
 
-        <StyledPaper elevation={3}>
-          <TableContainer sx={{ maxHeight: 440 }}>
+        <StyledPaper elevation={3} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+          <TableContainer sx={{ flexGrow: 1 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
@@ -238,7 +239,7 @@ const UserActivityLogPage = () => {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          style={{ borderBottom: '1px solid #e0e0e0', padding: '12px' }}
+                          style={{ borderBottom: '1px solid #e0e0e0', padding: '12px', border: '1px solid black' }} // Black border for table cells
                         >
                           {column.id === 'type' ? (
                             <span style={getTypeCellStyle(log[column.id])}>{log[column.id]}</span>
