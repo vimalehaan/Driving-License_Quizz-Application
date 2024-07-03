@@ -25,7 +25,7 @@ import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
 import TransactionTable from './Components/TransactionLog/transaction-table';
 import FileUploadSample from './FileUpload';
-import Certificate from './Pages/CertificatePage/Certificatepage';
+import Certificatepage from './Pages/CertificatePage/Certificatepage';
 import Invoice from './Pages/InvoicePage/Invoice';
 
 function App() {
@@ -54,7 +54,9 @@ function App() {
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
         <Route path="/transaction" element={<TransactionTable />} />
         <Route path="/upload" element={<FileUploadSample />} />
+        <Route path="/activitylog" element={<UserActivityLogPage />} />
         <Route path="/invoice" element={<Invoice />} />
+        <Route path="/certificates" element={<Certificatepage /> } />
 
       </Routes>
     </Router>
