@@ -84,6 +84,7 @@ export default function ImgMediaCard() {
     };
 
     const handleSave = () => {
+
         if (newFirstName.trim() === '' || newLastName.trim() === '' || newEmail.trim() === '') {
             alert("All fields are required");
             return;
@@ -96,6 +97,7 @@ export default function ImgMediaCard() {
         // Save changes logic here
         setFirstName(tempFirstName);
         setLastName(tempLastName);
+
         handleClose();
     };
 

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// import { useAuth } from '../../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
+
+
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -100,9 +104,6 @@ function Login() {
                     console.error('No token received');
                     setErrorOpen(true);
                 }
-
-
-
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);

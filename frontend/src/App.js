@@ -32,29 +32,39 @@ import Invoice from './Pages/InvoicePage/Invoice';
 function App() {
   return (
     <div className="App">
+
     
     <GoogleOAuthProvider clientId="345006772496-uvo2kh85h9sn1g4pef686hgv180re52c">
       <Router>
         <Routes>
-          <Route exact path="/login" element={<Login/>}/>
-          <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
-          <Route exact path="/signup" element={<Signup/>}></Route>
-          <Route exact path="/reset" element={<ResetPassword/>}></Route>
-          
-          <Route path="/addtest" element={<AddTest />} />
-          <Route path="/customdialog" element={<CustomizedDialogs />} />
-          <Route path="/carexamdb" element={<CarExamDashboard />} />
-          <Route path="/userpropage" element={<UserProfilePage />} />
-          <Route path="/piechart" element={<BasicPie />} />
-          <Route path="/passratiochart" element={<PassRatioChart />} />
-          <Route path="/stickyheadtable" element={<StickyHeadTable />} />
-          <Route path="/result" element={<ViewResultPage />} />
-          <Route path="/checkout" element={<CheckoutForm />} />
-          <Route path="/return" element={<Return />} />
+        <Route exact path="/login" element={<Login/>}/>
+        <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
+        <Route exact path="/signup" element={<Signup/>}></Route>
+        <Route exact path="/reset" element={<ResetPassword/>}></Route>
 
-        </Routes>
-      </Router>
+        <Route path="/addtest" element={<AddTest />} />
+        <Route path="/customdialog" element={<CustomizedDialogs />} />
+        <Route path="/carexamdb" element={<CarExamDashboard />} />
+        <Route path="/profile" element={<UserProfilePage />} />
+        <Route path="/piechart" element={<BasicPie />} />
+        <Route path="/passratiochart" element={<PassRatioChart />} />
+        <Route path="/stickyheadtable" element={<StickyHeadTable />} />
+        <Route path="/result/:attemptId" element={<ViewResultPage />} />
+        <Route path="/checkout" element={<CheckoutForm />} />
+        <Route path="/return" element={<Return />} />
+        <Route path="/quiz" element={<AttemptQuiz />} />
+        <Route path="/questions" element={<ViewQuestions />} />
+        <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+        <Route path="/transaction" element={<TransactionTable />} />
+        <Route path="/upload" element={<FileUploadSample />} />
+        <Route path="/activitylog" element={<UserActivityLogPage />} />
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/certificates" element={<Certificatepage /> } />
+
+      </Routes>
+    </Router>
     </GoogleOAuthProvider>
+
     </div>
   );
 }
