@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// import { useAuth } from '../../context/AuthContext';
+import { jwtDecode } from 'jwt-decode';
+
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -76,13 +79,14 @@ function Login() {
         if (!validatePassword(password)) {
             setPasswordError('Password must contain at least 8 characters including 1 uppercase, 1 lowercase, 1 number, and 1 special character');
             isValid = false;
-        } else {
+        } else { //
             setPasswordError('');
         }
+        console.log(isValid)
 
         if (isValid) {
             try {
-                const response = await axios.post('http://localhost:3001/api/auth/password', {
+                const response = await axios.post('http://localhost:3000/api/auth/password', {
                     email,
                     password
                 });
@@ -100,8 +104,6 @@ function Login() {
                     console.error('No token received');
                     setErrorOpen(true);
                 }
-
-
 
             } catch (error) {
                 console.error('Error logging in:', error);

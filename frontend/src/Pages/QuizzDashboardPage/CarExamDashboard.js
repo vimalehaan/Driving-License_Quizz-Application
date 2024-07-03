@@ -13,6 +13,7 @@ import SimuE from '../../Components/QuizzDashboard/simuEasy';
 import SimuH1 from '../../Components/QuizzDashboard/simuHard';
 import SimuH2 from '../../Components/QuizzDashboard/simuHardest';
 import '../../Components/QuizzDashboard/ContainerStyles.css'
+import NavBarTop from '../../Components/Utils/NavBarTop';
 
 
 function CarExamDashboard() {
@@ -40,7 +41,7 @@ function CarExamDashboard() {
 
     return (
         <div>
-            {/* Bottom Navigation Bar */}
+            
             <NavBarBottom />
 
             <IntroductionSection1 title="Introduction 1" content="This is the first introduction section." />

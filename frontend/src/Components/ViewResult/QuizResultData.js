@@ -20,7 +20,9 @@ import { SpecificQuizContext } from '../Utils/Contexts';
 function QuizResultComponent() {
 
     const { questionViewData } = useContext(SpecificQuizContext);
-    const correctQuestions = questionViewData.selectedAnswers.filter(question => question.selectedAnswer_id.isCorrect).length;
+    const correctQuestions = questionViewData.selectedAnswers.filter(
+        question => question.selectedAnswer_id && question.selectedAnswer_id.isCorrect
+    ).length;
     const inCorrectQuestions = questionViewData.selectedAnswers.length - correctQuestions;
 
     const correctPercentage = Math.round(correctQuestions / questionViewData.selectedAnswers.length * 100)
