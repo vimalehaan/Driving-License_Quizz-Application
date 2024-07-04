@@ -65,7 +65,7 @@ const UpdateBox = ({
             margin="dense"
           />
         ))}
-        <FormControl component="fieldset" margin="dense">
+        <FormControl component="fieldset" margin="dense" sx={{marginLeft:'14px',marginTop:'15px'}}>
           <FormLabel component="legend">Difficulty</FormLabel>
           <RadioGroup
             row
@@ -77,7 +77,9 @@ const UpdateBox = ({
             <FormControlLabel value="Hard" control={<Radio />} label="Hard" />
           </RadioGroup>
         </FormControl>
-        <FormControl component="fieldset" margin="dense">
+
+
+        <FormControl component="fieldset" margin="dense" sx={{marginTop:'5px', marginLeft:'14px'}}>
           <FormLabel component="legend">Question Type</FormLabel>
           <RadioGroup
             row
