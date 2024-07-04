@@ -16,12 +16,31 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     Cookies.set('auth-token', token, { expires: 1 }); // Set cookie for 1 day
     setIsAuthenticated(true);
+    postActivityLogOnLogin(token);
   };
 
   const logout = () => {
     Cookies.remove('auth-token');
     setIsAuthenticated(false);
+    postActivityLogOnLogout(token);
+    
+
   };
+
+  const postActivityLogOn = async (userId) => {
+    try {
+      const response = await axios.post('http://localhost:3000/activitylog//logs', {
+        userId,
+        loginTime: new Date(),
+        logoutTime: null,
+      });
+      console.log('Activity log created on login:', response.data);
+    } catch (error) {
+      console.error('Error creating activity log on login:', error);
+    }
+  };
+
+ 
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
