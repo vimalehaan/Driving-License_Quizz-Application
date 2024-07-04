@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
 import { Grid } from "@mui/material";
@@ -19,10 +19,10 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
-
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import LockIcon from '@mui/icons-material/Lock';
 import SaveIcon from '@mui/icons-material/Save';
+import LogoutIcon from '@mui/icons-material/Logout'; 
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
 
@@ -50,13 +50,24 @@ export default function ImgMediaCard() {
     const [lastName, setLastName] = useState('Vimalanathan');
     const [tempFirstName, setTempFirstName] = useState(firstName);
     const [tempLastName, setTempLastName] = useState(lastName);
-    const [email, setEmail] = useState('lehaan@example.com');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [newFirstName, setNewFirstName] = useState(firstName);
+    const [newLastName, setNewLastName] = useState(lastName);
+
+    const navigate = useNavigate();
+    
+
+    const validatePassword = (password) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+        return passwordRegex.test(password);
+      };
 
 
     const handleEditClickOpen = () => {
+        setNewFirstName(firstName);
+        setNewLastName(lastName);
         setEditOpen(true);
     };
 
@@ -64,10 +75,16 @@ export default function ImgMediaCard() {
         setPasswordOpen(true);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('token');  // remove token from local storage
+        navigate('/login');  // redirect to login page
+    };
+
     const handleClose = () => {
         setEditOpen(false);
         setPasswordOpen(false);
     };
+
 
     const handleProfilePictureChange = (e) => {
         const file = e.target.files[0];
@@ -76,19 +93,81 @@ export default function ImgMediaCard() {
         }
     };
 
-    const handleSave = () => {
-        // Save changes logic here
-        setFirstName(tempFirstName);
-        setLastName(tempLastName);
+    const handleSave =async () => {
+
+        if (newFirstName.trim() === '' || newLastName.trim() === '' ) {
+            alert("All fields are required");
+            return;
+        }
+       
+        try {
+            const response = await fetch('http://localhost:3000/api/auth/updateProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: newFirstName,
+                    lastName: newLastName,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setFirstName(newFirstName);
+                setLastName(newLastName);
+                alert(result.message);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('An error occurred while updating the profile. Please try again.');
+        }
+
+           
         handleClose();
     };
 
-    const handlePasswordSave = () => {
+    const handlePasswordSave = async() => {
+        if (currentPassword.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+            alert("All fields are required");
+            return;
+        }
         if (newPassword !== confirmPassword) {
             alert("New password and confirm password do not match");
             return;
         }
-        // Save password change logic here
+
+        if (!validatePassword(newPassword)) {
+            alert("Password must contain at least 8 characters including 1 uppercase, 1 lowercase, 1 number, and 1 special character");
+            return;
+          }
+
+          try {
+            const response = await fetch('http://localhost:3000/api/auth/updatePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error updating password:', error);
+            alert('An error occurred while updating the password. Please try again.');
+        }
         handleClose();
     };
 
@@ -126,7 +205,12 @@ export default function ImgMediaCard() {
                             color: '#6070D4',
                             borderRadius: '20px'
                         }}>Change Password</Button>
-                    {/* <Chip variant="outlined" sx={{marginBottom: '30px', border: '2px solid #ffc400',color:'#ffc400'}} icon={<DiamondIcon sx={{color:'#ffc400'}} color='#ffc400' />} label="Premium" /> */}
+                     <Button onClick={handleLogout} startIcon={<LogoutIcon />}
+                        sx={{
+                            textTransform: 'capitalize',
+                            color: '#6070D4',
+                            borderRadius: '20px'
+                        }}>Logout</Button>
                 </CardActions>
             </Card>
 
@@ -182,16 +266,7 @@ export default function ImgMediaCard() {
                                 onChange={(e) => setTempLastName(e.target.value)}
                                 InputProps={{ sx: { borderRadius: '20px' } }}
                             />
-                            {/* <TextField
-                                    margin="dense"
-                                    id="email"
-                                    label="Email *"
-                                    type="email"
-                                    fullWidth
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    InputProps={{ sx: { borderRadius: '20px' } }}
-                                /> */}
+                            
                         </Grid>
                     </Grid>
 
