@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
-
+import axios from 'axios';
 
 const AuthContext = createContext();
 
@@ -33,6 +33,8 @@ export const AuthProvider = ({ children }) => {
     const decodedToken = jwtDecode(token);
       setUserRole(decodedToken.userId);
       setUserId(decodedToken.userRole);
+      postActivityLog(decodedToken.userId, 'User logged in');
+
   };
 
   const logout = () => {
@@ -40,6 +42,22 @@ export const AuthProvider = ({ children }) => {
     localStorage.remove('auth-token');
     setIsAuthenticated(false);
     setUserRole(null);
+    postActivityLog(userId, 'User logged out');
+
+  };
+
+  const postActivityLog = async (userId, action) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/activityLogs/logs', {
+        userId,
+        action,
+        loginTime: action === 'User logged in' ? new Date() : null,
+        logoutTime: action === 'User logged out' ? new Date() : null,
+      });
+      console.log('Activity log created:', response.data);
+    } catch (error) {
+      console.error('Error creating activity log:', error);
+    }
   };
 
   return (
