@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
+// import Cookies from 'js-cookie';
 
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
@@ -22,12 +23,14 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import useStyle from "../../Components/UserLog/LogStyle.jsx";
 import '../../Components/UserLog/Login.css';
 import axios from 'axios';
+import { useAuth } from '../../Components/AuthContext_Handle/Auth_Context.js';
 
 
 function Login() {
 
     const classes = useStyle();
     const navigate = useNavigate();
+    const {isAuthenticated,setIsAuthenticated,login} = useAuth();
 
     const outerTheme = createTheme({
         palette: {
@@ -91,10 +94,29 @@ function Login() {
                     password
                 });
 
-                if (response.data.data.accessToken && response.data.data.refreshToken) {
+
+                if (response.data.data.accessToken) {
                     localStorage.setItem("token", response.data.data.accessToken)
                     console.log(response.data.data.accessToken);
-                    navigate('/carexamdb');
+                    login(response.data.data.accessToken)
+                    // setIsAuthenticated(true);
+                }
+
+                const userToken = localStorage.getItem('auth-token');
+                const decodedToken = jwtDecode(userToken);
+                const userID = decodedToken.userId;
+
+                console.log("userToken:::::::",userToken)
+                console.log(decodedToken.userID)
+
+                if(isAuthenticated){
+                    if(decodedToken.userRole === "user"){
+                        navigate('/carexamdb');
+                       } else if (decodedToken.userRole = "admin"){
+                        navigate('/addTest');
+                       }
+                }
+
 
                     const userToken = localStorage.getItem("token");
                     console.log("userToken----", userToken)
@@ -135,9 +157,9 @@ function Login() {
         <div className='loginPage'>
 
             <Grid container className={classes.gridContainer} >
-                <Grid item lg={12}>
+                {/* <Grid item lg={12}>
                     <Appbar />
-                </Grid>
+                </Grid> */}
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
                 </Grid>
