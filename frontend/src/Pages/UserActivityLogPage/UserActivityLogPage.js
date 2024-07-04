@@ -61,11 +61,7 @@ const UserActivityLogPage = () => {
   });
 
   const fetchLogs = () => {
-    fetch('/api/activityLogs/user', {
-      headers: {
-        Authorization: 'Bearer your_jwt_token', // Replace with actual JWT token
-      },
-    })
+     fetch('http://localhost:3000/api/activityLogs/logs')
       .then(response => response.json())
       .then(data => {
         setLogs(data);
@@ -150,7 +146,6 @@ const UserActivityLogPage = () => {
     return Array.from(uniqueValues);
   };
 
-  // Custom theme for table and typography
   const theme = createTheme({
     typography: {
       fontFamily: 'Roboto, sans-serif',
