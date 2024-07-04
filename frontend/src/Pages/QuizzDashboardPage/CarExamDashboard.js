@@ -28,7 +28,7 @@ import QuizDialog from '../../Components/QuizzDashboard/QuizDialog';
 
 import { Box, Grid } from '@mui/material';
 import { typographyTheme } from '../../Components/Utils/TypographyTheme';
-import { useAuth } from '../../Components/AuthContext_Handle/AuthContext';
+import { useAuth } from '../../Components/AuthContext_Handle/Auth_Context';
 
 export const QuizCardContext = createContext();
 export const QuizCardContext2 = createContext();

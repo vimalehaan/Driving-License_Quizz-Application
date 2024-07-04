@@ -30,8 +30,8 @@ import Certificate from './Pages/CertificatePage/Certificatepage';
 import DummyPage from './Pages/Dummy';
 import ProtectedRoute from './Components/Utils/ProtectedRoutes';
 
-import { useAuth } from './Components/AuthContext_Handle/AuthContext'
-import { AuthProvider } from './Components/AuthContext_Handle/AuthContext';
+import { useAuth } from './Components/AuthContext_Handle/Auth_Context'
+import { AuthProvider } from './Components/AuthContext_Handle/Auth_Context';
 
 
 

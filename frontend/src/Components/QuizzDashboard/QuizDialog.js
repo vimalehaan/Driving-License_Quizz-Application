@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Typography, Box, Stack, Grid } from '@mui/material';
 import Slide from '@mui/material/Slide';
 
-import { useAuth } from '../AuthContext_Handle/AuthContext';
+import { useAuth } from '../AuthContext_Handle/Auth_Context';
 import { QuizCardContext2 } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
