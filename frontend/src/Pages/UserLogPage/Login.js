@@ -149,9 +149,9 @@ function Login() {
         <div className='loginPage'>
 
             <Grid container className={classes.gridContainer} >
-                <Grid item lg={12}>
+                {/* <Grid item lg={12}>
                     <Appbar />
-                </Grid>
+                </Grid> */}
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
                 </Grid>

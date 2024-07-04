@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext, useRef } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { ThemeProvider } from '@emotion/react';
 import Stack from '@mui/material/Stack';
@@ -27,6 +28,7 @@ import QuizDialog from '../../Components/QuizzDashboard/QuizDialog';
 
 import { Box, Grid } from '@mui/material';
 import { typographyTheme } from '../../Components/Utils/TypographyTheme';
+import { useAuth } from '../../Components/AuthContext_Handle/AuthContext';
 
 export const QuizCardContext = createContext();
 export const QuizCardContext2 = createContext();
@@ -94,18 +96,22 @@ function QuizSection({ title, quizzes }) {
 }
 
 function CarExamDashboard() {
+  const {userId} = useAuth();
   const [quizSet, setQuizSet] = useState([]);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [clickedQuiz, setClickedQuiz] = useState(null);
-  console.log('IIIIID', clickedQuiz);
+
+  console.log('userId:', userId)
+
+  const navigate = useNavigate();
 
   const easyQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Easy');
   const hardQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hard');
   const hardestQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hardest');
 
 
-  const handleClickOpen = () => {
-    setDialogOpen(true);
+  const handleOpen = () => {
+    navigate(`/premium`)
   };
 
   const handleClose = () => {
@@ -113,6 +119,7 @@ function CarExamDashboard() {
   };
 
   useEffect(() => {
+
     const fetchAttempts = async () => {
       try {
         const response = await axios.get('http://localhost:3000/allquizzes');
@@ -160,7 +167,7 @@ function CarExamDashboard() {
                   </Stack>
 
                   <Button variant="contained"
-                   
+                   onClick={handleOpen}
                     endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
                     sx={{
                       display: 'flex',
