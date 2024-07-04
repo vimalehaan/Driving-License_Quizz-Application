@@ -1,69 +1,88 @@
 import React from 'react';
+import { useContext } from 'react';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Box, CardActionArea, Grid } from '@mui/material';
+import { Box, Grid, Stack } from '@mui/material';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 
-const createExamCard = (examNumber, title, image, description, rangeStart, rangeEnd) => {
-  return (
-    <Card key={examNumber} sx={{ width: 345,marginBottom:"10px",paddingBottom:"10px" }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={image}
-          alt={`Practical Test ${examNumber}`}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div" color="#323A6E" align ="left">
-            <b>{title}</b>
-          </Typography>
-          <Typography variant="body2" color="#323A6E" align ="left">
-            {description}
-          </Typography>
-        </CardContent>
-        {/* Grid for Additional Contents */}
-        <Grid container spacing={2} direction="row">
-          <Grid item xs={6}>
-            <Typography variant="body2" color="#323A6E" align ="left" marginLeft="15px">
-              <b>{`${rangeStart} - ${rangeEnd}`}</b>
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2" color="#323A6E" align ="left">
-              <b>8 Mistakes</b>
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2" color="#323A6E" align ="left" marginLeft="15px">
-              Questions
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2" color="#323A6E" align ="left">
-              Allowed to pass
-            </Typography>
-          </Grid>
-        </Grid>
-      </CardActionArea>
-    </Card>
-  );
-};
+import LockIcon from '@mui/icons-material/Lock';
+
+import { QuizCardContext } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
+import { QuizCardContext2 } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
+
 
 const ExamListE = () => {
-  const exams = [
-    createExamCard(1, 'Practical Test 1', '/images/im1.jpg', 'A great place to start as it covers the basics of driving in Ontario. Each question comes with a hint and a detailed explanation.', 1, 40),
-    createExamCard(2, 'Practical Test 2', '/images/im2.jpg', 'Questions cover roundabouts, intersections, overtaking other vehicles, and driving on highways. Two sections: Road Signs and Road Rules.', 41, 80),
-    createExamCard(3, 'Practical Test 3', '/images/im3.jpg', 'Questions cover roundabouts, intersections, overtaking other vehicles, and driving on highways. Two sections: Road Signs and Road Rules.', 81, 120),
-    createExamCard(4, 'Practical Test 4', '/images/im4.jpg', 'This test challenges you on distracted driving fines, traffic lights, maximum speed limits, cell phone use, blood alcohol levels, and more.', 121, 160),
-  ];
 
+  const { quiz } = useContext(QuizCardContext);
+  const {setClickedQuiz, setDialogOpen} = useContext(QuizCardContext2)
+
+  const handleClick = () => {
+    setClickedQuiz(quiz);
+    setDialogOpen(true);
+  };
+
+  console.log("lehaan", quiz.quizName)
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', gap: '20px', width: '80vw', overflowX: 'auto', margin: '10px' }}>
-      {exams}
+    <Box>
+
+
+      <Card
+        onClick={handleClick}
+
+        sx={{
+          width: '300px',
+          marginBottom: "10px",
+          borderRadius: '20px',
+          height: '360px',
+          transition: 'transform 0.4s, box-shadow 0.4s, margin-top 0.4s',
+          ":hover": {
+            marginTop: '-4px',
+            transform: 'scale(1)', // Enlarge the component on hover
+            zIndex: 1, // Bring the component slightly forward
+            boxShadow: '2px 4px 10px 0px rgba(0, 0, 0, 0.1)',
+          }
+        }} >
+        <CardActionArea sx={{ height: '100%' }}>
+
+          <CardMedia
+            component="img"
+            height="140"
+            image="/images/img8.jpg"
+            alt="green iguana"
+            sx={{ height: '160px', marginTop: '-20px' }}
+          />
+          <CardContent sx={{ padding: '20px 20px 0 20px' }}>
+            <Typography textAlign={'left'} fontSize={'22px'} fontWeight={600} component="div">
+              {quiz.quizName}
+            </Typography>
+            <Typography textAlign={'left'} variant="body2" color="text.secondary" sx={{ marginTop: '10px', color: '#7c7c91' }}>
+              Lizards are a widespread group of squamate reptiles, with over 6,000
+              species.
+            </Typography>
+            <Stack direction={'row'} sx={{ marginTop: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+
+              <Stack spacing={-0.5} sx={{ flexGrow: 1 }}>
+                <Typography textAlign={'left'} fontSize={'19px'} fontWeight={600} >
+                  {quiz.questions.length}
+                </Typography>
+                <Typography textAlign={'left'} fontSize={'13px'} fontWeight={500} sx={{ color: '#7c7c91' }}>
+                  Questions
+                </Typography>
+              </Stack>
+              {quiz.difficulty !== "Easy"
+                ? <LockIcon sx={{ color: '#7c7c91' }} /> : null}
+
+            </Stack>
+          </CardContent>
+        </CardActionArea>
+      </Card>
     </Box>
   );
 };
+
+
 
 export default ExamListE;

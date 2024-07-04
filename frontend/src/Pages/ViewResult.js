@@ -16,7 +16,7 @@ import QuizResultComponent from '../Components/ViewResult/QuizResultData';
 import { SpecificQuizContext } from '../Components/Utils/Contexts';
 
 function ViewResultPage() {
-    const { attemptId } = useParams();
+    const { attemptId } = useParams(); 
     const navigate = useNavigate();
 
     const [questionViewData, setQuestionViewData] = useState([]);

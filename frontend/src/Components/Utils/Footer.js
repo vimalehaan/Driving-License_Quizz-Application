@@ -5,6 +5,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
+    
     <footer style={{ width: '100%', height: '448px', position: 'relative', textAlign: 'center', padding: '100px 0 0 0', boxSizing: 'border-box', background: 'linear-gradient(180deg, #6070D4 0%, #323A6E 100%)',marginTop:'70px', color: 'white' }}>
       <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100px', borderRadius: '40%', background: 'white', transform: 'translateY(-50%)' }}></div>
 

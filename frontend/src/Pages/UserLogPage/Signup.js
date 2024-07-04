@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Typography,Snackbar, Alert} from '@mui/material';
+import { AppBar, Typography,Snackbar, Alert,Checkbox,FormControlLabel} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -46,6 +46,8 @@ function Signup() {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [termsError, setTermsError] = useState('');
 
 
     const validateEmail = (email) => {
@@ -89,6 +91,13 @@ function Signup() {
         if (firstName.trim() === '' || lastName.trim() === '') {
             // Display error message or handle as appropriate
             isValid = false;
+        }
+
+        if (!termsAccepted) {
+            setTermsError('You must accept the terms and conditions');
+            isValid = false;
+        } else {
+            setTermsError('');
         }
 
         if (isValid) {
@@ -195,6 +204,23 @@ function Signup() {
                                         helperText={confirmPasswordError}
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
+
+<FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={termsAccepted}
+                                                onChange={(e) => setTermsAccepted(e.target.checked)}
+                                                name="terms"
+                                                color="primary"
+                                            />
+                                        }
+                                        label="I accept the terms and conditions"
+                                    />
+                                    {termsError && (
+                                        <Typography color="error" variant="body2">
+                                            {termsError}
+                                        </Typography>
+                                    )}
 
                                     <Button type="submit" sx={{ borderRadius: '20px', textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
                                 </Stack>
