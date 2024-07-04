@@ -36,7 +36,7 @@ const TransactionTable = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch('http://localhost:3000/transaction');
+        const response = await fetch('http://localhost:3001/transaction');
         const data = await response.json();
         setTransactions(data);
       } catch (error) {

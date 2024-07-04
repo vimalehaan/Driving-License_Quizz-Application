@@ -1,5 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -12,25 +13,34 @@ import LockIcon from '@mui/icons-material/Lock';
 
 import { QuizCardContext } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
 import { QuizCardContext2 } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
+import { SignalCellularNullRounded } from '@mui/icons-material';
 
 
 const ExamListE = () => {
 
+  const navigate = useNavigate();
+
   const { quiz } = useContext(QuizCardContext);
-  const {setClickedQuiz, setDialogOpen} = useContext(QuizCardContext2)
+  const {setClickedQuiz, setDialogOpen, userDetail} = useContext(QuizCardContext2)
 
   const handleClick = () => {
+    
     setClickedQuiz(quiz);
     setDialogOpen(true);
   };
 
-  console.log("lehaan", quiz.quizName)
+  const handlePremiumOpen = () => {
+    navigate(`/premium`)
+  };
+
+  console.log("lehaan", quiz.difficult)
   return (
     <Box>
 
 
       <Card
-        onClick={handleClick}
+        onClick={ handleClick }
+
 
         sx={{
           width: '300px',
@@ -72,7 +82,7 @@ const ExamListE = () => {
                   Questions
                 </Typography>
               </Stack>
-              {quiz.difficulty !== "Easy"
+              {quiz.difficulty !== "Easy" && !userDetail.isPremium 
                 ? <LockIcon sx={{ color: '#7c7c91' }} /> : null}
 
             </Stack>

@@ -13,7 +13,7 @@ const Return = () => {
 
     const fetchData = async () => {
       try{
-        const response = await axios.get(`http://localhost:3000/session-status?session_id=${sessionId}`);
+        const response = await axios.get(`http://localhost:3001/session-status?session_id=${sessionId}`);
         setStatus(response.data.status);
         setCustomerEmail(response.data.customer_email);
       } catch (error) {

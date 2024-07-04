@@ -101,7 +101,7 @@ export default function ImgMediaCard() {
         }
        
         try {
-            const response = await fetch('http://localhost:3000/api/auth/updateProfile', {
+            const response = await fetch('http://localhost:3001/api/auth/profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export default function ImgMediaCard() {
           }
 
           try {
-            const response = await fetch('http://localhost:3000/api/auth/updatePassword', {
+            const response = await fetch('http://localhost:3001/api/auth/updatePassword', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

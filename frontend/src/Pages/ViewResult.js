@@ -27,7 +27,7 @@ function ViewResultPage() {
         const fetchAttempts = async () => {
             try {
                 // Make a GET request to your backend endpoint
-                const response = await axios.get(`http://localhost:3000/viewattempt/${attemptId}`); 
+                const response = await axios.get(`http://localhost:3001/viewattempt/${attemptId}`); 
                 console.log('Response from backend:', response.data);
                 // Set the fetched attempted quiz in state
                 setQuestionViewData(response.data);

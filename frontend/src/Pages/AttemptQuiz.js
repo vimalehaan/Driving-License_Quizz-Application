@@ -55,7 +55,7 @@ function AttemptQuiz() {
     useEffect(() => {
         const fetchAttempts = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/viewattempt/${attemptId}`);
+                const response = await axios.get(`http://localhost:3001/viewattempt/${attemptId}`);
                 console.log('Response from backend:', response.data);
                 setQuestionViewData(response.data);
                 setUserAnswer(Array(response.data.quiz_id.questions.length).fill(''));
@@ -99,7 +99,7 @@ function AttemptQuiz() {
             const score = calculateScore(userAnswer); // Implement this function
             const result = calculateResult(userAnswer); // Implement this function
 
-            const response = await axios.put(`http://localhost:3000/submit/${attemptId}`, {
+            const response = await axios.put(`http://localhost:3001/submit/${attemptId}`, {
                 selectedAnswers,
                 score,
                 result
@@ -310,6 +310,7 @@ function AttemptQuiz() {
                             </Box>
 
                         </Grid>
+                        
                         <Grid item lg='8' xs='8'>
                             <WhitePaper sx={{ marginTop: '30px' }}>
                                 <QuizQuestions />

@@ -25,7 +25,10 @@ import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
 import FileUploadSample from './FileUpload';
 import PremiumAd from './Pages/PremiumAdPage';
+import TransactionTable from './Components/TransactionLog/transaction-table';
 import Certificate from './Pages/CertificatePage/Certificatepage';
+import InvoiceTemplate from './Components/Invoice/Invoice';
+import Invoice from './Pages/InvoicePage/Invoice';
 
 import DummyPage from './Pages/Dummy';
 import ProtectedRoute from './Components/Utils/ProtectedRoutes';
@@ -57,6 +60,11 @@ function RouteMain() {
                                 <Route path="/quiz/:attemptId" element={<AttemptQuiz />} />
                                 <Route path="/upload" element={<FileUploadSample />} />
                                 <Route path="/premium" element={<PremiumAd />} />
+                                <Route path="/transaction" element={<TransactionTable />} />
+                                <Route path="/invoicetemp" element={<InvoiceTemplate />} />
+                                <Route path="/invoice" element={<Invoice />} />
+
+                                
                             </>
                         ) : userRole === 'admin' ? (
                             <>

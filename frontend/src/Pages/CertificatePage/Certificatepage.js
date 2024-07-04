@@ -21,13 +21,13 @@ const Certificate = ({ recipientName, courseName, completionDate, recipientEmail
     const handleGeneratePDF = async () => {
         try {
             const data = { recipientName, courseName, completionDate,recipientEmail };
-            await axios.post("http://localhost:5000/certificates/generate/pdf", data);
+            await axios.post("http://localhost:3001/certificates/generate/pdf", data);
 
-            const getPdf = await axios.get("http://localhost:5000/certificates/fetch/pdf", { responseType: "blob" });
+            const getPdf = await axios.get("http://localhost:3001/certificates/fetch/pdf", { responseType: "blob" });
             const pdfBlob = new Blob([getPdf.data], { type: 'application/pdf' });
             saveAs(pdfBlob, "Certificate.pdf");
 
-            await axios.post("http://localhost:5000/certificates/send/pdf", { recipientEmail });
+            await axios.post("http://localhost:3001/certificates/send/pdf", { recipientEmail });
 
         } catch (error) {
             console.error('Error handling PDF:', error);
