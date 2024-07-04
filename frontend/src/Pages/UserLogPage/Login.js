@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 // import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 // import Cookies from 'js-cookie';
+
 
 import { AppBar, Typography, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -49,7 +51,7 @@ function Login() {
     const [passwordError, setPasswordError] = useState('');
     const [successOpen, setSuccessOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
-  
+
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -92,12 +94,10 @@ function Login() {
                     password
                 });
 
+
                 if (response.data.data.accessToken) {
-                    localStorage.setItem('auth-token', response.data.data.accessToken, {
-                        expires: 1, // 1 day
-                        secure: true,
-                        sameSite: 'Strict'
-                    });
+                    localStorage.setItem("token", response.data.data.accessToken)
+                    console.log(response.data.data.accessToken);
                     login(response.data.data.accessToken)
                     // setIsAuthenticated(true);
                 }
@@ -117,7 +117,15 @@ function Login() {
                        }
                 }
 
-               
+
+                    const userToken = localStorage.getItem("token");
+                    console.log("userToken----", userToken)
+                }
+
+                else {
+                    console.error('No token received');
+                    setErrorOpen(true);
+                }
             } catch (error) {
                 console.error('Error logging in:', error);
                 setErrorOpen(true);

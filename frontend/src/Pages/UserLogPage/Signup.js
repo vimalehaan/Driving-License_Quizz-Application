@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { AppBar, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { AppBar, Typography,Snackbar, Alert,Checkbox,FormControlLabel} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -21,6 +22,7 @@ import axios from 'axios';
 function Signup() {
 
     const classes = useStyle();
+    const navigate = useNavigate();
 
     const outerTheme = createTheme({
         palette: {
@@ -42,6 +44,11 @@ function Signup() {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [termsError, setTermsError] = useState('');
+
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -86,6 +93,13 @@ function Signup() {
             isValid = false;
         }
 
+        if (!termsAccepted) {
+            setTermsError('You must accept the terms and conditions');
+            isValid = false;
+        } else {
+            setTermsError('');
+        }
+
         if (isValid) {
 
             try {
@@ -96,13 +110,27 @@ function Signup() {
                     password,
                 });
                 console.log('User registered successfully:', response.data);
-                // Handle successful registration, e.g., navigate to login page or show a success message
+                navigate('/login');
+
             } catch (error) {
-                console.error('Error registering user:', error);
-                // Handle error, e.g., show an error message
+                if (error.response && error.response.data.message === 'user_exists_social_auth') {
+                    console.error('User already exists with social account');
+                    setAlertMessage('User already exists with social account');
+                    setErrorOpen(true);
+                } else {
+                    console.error('Error registering user:', error);
+                    setErrorOpen(true);
+                }
             }
         }
 
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorOpen(false);
     };
 
 
@@ -177,6 +205,23 @@ function Signup() {
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
+<FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={termsAccepted}
+                                                onChange={(e) => setTermsAccepted(e.target.checked)}
+                                                name="terms"
+                                                color="primary"
+                                            />
+                                        }
+                                        label="I accept the terms and conditions"
+                                    />
+                                    {termsError && (
+                                        <Typography color="error" variant="body2">
+                                            {termsError}
+                                        </Typography>
+                                    )}
+
                                     <Button type="submit" sx={{ borderRadius: '20px', textTransform: 'none' }} className={classes.signButton} variant="contained" color='secondary'>Sign up</Button>
                                 </Stack>
                             </form>
@@ -195,6 +240,12 @@ function Signup() {
                     </ThemeProvider>
                 </Grid>
             </Grid>
+
+            <Snackbar open={errorOpen} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                User already exists with social account
+                </Alert>
+            </Snackbar>
 
         </div>
     );

@@ -24,7 +24,7 @@ const CertificateTemplate = ({ recipientName, courseName, completionDate }) => {
         </div>
         <div className="center-section">
           <div className="seal">
-            <img src="../images/seal.webp" alt="Seal" />
+            <img src="../images/seal.png" alt="Seal" />
           </div>
         </div>
         <div className="right-section">
