@@ -148,7 +148,7 @@ function SocialSignIn() {
 
                                             <Button
                                                 onClick={() => openGoogleWindow()}
-                                                sx={{ borderRadius: '20px', textTransform: 'none', color: '#323A6', fontSize: '16px', fontFamily: 'Inter, sans-serif' }}
+                                                sx={{ borderRadius: '20px', textTransform: 'none', color: '#323A6', fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
                                                 className={classes.signButton}
                                                 variant="contained"
                                                 color='secondary'
