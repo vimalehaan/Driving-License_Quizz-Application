@@ -89,40 +89,24 @@ function Login() {
 
         if (isValid) {
             try {
-                const response = await axios.post('http://localhost:3000/api/auth/password', {
-                    email,
-                    password
-                });
-
+                const response = await axios.post('http://localhost:3000/api/auth/password', { email, password });
 
                 if (response.data.data.accessToken) {
-                    localStorage.setItem("token", response.data.data.accessToken)
-                    console.log(response.data.data.accessToken);
-                    login(response.data.data.accessToken)
-                    // setIsAuthenticated(true);
-                }
+                    const token = response.data.data.accessToken;
+                    localStorage.setItem("token", token);
+                    login(token);
 
-                const userToken = localStorage.getItem('auth-token');
-                const decodedToken = jwtDecode(userToken);
-                const userID = decodedToken.userId;
+                    const decodedToken = jwtDecode(token);
+                    const userID = decodedToken.userId;
 
-                console.log("userToken:::::::",userToken)
-                console.log(decodedToken.userID)
-
-                if(isAuthenticated){
-                    if(decodedToken.userRole === "user"){
-                        navigate('/carexamdb');
-                       } else if (decodedToken.userRole = "admin"){
-                        navigate('/addTest');
-                       }
-                }
-
-
-                    const userToken = localStorage.getItem("token");
-                    console.log("userToken----", userToken)
-                }
-
-                else {
+                    if (isAuthenticated) {
+                        if (decodedToken.userRole === "user") {
+                            navigate('/carexamdb');
+                        } else if (decodedToken.userRole === "admin") {
+                            navigate('/addTest');
+                        }
+                    }
+                } else {
                     console.error('No token received');
                     setErrorOpen(true);
                 }

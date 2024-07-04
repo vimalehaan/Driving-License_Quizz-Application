@@ -39,7 +39,7 @@ const ExamListE = () => {
           height: '360px',
           transition: 'transform 0.4s, box-shadow 0.4s, margin-top 0.4s',
           ":hover": {
-            marginTop: '-10px',
+            marginTop: '-4px',
             transform: 'scale(1)', // Enlarge the component on hover
             zIndex: 1, // Bring the component slightly forward
             boxShadow: '2px 4px 10px 0px rgba(0, 0, 0, 0.1)',
