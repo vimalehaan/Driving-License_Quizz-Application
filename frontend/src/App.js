@@ -3,6 +3,8 @@ import './App.css';
 import Quizdashboard from './Components/Admin/AddQuestion.js/quizDashboard'
 import ViewQuestions from './Pages/AdminPage/ViewQuestions'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import AddTest from './Pages/AdminPage/AddTest';
 import QuestionTextField from './Components/Admin/QuestionTextField';
 import TestIdComponent from './Components/Admin/TestIDContainer';
@@ -13,6 +15,7 @@ import UserProfilePage from './Pages/UserProfile'
 import BasicPie from './Components/UserProfile/PieChart';
 import PassRatioChart from './Components/UserProfile/PassRatioChart';
 import StickyHeadTable from './Components/UserProfile/ExamTable';
+import UserActivityLogPage from './Pages/UserActivityLogPage/UserActivityLogPage';
 import ViewResultPage from './Pages/ViewResult';
 import CheckoutForm from './Components/Payment/CheckoutForm';
 import Return from './Components/Payment/Return';
@@ -21,15 +24,19 @@ import SocialSignIn from './Pages/UserLogPage/SocialSignIn';
 import Signup from './Pages/UserLogPage/Signup';
 import ResetPassword from './Pages/UserLogPage/ResetPassword';
 import AttemptQuiz from './Pages/AttemptQuiz';
+import TransactionTable from './Components/TransactionLog/transaction-table';
 import FileUploadSample from './FileUpload';
-import Certificate from './Pages/CertificatePage/Certificatepage';
+import Certificatepage from './Pages/CertificatePage/Certificatepage';
+import Invoice from './Pages/InvoicePage/Invoice';
 
 function App() {
   return (
     <div className="App">
 
-    <Router>
-      <Routes>
+    
+    <GoogleOAuthProvider clientId="345006772496-uvo2kh85h9sn1g4pef686hgv180re52c">
+      <Router>
+        <Routes>
         <Route exact path="/login" element={<Login/>}/>
         <Route exact path="/social-login" element={<SocialSignIn/>}></Route>
         <Route exact path="/signup" element={<Signup/>}></Route>
@@ -48,10 +55,16 @@ function App() {
         <Route path="/quiz" element={<AttemptQuiz />} />
         <Route path="/questions" element={<ViewQuestions />} />
         <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+        <Route path="/transaction" element={<TransactionTable />} />
         <Route path="/upload" element={<FileUploadSample />} />
+        <Route path="/activitylog" element={<UserActivityLogPage />} />
+        <Route path="/invoice" element={<Invoice />} />
+        <Route path="/certificates" element={<Certificatepage /> } />
 
       </Routes>
     </Router>
+    </GoogleOAuthProvider>
+
     </div>
   );
 }

@@ -55,8 +55,15 @@ export default function ImgMediaCard() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const [newFirstName, setNewFirstName] = useState(firstName);
+    const [newLastName, setNewLastName] = useState(lastName);
+    const [newEmail, setNewEmail] = useState(email);
+
 
     const handleEditClickOpen = () => {
+        setNewFirstName(firstName);
+        setNewLastName(lastName);
+        setNewEmail(email);
         setEditOpen(true);
     };
 
@@ -77,18 +84,34 @@ export default function ImgMediaCard() {
     };
 
     const handleSave = () => {
+
+        if (newFirstName.trim() === '' || newLastName.trim() === '' || newEmail.trim() === '') {
+            alert("All fields are required");
+            return;
+        }
+        // Assuming here is an API call to save the data
+        // saveProfile(newFirstName, newLastName, newEmail, profilePicture)
+        setFirstName(newFirstName);
+        setLastName(newLastName);
+        setEmail(newEmail);
         // Save changes logic here
         setFirstName(tempFirstName);
         setLastName(tempLastName);
+
         handleClose();
     };
 
     const handlePasswordSave = () => {
+        if (currentPassword.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+            alert("All fields are required");
+            return;
+        }
         if (newPassword !== confirmPassword) {
             alert("New password and confirm password do not match");
             return;
         }
-        // Save password change logic here
+        // Assuming here is an API call to save the new password
+        // changePassword(currentPassword, newPassword)
         handleClose();
     };
 
