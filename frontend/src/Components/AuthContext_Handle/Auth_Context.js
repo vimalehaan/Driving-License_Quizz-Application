@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 
-
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -11,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('auth-token');
+    const token = localStorage.getItem('token');
     console.log("Token in useEffect:", token);
     if (token) {
       setIsAuthenticated(true);
@@ -28,7 +27,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = (token) => {
     console.log("Logging in with token:", token);
-    localStorage.setItem('auth-token', token, { expires: 1 }); // Set cookie for 1 day
     setIsAuthenticated(true);
     const decodedToken = jwtDecode(token);
       setUserRole(decodedToken.userId);
@@ -37,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     console.log("Logging out");
-    localStorage.remove('auth-token');
+    localStorage.remove('token');
     setIsAuthenticated(false);
     setUserRole(null);
   };

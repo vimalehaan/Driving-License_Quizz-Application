@@ -34,6 +34,7 @@ export const QuizCardContext = createContext();
 export const QuizCardContext2 = createContext();
 
 
+
 function QuizSection({ title, quizzes }) {
   const scrollRef = useRef(null);
   const cardWidth = 300; // Set the card width to your card's actual width
@@ -99,6 +100,8 @@ function QuizSection({ title, quizzes }) {
 function CarExamDashboard() {
   const {userId} = useAuth();
   const [quizSet, setQuizSet] = useState([]);
+  const [userDetail, setUserDetail] = useState({});
+
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [clickedQuiz, setClickedQuiz] = useState(null);
 
@@ -121,16 +124,31 @@ function CarExamDashboard() {
 
   useEffect(() => {
 
-    const fetchAttempts = async () => {
+    const fetchQuizzes = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/allquizzes');
-        console.log('Response from backend:', response.data);
-        setQuizSet(response.data);
+        const [response1, response2] = await Promise.all([
+          axios.get(`http://localhost:3000/user/${userId}`),
+          axios.get('http://localhost:3000/allquizzes')
+        ]);
+        setQuizSet(response2.data);
+        setUserDetail(response1.data);
+        console.log('First API response:', userDetail);
+        console.log('Second API response:', response2.data);
       } catch (error) {
-        console.error('Error fetching attempted quizzes:', error);
+        console.error('Error:', error);
       }
-    };
-    fetchAttempts();
+    }
+
+    // const fetchQuizze = async () => {
+    //   try {
+    //     const response = await axios.get('http://localhost:3000/allquizzes');
+    //     console.log('Response from backend:', response.data);
+    //     setQuizSet(response.data);
+    //   } catch (error) {
+    //     console.error('Error fetching attempted quizzes:', error);
+    //   }
+    // };
+    fetchQuizzes();
   }, []);
 
 
@@ -167,6 +185,7 @@ function CarExamDashboard() {
 
                   </Stack>
 
+                  {!userDetail.isPremium ? 
                   <Button variant="contained"
                    onClick={handleOpen}
                     endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
@@ -188,6 +207,9 @@ function CarExamDashboard() {
                       }
                     }}> Get full access now
                   </Button>
+                  : null
+                }
+
                 </Box>
 
                 

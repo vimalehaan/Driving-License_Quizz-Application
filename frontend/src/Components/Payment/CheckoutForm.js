@@ -1,32 +1,32 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { loadStripe } from '@stripe/stripe-js';
+
+
 import {
   EmbeddedCheckoutProvider,
   EmbeddedCheckout
 } from '@stripe/react-stripe-js';
 
-import { jwtDecode } from "jwt-decode";
+import styled from 'styled-components';
 
 import Return from "./Return";
 
-
 const stripePromise = loadStripe("pk_test_51P0HbhKqUCwilBKS4TxXgjQwtEn6vXTEmsyIEKLUSrcfGADWKkl27RZErtHgD4zpJmoXSWZH6HJaBNKl95nytOlA0087HAynlO");
 
-// const userToken=localStorage.getItem("token");
-// const decoded = jwtDecode(userToken);
-// console.log(decoded?.userId);
+const CheckoutWrapper = styled.div`
+  /* background: black; */
+`;
+
+const EmbeddedCheckoutStyled = styled(EmbeddedCheckout)`
+  background: none !important;
+`;
 
 const CheckoutForm = () => {
-
   const [checkoutComplete, setCheckoutComplete] = useState(false);
 
-
   useEffect(() => {
-    // Check if checkout is complete
-    // You may have your own logic to determine when the checkout is complete
     if (checkoutComplete) {
       console.log("Checkout complete");
-      // Call backend webhook when checkout is complete
       callBackendWebhook();
     }
   }, [checkoutComplete]);
@@ -38,7 +38,6 @@ const CheckoutForm = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ priceId: 'price_1PSMbQKqUCwilBKSPpH3pfJt' }),
-      
     })
       .then((res) => res.json())
       .then((data) => {
@@ -63,26 +62,25 @@ const CheckoutForm = () => {
       console.log("Backend webhook called successfully");
     } catch (error) {
       console.error("Error calling backend webhook:", error.message);
-      // Handle error as needed (e.g., show error message to user)
     }
   };
 
   const handlePaymentComplete = () => {
-    setCheckoutComplete(true); // Trigger checkout completion when payment is successful
+    setCheckoutComplete(true);
   };
 
   return (
     <div>
-      <div id="checkout">
+      <CheckoutWrapper id="checkout" style={{background: 'transparent'}}>
         <EmbeddedCheckoutProvider
           stripe={stripePromise}
           options={options}
         >
-          <EmbeddedCheckout
-            onPayment={handlePaymentComplete} // Call handlePaymentComplete when payment is successful
+          <EmbeddedCheckoutStyled
+            onPayment={handlePaymentComplete}
           />
         </EmbeddedCheckoutProvider>
-      </div>
+      </CheckoutWrapper>
     </div>
   );
 };
