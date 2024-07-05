@@ -18,7 +18,8 @@ import { handleButtonClick } from "../../Components/Admin/Switch_Q&AField";
 import { TopButton_Difficulty, TopButton_Tests } from "../../Components/Admin/TopButtons";
 import SideBar from "../../Components/Admin/SideBar";
 import { typographyTheme } from "../../Components/Utils/TypographyTheme";
-
+import UserSideBar from "../../Components/UserProfile/UserSideBar";
+import AdminNavBar from "../../Components/Utils/AdminNavBar";
 
 export const rerenderContext = createContext();
 export const imageHandleContext = createContext();
@@ -62,11 +63,11 @@ function AddTest() {
   const matches = useMediaQuery(theme.breakpoints.not('md'));
 
   return (
-    <div>
+    <div style={{backgroundColor: 'white', height: '100vh'}}>
       <ThemeProvider theme={typographyTheme}>
         <rerenderContext.Provider value={(handleRefresh)}>
           <imageHandleContext.Provider value={{ image, setImage, preview, setPreview }}>
-
+    <AdminNavBar />
             <Container
               maxWidth={false}
               sx={{
@@ -76,7 +77,8 @@ function AddTest() {
               }}>
 
               <Box sx={{ display: 'flex' }}>
-                <SideBar />
+                {/* <SideBar /> */}
+                {/* <UserSideBar /> */}
 
                 <Box
                   component="main"
@@ -140,6 +142,33 @@ function AddTest() {
                             startIcon={<AddCircleOutlinedIcon />}>
                             <Typography fontSize={matches ? '15px' : '13px'}>Answers</Typography>
                           </CusBigButton>
+
+
+                        </Stack>
+
+                      </Item>
+                      <Item elevation={0}
+                        sx={{
+                          height: "90px",
+                          justifyContent: "center",
+                          marginTop: '100px'
+                        }}
+                      >
+
+                        <Stack
+                          direction={matches ? "column" : "row"}
+                          spacing={matches ? 3 : 1}
+                          sx={{ width: "100%", alignItems: "center" }}>
+
+                          <CusBigButton variant="outlined"
+                            disableTouchRipple
+                            clicked={activeButton['addQuestions']}
+                           href="/questions"
+                            >
+                            <Typography fontSize={matches ? '15px' : '13px'}>View Questions</Typography>
+                          </CusBigButton>
+
+                          
 
 
                         </Stack>

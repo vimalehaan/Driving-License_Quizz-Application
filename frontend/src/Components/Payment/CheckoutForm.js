@@ -1,7 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { loadStripe } from '@stripe/stripe-js';
 
 import { jwtDecode } from "jwt-decode";
+
+import NavBarTop from "../Utils/NavBarTop";
 
 
 
@@ -26,6 +29,7 @@ const EmbeddedCheckoutStyled = styled(EmbeddedCheckout)`
 
 const CheckoutForm = () => {
   const [checkoutComplete, setCheckoutComplete] = useState(false);
+  const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
@@ -65,7 +69,7 @@ const CheckoutForm = () => {
         },
         body: JSON.stringify({ checkoutComplete }),
       });
-      if (!response.ok) {
+       if (!response.ok) {
         throw new Error("Failed to call backend webhook");
       }
       console.log("Backend webhook called successfully");
@@ -80,6 +84,7 @@ const CheckoutForm = () => {
 
   return (
     <div>
+      <NavBarTop />
       <CheckoutWrapper id="checkout" style={{ background: 'transparent' }}>
         <EmbeddedCheckoutProvider
           stripe={stripePromise}

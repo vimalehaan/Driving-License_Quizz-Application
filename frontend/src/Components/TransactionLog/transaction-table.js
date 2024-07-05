@@ -20,7 +20,10 @@ import TransactionGraph from './TransactionGraph';
 import SideBar from '../Admin/SideBar';
 import { WhitePaper } from '../Utils/StyledComponents';
 
+import AdminNavBar from '../Utils/AdminNavBar';
+
 import VerifiedIcon from '@mui/icons-material/Verified';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -90,13 +93,13 @@ const TransactionTable = () => {
 
   return (
     <div style={{ height: '100vh', overflow: 'hidden' }}>
-
+<AdminNavBar />
 
       <Container sx={{ justifyContent: 'center', marginTop: '150px' }}>
 
 
 
-        <SideBar />
+       
 
         <Grid
           container
@@ -104,7 +107,7 @@ const TransactionTable = () => {
           justifyContent="center"
           alignItems="flex-start"
           spacing={3}
-          sx={{ marginLeft: '50px' }}
+          sx={{ }}
         >
           <Grid item lg={3} xs={3}>
 

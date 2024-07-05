@@ -161,7 +161,7 @@ function PremiumAd() {
                     </>
                 ) : (
 
-                    <Grid lg={12} xs={12}  sx={{ zIndex: 1, marginTop: '50px' }}>
+                    <Grid lg={12} xs={12}  sx={{ zIndex: 1, marginTop: '150px' }}>
                         <CheckoutForm />
                     </Grid>
 

@@ -4,6 +4,8 @@ import "./Invoice.css";
 import ReactToPrint from 'react-to-print';
 
 import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+
 
 
 
@@ -76,7 +78,7 @@ function InvoiceTemplate(props) {
 
                     <tr className="item">
                         <td>Premium Full Access</td>
-                        <td>{props.transaction.amountTotal/100} CAD</td>
+                        <td>{props.transaction.amountTotal} CAD</td>
                     </tr>
 
                     {/* <tr className="item">
@@ -91,15 +93,24 @@ function InvoiceTemplate(props) {
 
                     <tr className="total">
                         <td></td>
-                        <td>Total: {props.transaction.amountTotal/100} CAD</td>
+                        <td>Total: {props.transaction.amountTotal} CAD</td>
                     </tr>
                 </table>
             </div>
             <ReactToPrint
-                trigger={() => <button>Download</button>}
+                trigger={() => <Button sx={{ color: 'white', backgroundColor: '#6070d4', borderRadius:" 20px", 
+                    ":hover":{
+                        color: 'white', backgroundColor: '#6070d4'
+                    }
+                }}>Download</Button>}
                 content={() => ref.current}
                 documentTitle={`INVOICE ${props.encodedNumber}`}
             />
+            <Button href='/carexamdb' sx={{ color: 'white', backgroundColor: '#6070d4', borderRadius:" 20px", marginLeft: '10px',
+                    ":hover":{
+                        color: 'white', backgroundColor: '#6070d4'
+                    }
+                }}>Go to Home</Button>
         </>
     );
 };
