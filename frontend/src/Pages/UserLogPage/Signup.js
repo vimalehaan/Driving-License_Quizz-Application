@@ -103,7 +103,7 @@ function Signup() {
         if (isValid) {
 
             try {
-                const response = await axios.post('http://localhost:3000/api/auth/create', {
+                const response = await axios.post('http://localhost:3001/api/auth/create', {
                     firstName,
                     lastName,
                     email,
@@ -131,6 +131,10 @@ function Signup() {
             return;
         }
         setErrorOpen(false);
+    };
+
+    const handleLoginLinkClick = () => {
+        navigate('/login');
     };
 
 
@@ -205,7 +209,7 @@ function Signup() {
                                         InputProps={{ sx: { borderRadius: '20px' } }}
                                     />
 
-<FormControlLabel
+                                    <FormControlLabel
                                         control={
                                             <Checkbox
                                                 checked={termsAccepted}
@@ -226,7 +230,7 @@ function Signup() {
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
-                                Already have an account? <Link href="#" underline="none" color='#09BCE0'> {'Login'} </Link>
+                                Already have an account? <Link href="#" underline="none" color='#09BCE0' onClick={handleLoginLinkClick}> {'Login'} </Link>
                             </Typography> <br />
                             <Divider className={classes.divider} > or </Divider><br />
                             <Stack direction={'row'} spacing={1.5} marginTop={-1} >
