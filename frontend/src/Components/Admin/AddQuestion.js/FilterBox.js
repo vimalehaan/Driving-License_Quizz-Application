@@ -131,8 +131,8 @@ const DataTable = () => {
       headerName: 'Questions',
       width: 500,
     },
-    { field: 'difficulty', headerName: 'Difficulty', width: 100 },
-    { field: 'questionType', headerName: 'Question Type', width: 140 }
+    { field: 'difficulty', headerName: 'Difficulty', width: 90 },
+    { field: 'questionType', headerName: 'Question Type', width: 150 }
   ];
 
   return (
