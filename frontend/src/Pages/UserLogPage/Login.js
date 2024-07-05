@@ -89,7 +89,7 @@ function Login() {
 
         if (isValid) {
             try {
-                const response = await axios.post('http://localhost:3000/api/auth/password', { email, password });
+                const response = await axios.post('http://localhost:3001/api/auth/password', { email, password });
 
                 if (response.data.data.accessToken) {
                     const token = response.data.data.accessToken;

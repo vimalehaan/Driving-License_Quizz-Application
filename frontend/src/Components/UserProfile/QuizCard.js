@@ -45,6 +45,7 @@ function QuizCard() {
         sx={{
             // backgroundColor:
             height: '160px',
+            width: '285px',
             padding: '0px',
             backgroundImage: data.result ? 'url("./Images/circle-check-regular.png")' : 'url("./Images/circle-xmark-regular.png")',
             backgroundColor: data.result ? '#fcfffa' : '#fffafa',

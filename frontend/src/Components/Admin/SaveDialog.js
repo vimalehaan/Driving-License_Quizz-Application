@@ -88,7 +88,7 @@ export default function CustomizedDialogs({ state, setOpen }) {
       console.log(data);
 
       const res = await axios.post(
-        'http://localhost:3000/questions/createQuestion',
+        'http://localhost:3001/questions/createQuestion',
         data,
         {
           headers: {

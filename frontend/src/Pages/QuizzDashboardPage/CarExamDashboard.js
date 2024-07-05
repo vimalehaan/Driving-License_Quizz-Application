@@ -114,7 +114,7 @@ function CarExamDashboard() {
   const hardestQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hardest');
 
 
-  const handleOpen = () => {
+  const handlePremiumOpen = () => {
     navigate(`/premium`)
   };
 
@@ -127,8 +127,8 @@ function CarExamDashboard() {
     const fetchQuizzes = async () => {
       try {
         const [response1, response2] = await Promise.all([
-          axios.get(`http://localhost:3000/user/${userId}`),
-          axios.get('http://localhost:3000/allquizzes')
+          axios.get(`http://localhost:3001/user/${userId}`),
+          axios.get('http://localhost:3001/allquizzes')
         ]);
         setQuizSet(response2.data);
         setUserDetail(response1.data);
@@ -138,19 +138,8 @@ function CarExamDashboard() {
         console.error('Error:', error);
       }
     }
-
-    // const fetchQuizze = async () => {
-    //   try {
-    //     const response = await axios.get('http://localhost:3000/allquizzes');
-    //     console.log('Response from backend:', response.data);
-    //     setQuizSet(response.data);
-    //   } catch (error) {
-    //     console.error('Error fetching attempted quizzes:', error);
-    //   }
-    // };
     fetchQuizzes();
   }, []);
-
 
 
   return (
@@ -159,7 +148,7 @@ function CarExamDashboard() {
 
 
 
-        {/* <NavBarTop /> */}
+        <NavBarTop />
 
 
         <Container sx={{}}>
@@ -187,7 +176,7 @@ function CarExamDashboard() {
 
                   {!userDetail.isPremium ? 
                   <Button variant="contained"
-                   onClick={handleOpen}
+                   onClick={handlePremiumOpen}
                     endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
                     sx={{
                       display: 'flex',
@@ -220,13 +209,17 @@ function CarExamDashboard() {
 
               <Grid Item lg={12} xs={12} spacing={2} sx={{ marginTop: '20px' }}>
 
-                <QuizCardContext2.Provider value={ {clickedQuiz, setClickedQuiz, setDialogOpen} }>
+                <QuizCardContext2.Provider value={ {clickedQuiz, setClickedQuiz, setDialogOpen, userDetail} }>
                   <QuizSection title="Easy" quizzes={easyQuizzes} />
                   <QuizSection title="Hard" quizzes={hardQuizzes} />
                   <QuizSection title="Hardest" quizzes={hardestQuizzes} />
 
-                  <QuizDialog open={dialogOpen} close={handleClose} />
+                  <QuizDialog 
+                  // open= {!userDetail.isPremium && dialogOpen && clickedQuiz.difficulty === 'Easy' ? dialogOpen : false}
+                  open={dialogOpen}
+                  close={handleClose} />
                 </QuizCardContext2.Provider>
+                
 
               </Grid>
 

@@ -25,30 +25,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const MotionTypography = motion(Typography);
 
 export default function QuizDialog({ open, close }) {
-    const {userId} = useAuth();
+    const { userId } = useAuth();
 
-    const { clickedQuiz } = useContext(QuizCardContext2);
+    const { clickedQuiz, userDetail } = useContext(QuizCardContext2);
     const navigate = useNavigate();
     // console.log(clickedQuiz.quizName)
 
     const handleClick = async () => {
         // View result logic here
-        try {
-            // const candidateId = 'candidate123'; // Replace with actual candidate ID
-            // const quizId = '6671c33dcd37ec7c5280c9b1'; // Replace with actual quiz ID
-            // const attemptId = 'your_attempt_id'; // Replace with the actual attempt ID
 
-            const response = await axios.post(`http://localhost:3000/newattempt`, {
-                candidate_id: userId,
-                quiz_id: clickedQuiz._id
-            });
+        if (clickedQuiz && clickedQuiz.difficulty !== 'Easy' && !userDetail.isPremium) {
+            navigate(`/premium`);
+        }
+        else {
+            try {
+                const response = await axios.post(`http://localhost:3001/newattempt`, {
+                    candidate_id: userId,
+                    quiz_id: clickedQuiz._id
+                });
 
-            const attemptId = response.data._id;
-            navigate(`/quiz/${attemptId}`);
+                const attemptId = response.data._id;
+                navigate(`/quiz/${attemptId}`);
 
-        } catch (error) {
-            console.error('Error submitting answers:', error);
+            } catch (error) {
+                console.error('Error submitting answers:', error);
 
+            }
         }
 
 
@@ -227,7 +229,10 @@ export default function QuizDialog({ open, close }) {
                             backgroundColor: '#6070D4',
 
                         }
-                    }}>Attempt Quiz</Button>
+                    }}>
+                        {clickedQuiz && clickedQuiz.difficulty !== 'Easy' && !userDetail.isPremium ? 'Get Premium' : 'Attempt Quiz'}
+
+                    </Button>
 
                 </DialogActions>
             </Dialog>
