@@ -12,11 +12,7 @@ function ViewQuestions() {
       <SideBar/>         
 
         <Container/>
-     
-   
-      
-     
-
+    
     </div>
   )
 }
