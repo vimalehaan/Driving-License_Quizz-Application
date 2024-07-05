@@ -11,13 +11,13 @@ export default function FixedContainer() {
       <CssBaseline />
       <Container fixed>
 
-      <Box sx={{ bgcolor: '#F0F2F7', height: '100%' , marginLeft : '90px', marginTop:'15px'}} >
-        
-        <ComboBox/>
-       
-    </Box>
- 
-    
+        <Box sx={{ bgcolor: '#F0F2F7', height: '100%', marginLeft: '90px', marginTop: '15px' }} >
+
+          <ComboBox />
+
+        </Box>
+
+
       </Container>
     </React.Fragment>
   );

@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { delay, motion } from "framer-motion";
+
 
 import Container from '@mui/material/Container';
 import { Button, Grid, Paper, Slide } from "@mui/material";
@@ -217,9 +219,10 @@ function AttemptQuiz() {
                     width: '1100px',
                     marginTop: '50px'
                 }}>
+                   
                 <Grid container spacing={"20px"}>
                     <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex, userAnswer, setUserAnswer, open, setOpen, timeLeft, setTimeLeft, }}>
-                        <Grid item lg='4' xs='4' sx={{border: '1px solid black'}}>
+                        <Grid item lg='4' xs='4' sx={{}}>
                             <WhitePaper sx={{ marginTop: '30px', maxWidth: '82%', }}>
                                 <QuizQuestionButtons />
                                 <Box sx={{ marginTop: '10px', display: 'flex', alignItems: 'start', }}>
@@ -313,8 +316,8 @@ function AttemptQuiz() {
 
                         </Grid>
                         
-                        <Grid item lg='8' xs='8'>
-                            <WhitePaper sx={{ marginTop: '30px', maxWidth: '93%' }}>
+                        <Grid item lg='8' xs='8' sx={{zindex: 2}}>
+                            <WhitePaper sx={{ marginTop: '30px', maxWidth: '93%', zindex: 2 }}>
                                 <QuizQuestions />
                             </WhitePaper>
                         </Grid>
