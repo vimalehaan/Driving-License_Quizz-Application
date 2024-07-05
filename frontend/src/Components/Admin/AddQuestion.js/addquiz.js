@@ -37,7 +37,7 @@ const AddQuiz = ({ state, setOpen, selectedRows }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/quiz/createQuiz', data, {
+      const response = await axios.post('http://localhost:3001/quiz/createQuiz', data, {
         headers: {
           'Content-Type': 'application/json',
         },
