@@ -11,12 +11,22 @@ import '../../App.css';
 
 const Certificate = ({ recipientName, courseName, completionDate, recipientEmail }) => {
     const [certificateAppeared, setCertificateAppeared] = useState(false);
-    
+    const [attemptDetails, setAttemptDetails] = useState(null);
+
     const componentRef = useRef();
 
     useEffect(() => {
-        setCertificateAppeared(true);
-    }, []);
+        const fetchAttemptDetails = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/attempts?email=${recipientEmail}`);
+                setAttemptDetails(response.data);
+            } catch (error) {
+                console.error('Error fetching attempt details:', error);
+            }
+        };
+
+        fetchAttemptDetails();
+    }, [recipientEmail]);
 
     // Function to handle PDF generation and sending to backend
     const handleGeneratePDF = async () => {
