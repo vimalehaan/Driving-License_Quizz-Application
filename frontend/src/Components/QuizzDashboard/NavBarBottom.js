@@ -1,24 +1,69 @@
-import React from 'react';
-import { AppBar, Toolbar, Button } from '@mui/material';
+import React, { useContext } from 'react';
+import { Button, Box, Stack } from '@mui/material';
+
 // import { Link } from 'react-router-dom';
+import { ToggleContentContext } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
 
 const NavBarBottom = () => {
+  const { isCarOpen, isCommercialOpen, setIsCarOpen, setIsCommercialOpen } = useContext(ToggleContentContext);
+
+  const handleCarClick = () => {
+    setIsCarOpen(true);
+    setIsCommercialOpen(false);
+  };
+
+  const handleCommercialClick = () => {
+    setIsCarOpen(false);
+    setIsCommercialOpen(true);
+  };
+
   return (
-    <AppBar position="static" sx={{ marginTop: '30px', height: '43px', backgroundColor: "white", boxShadow: "none" }}>
-      <Toolbar sx={{ backgroundColor: "#F0F2F7", justifyContent: 'space-around', lineHeight: '10px', marginX: 'auto', borderRadius: '99px', marginBottom: '200px', width: '500px' }}>
-        <div className="exam-links">
-          <Button  variant="text" color="inherit" sx={{ marginRight: 2, color: 'rgba(50, 58, 110, 0.5)', '&:hover': { backgroundColor: '#6070D4', color: 'white' } }}>
+
+
+    <div className="exam-links" style={{display: 'flex', justifyContent: 'center'}}>
+      
+      <Box sx={{borderRadius: '20px', backgroundColor: '#e3e3e8', height: '42px', width: '410px',display: 'flex', justifyContent: 'center', alignItem: 'center',  }}>
+        <Stack direction={'row'}>
+          <Button onClick={handleCarClick} variant="text" color="inherit"
+            sx={{
+              marginTop: '5px',
+              width: '200px',
+              height: '32px',
+              borderRadius: '20px',
+              backgroundColor: isCarOpen ? "#6070D4" : null,
+            
+              color: isCarOpen ? "white" : "#7C7C91",
+              '&:hover': {
+                backgroundColor: isCarOpen ? "#6070D4" : null,
+                color: isCarOpen ? "white" : "#7C7C91",
+              }
+            }}>
             Car Test
           </Button>
 
-          <Button  variant="text" color="inherit" sx={{ marginRight: 2, color: 'rgba(50, 58, 110, 0.5)', '&:hover': { backgroundColor: '#6070D4', color: 'white' } }}>
+          <Button onClick={handleCommercialClick} variant="text" color="inherit"
+            sx={{
+              marginTop: '5px',
+              height: '32px',
+              width: '200px',
+              borderRadius: '20px',
+              backgroundColor: isCommercialOpen ? "#6070D4" : null,
+              
+              color: isCommercialOpen ? "white" : "#7C7C91",
+              '&:hover': {
+                backgroundColor: isCommercialOpen ? "#6070D4" : null,
+                color: isCommercialOpen ? "white" : "#7C7C91",
+              }
+            }}>
             Commercial Test
           </Button>
+        </Stack>
 
-          
-        </div>
-      </Toolbar>
-    </AppBar>
+      </Box>
+
+
+    </div>
+
   );
 };
 
