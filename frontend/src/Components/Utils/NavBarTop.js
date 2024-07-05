@@ -17,10 +17,9 @@ const NavBarTop = () => {
         sx={{
           backgroundColor: "#F0F2F7",
           borderRadius: '20px',
-          // padding: '1px',
           border: '2px solid white',
-          marginBottom: '20px',
-          width: '90%',
+          marginTop: '0px',
+          width: '100%',
         }}>
         {/* <Container> */}
 
@@ -31,14 +30,14 @@ const NavBarTop = () => {
               <span style={{ color: '#323A6E', fontWeight: 'bold' }}>oBit</span>
             </Typography>
             <div className="links">
-              <Link href="/login" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b>Login</b>
+              <Link href="/carexamdb" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b>Home</b>
               </Link>
-              <Link href="/premium-login" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b>Premium Login</b>
+              <Link href="/premium" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b>Premium</b>
               </Link>
-              <Link href="/help" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b> Help</b>
+              <Link href="/profile" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b> Profile</b>
               </Link>
             </div>
           </Toolbar>

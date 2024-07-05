@@ -32,6 +32,8 @@ import { useAuth } from '../../Components/AuthContext_Handle/Auth_Context';
 
 export const QuizCardContext = createContext();
 export const QuizCardContext2 = createContext();
+export const ToggleContentContext = createContext();
+
 
 
 
@@ -39,7 +41,9 @@ function QuizSection({ title, quizzes }) {
   const scrollRef = useRef(null);
   const cardWidth = 300; // Set the card width to your card's actual width
   const cardsToShow = 3;
-  
+
+
+
   // console.log("id", clickedQuiz)
 
   const scroll = (direction) => {
@@ -98,23 +102,32 @@ function QuizSection({ title, quizzes }) {
 
 
 function CarExamDashboard() {
-  const {userId} = useAuth();
+  const { userId } = useAuth();
   const [quizSet, setQuizSet] = useState([]);
   const [userDetail, setUserDetail] = useState({});
 
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [clickedQuiz, setClickedQuiz] = useState(null);
 
+  const [isCarOpen, setIsCarOpen] = useState(true);
+  const [isCommercialOpen, setIsCommercialOpen] = useState(false);
+
+  console.log('Car', isCarOpen);
+  console.log('Com', isCommercialOpen);
+
   console.log('userId:', userId)
 
   const navigate = useNavigate();
 
-  const easyQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Easy');
-  const hardQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hard');
-  const hardestQuizzes = quizSet.filter(quiz => quiz.difficulty === 'Hardest');
+  const easyQuizzesCar = quizSet.filter(quiz => quiz.difficulty === 'Easy' && quiz.quizType);
+  const hardQuizzesCar = quizSet.filter(quiz => quiz.difficulty === 'Hard' && quiz.quizType);
+  const hardestQuizzesCar = quizSet.filter(quiz => quiz.difficulty === 'Hardest' && quiz.quizType);
 
+  const easyQuizzesCom = quizSet.filter(quiz => quiz.difficulty === 'Easy' && !quiz.quizType);
+  const hardQuizzesCom = quizSet.filter(quiz => quiz.difficulty === 'Hard' && !quiz.quizType);
+  const hardestQuizzesCom = quizSet.filter(quiz => quiz.difficulty === 'Hardest' && !quiz.quizType);
 
-  const handleOpen = () => {
+  const handlePremiumOpen = () => {
     navigate(`/premium`)
   };
 
@@ -127,8 +140,8 @@ function CarExamDashboard() {
     const fetchQuizzes = async () => {
       try {
         const [response1, response2] = await Promise.all([
-          axios.get(`http://localhost:3000/user/${userId}`),
-          axios.get('http://localhost:3000/allquizzes')
+          axios.get(`http://localhost:3001/user/${userId}`),
+          axios.get('http://localhost:3001/allquizzes')
         ]);
         setQuizSet(response2.data);
         setUserDetail(response1.data);
@@ -138,28 +151,17 @@ function CarExamDashboard() {
         console.error('Error:', error);
       }
     }
-
-    // const fetchQuizze = async () => {
-    //   try {
-    //     const response = await axios.get('http://localhost:3000/allquizzes');
-    //     console.log('Response from backend:', response.data);
-    //     setQuizSet(response.data);
-    //   } catch (error) {
-    //     console.error('Error fetching attempted quizzes:', error);
-    //   }
-    // };
     fetchQuizzes();
   }, []);
 
 
-
   return (
+
     <div style={{ backgroundColor: '#F0F2F7' }}>
       <ThemeProvider theme={typographyTheme}>
 
 
-
-        {/* <NavBarTop /> */}
+        <NavBarTop />
 
 
         <Container sx={{}}>
@@ -167,8 +169,11 @@ function CarExamDashboard() {
 
           <div style={{ marginTop: '100px' }}>
 
+            <ToggleContentContext.Provider value={{ isCarOpen, isCommercialOpen, setIsCarOpen, setIsCommercialOpen }}>
+              <NavBarBottom />
+            </ToggleContentContext.Provider>
 
-            <NavBarBottom />
+
 
             <Grid container sx={{ marginTop: '50px' }}>
               <Grid Item lg={12} xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -185,34 +190,34 @@ function CarExamDashboard() {
 
                   </Stack>
 
-                  {!userDetail.isPremium ? 
-                  <Button variant="contained"
-                   onClick={handleOpen}
-                    endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
-                    sx={{
-                      display: 'flex',
-                      borderRadius: "20px",
-                      height: '40px',
-                      width: '250px',
-                      backgroundColor: '#6070D4',
-                      marginTop: '20px',
-                      transition: 'transform 0.4s, box-shadow 0.4s',
-                      ":hover": {
-                        zIndex: 1,
-                        transform: 'translateY(-2px)',
+                  {!userDetail.isPremium ?
+                    <Button variant="contained"
+                      onClick={handlePremiumOpen}
+                      endIcon={<KeyIcon className="key-icon" sx={{ transition: 'transform 0.4s' }} />}
+                      sx={{
+                        display: 'flex',
+                        borderRadius: "20px",
+                        height: '40px',
+                        width: '250px',
                         backgroundColor: '#6070D4',
-                        '.key-icon': {
-                          transform: 'rotate(-180deg)',
+                        marginTop: '20px',
+                        transition: 'transform 0.4s, box-shadow 0.4s',
+                        ":hover": {
+                          zIndex: 1,
+                          transform: 'translateY(-2px)',
+                          backgroundColor: '#6070D4',
+                          '.key-icon': {
+                            transform: 'rotate(-180deg)',
+                          }
                         }
-                      }
-                    }}> Get full access now
-                  </Button>
-                  : null
-                }
+                      }}> Get full access now
+                    </Button>
+                    : null
+                  }
 
                 </Box>
 
-                
+
               </Grid>
               <Grid Item lg={4} xs={4} >
 
@@ -220,13 +225,29 @@ function CarExamDashboard() {
 
               <Grid Item lg={12} xs={12} spacing={2} sx={{ marginTop: '20px' }}>
 
-                <QuizCardContext2.Provider value={ {clickedQuiz, setClickedQuiz, setDialogOpen} }>
-                  <QuizSection title="Easy" quizzes={easyQuizzes} />
-                  <QuizSection title="Hard" quizzes={hardQuizzes} />
-                  <QuizSection title="Hardest" quizzes={hardestQuizzes} />
+                <QuizCardContext2.Provider value={{ clickedQuiz, setClickedQuiz, setDialogOpen, userDetail }}>
+                  {isCarOpen ?
+                    (<>
+                      <QuizSection title="Easy" quizzes={easyQuizzesCar} />
+                      <QuizSection title="Hard" quizzes={hardQuizzesCar} />
+                      <QuizSection title="Hardest" quizzes={hardestQuizzesCar} />
 
-                  <QuizDialog open={dialogOpen} close={handleClose} />
+                    </>)
+                    :
+                    (<>
+                      <QuizSection title="Easy" quizzes={easyQuizzesCom} />
+                      <QuizSection title="Hard" quizzes={hardQuizzesCom} />
+                      <QuizSection title="Hardest" quizzes={hardestQuizzesCom} />
+
+                    </>)
+                }
+
+                  <QuizDialog
+                    // open= {!userDetail.isPremium && dialogOpen && clickedQuiz.difficulty === 'Easy' ? dialogOpen : false}
+                    open={dialogOpen}
+                    close={handleClose} />
                 </QuizCardContext2.Provider>
+
 
               </Grid>
 

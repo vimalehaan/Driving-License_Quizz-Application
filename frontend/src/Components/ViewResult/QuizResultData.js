@@ -29,6 +29,8 @@ function QuizResultComponent() {
     const incorrectPercentage = 100 - correctPercentage;
     console.log('per: ' + questionViewData.quiz_id.quizName)
 
+
+
     return (
         <Stack direction={'column'} spacing={3} sx={{ alignItems: 'center', textAlign: 'left' }}>
             <Box sx={{ display: 'flex', alignItems: 'start', width: '90%' }}>
@@ -56,7 +58,7 @@ function QuizResultComponent() {
 
             <Box sx={{ width: '90%', position: 'relative' }}>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', marginTop: '-20px' }}>
                     <Paper sx={{ backgroundColor: '#37407b', height: '30px', width: `${correctPercentage}%`, borderRadius: '8px', marginRight: '3px', boxShadow: 'none' }} />
                     <Paper sx={{ backgroundColor: '#FFD6D6', height: '30px', width: `${incorrectPercentage}%`, borderRadius: '8px', boxShadow: 'none', position: 'relative' }} />
                 </Box>
@@ -66,10 +68,22 @@ function QuizResultComponent() {
                     : null
                 }
 
-                <Box sx={{ position: 'absolute', marginLeft: '-58px', left: `${correctPercentage}%`, top: '25px', textAlign: 'right' }}>
+                <Box sx={{ position: 'absolute', marginLeft: '-55px', left: `${correctPercentage}%`, top: '25px', textAlign: 'right' }}>
                     <ArrowDropUpIcon />
-                    <Typography fontSize={'15px'} sx={{ fontWeight: 'bold', position: 'relative', right: '8px', top: '-10px' }}> {correctPercentage}%</Typography>
-                    <Typography fontSize={'13px'} sx={{ color: '#7C7C91', position: 'relative', right: '8px', top: '-14px' }}> Your Score</Typography>
+                    <Typography fontSize={'15px'}
+                        sx={{
+                            fontWeight: 'bold',
+                            position: 'relative',
+                            right: correctPercentage <= 15 ? '-6px' : '8px',
+                            top: '-10px'
+                        }}> {correctPercentage}%</Typography>
+                    <Typography fontSize={'13px'}
+                        sx={{
+                            color: '#7C7C91',
+                            position: 'relative',
+                            right: correctPercentage <= 15 ? '-40px' : '8px',
+                            top: '-14px'
+                        }}> Your Score</Typography>
                 </Box>
 
                 {!questionViewData.result ?
@@ -83,8 +97,9 @@ function QuizResultComponent() {
                 {/* <ExamViewCauge /> */}
 
             </Box>
-            <Box sx={{display: 'flex', alignItems: 'start', width: '100%', marginTop: '100px'}}>
-                <Button endIcon={<ReplayIcon sx={{marginLeft: '-6px'}}/>} disableRipple variant="text" sx={{ marginTop: '17px',
+            <Box sx={{ display: 'flex', alignItems: 'start', width: '100%',  }}>
+                <Button endIcon={<ReplayIcon sx={{ marginLeft: '-6px', }} />} disableRipple variant="text" sx={{
+                    marginTop: '25px' ,
                     fontSize: '16px', width: '80px', borderRadius: '20px', textTransform: 'none', color: '#37407b', "&:hover": {
                         backgroundColor: 'inherit', color: '#2C3BA0'
                     }

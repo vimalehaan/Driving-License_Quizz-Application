@@ -18,7 +18,7 @@ const DeleteBox = ({ state, setOpen, selectedRows, handleDeleteConfirm }) => {
           selectedRows.map(row => (
             <ul>
               <li>
-              <Typography key={row.id}>{row.firstName}</Typography>
+              <Typography key={row.id}>{row.questionText}</Typography>
               </li>
             </ul>
           ))
