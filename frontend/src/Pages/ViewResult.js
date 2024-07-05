@@ -92,13 +92,13 @@ function ViewResultPage() {
                         <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex }}>
                             <Grid item lg='4' xs='4'>
                                 {/* <UserExamView /> */}
-                                <WhitePaper sx={{ height: '220px' }}>
+                                <WhitePaper sx={{ height: '220px',  maxWidth: '85%' }}>
                                     <QuizResultComponent />
                                 </WhitePaper>
                                 <Box>
                                     
                                 </Box>
-                                <WhitePaper sx={{ marginTop: '30px' }}>
+                                <WhitePaper sx={{ marginTop: '30px', maxWidth: '85%' }}>
 
                                     {/* <QuizzDetails /> */}
                                     <QuestionButtons />
@@ -107,7 +107,7 @@ function ViewResultPage() {
                                 </WhitePaper>
                             </Grid>
                             <Grid item lg='8' xs='8'>
-                                <WhitePaper >
+                                <WhitePaper sx={{maxWidth: '93%'}}>
                                     <QuestionBox />
                                 </WhitePaper>
                             </Grid>

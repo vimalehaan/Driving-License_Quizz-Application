@@ -148,7 +148,7 @@ function CarExamDashboard() {
 
 
 
-        {/* <NavBarTop /> */}
+        <NavBarTop />
 
 
         <Container sx={{}}>

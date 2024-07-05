@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Container from '@mui/material/Container';
-import { Button, Grid, Slide } from "@mui/material";
+import { Button, Grid, Paper, Slide } from "@mui/material";
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
@@ -219,8 +219,8 @@ function AttemptQuiz() {
                 }}>
                 <Grid container spacing={"20px"}>
                     <SpecificQuizContext.Provider value={{ questionViewData, currentQuestionIndex, setCurrentQuestionIndex, userAnswer, setUserAnswer, open, setOpen, timeLeft, setTimeLeft, }}>
-                        <Grid item lg='4' xs='4'>
-                            <WhitePaper sx={{ marginTop: '30px', }}>
+                        <Grid item lg='4' xs='4' sx={{border: '1px solid black'}}>
+                            <WhitePaper sx={{ marginTop: '30px', maxWidth: '82%', }}>
                                 <QuizQuestionButtons />
                                 <Box sx={{ marginTop: '10px', display: 'flex', alignItems: 'start', }}>
 
@@ -238,14 +238,15 @@ function AttemptQuiz() {
                                     </Typography>
                                 </Box>
                             </WhitePaper>
-                            <Box sx={{ marginTop: '20px' }}>
-                                <Stack direction={"row"} spacing={'15px'}>
+                            <Box sx={{ marginTop: '20px', width: '315px' }}>
+                                <Stack direction={"row"} spacing={'15px'} >
                                     <Button
                                         disabled={noQuestionsAnswered}
                                         onClick={() => setRestartDialogOpen(true)}
                                         startIcon={<ReplayIcon />}
                                         disableRipple
                                         sx={{
+                                            
                                             flexGrow: '1',
                                             color: '#37407b',
                                             height: '40px',
@@ -261,6 +262,7 @@ function AttemptQuiz() {
                                         endIcon={<SendIcon />}
                                         disableRipple
                                         sx={{
+                                            
                                             flexGrow: '1',
                                             color: '#37407b',
                                             height: '40px',
@@ -312,7 +314,7 @@ function AttemptQuiz() {
                         </Grid>
                         
                         <Grid item lg='8' xs='8'>
-                            <WhitePaper sx={{ marginTop: '30px' }}>
+                            <WhitePaper sx={{ marginTop: '30px', maxWidth: '93%' }}>
                                 <QuizQuestions />
                             </WhitePaper>
                         </Grid>
