@@ -11,6 +11,7 @@ import '../../App.css';
 
 const Certificate = ({ recipientName, courseName, completionDate, recipientEmail }) => {
     const [certificateAppeared, setCertificateAppeared] = useState(false);
+    
     const componentRef = useRef();
 
     useEffect(() => {
