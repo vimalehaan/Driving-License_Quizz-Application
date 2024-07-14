@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, Typography, TextField, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, Typography, TextField, FormControl, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import axios from 'axios';
 import { CusButtonPurp } from "../../Utils/StyledComponents";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+
 
 const AddQuiz = ({ state, setOpen, selectedRows }) => {
   const [quizName, setQuizName] = useState('');
   const [quizType, setQuizType] = useState('');
   const [difficulty, setDifficulty] = useState('');
   const [description, setDescription] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
 
 
   const handleQuizTypeChange = (event) => {
@@ -37,7 +40,7 @@ const AddQuiz = ({ state, setOpen, selectedRows }) => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3001/quiz/createQuiz', data, {
+      const response = await axios.post('http://localhost:3000/quiz/createQuiz', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -45,7 +48,14 @@ const AddQuiz = ({ state, setOpen, selectedRows }) => {
       console.log('Quiz created successfully:', response.data);
       handleClose();
     } catch (error) {
-      console.error('There was an error creating the quiz:', error);
+
+      if (error.response && error.response.status === 400) {
+        setSnackbarMessage('Quiz with this name, difficulty, and type already exists.');
+        setSnackbarOpen(true); // Alert with the specific error message
+      } else {
+        console.error('There was an error creating the quiz:', error);
+      }
+
     }
   };
 
@@ -105,8 +115,8 @@ const AddQuiz = ({ state, setOpen, selectedRows }) => {
                 <em>None</em>
               </MenuItem>
               <MenuItem value="Easy">Easy</MenuItem>
-              <MenuItem value="Medium">Medium</MenuItem>
-              <MenuItem value="Hard">Hard</MenuItem>
+              <MenuItem value="Medium">Hard</MenuItem>
+              <MenuItem value="Hard">Hardest</MenuItem>
             </Select>
           </FormControl>
 
@@ -130,6 +140,13 @@ const AddQuiz = ({ state, setOpen, selectedRows }) => {
           </CusButtonPurp>
         </DialogContent>
       </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+      />
     </div>
   );
 };

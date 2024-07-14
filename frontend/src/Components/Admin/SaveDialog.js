@@ -96,9 +96,9 @@ export default function CustomizedDialogs({ state, setOpen }) {
         handleError('Please fill out all required fields.');
         return;
       }
-
+      
       const res = await axios.post(
-        'http://localhost:3001/questions/createQuestion',
+        'http://localhost:3000/questions/createQuestion',
         data,
         {
           headers: {

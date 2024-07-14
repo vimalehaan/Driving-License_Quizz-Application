@@ -28,7 +28,8 @@ const UpdateBox = ({
   const [quizType, setQuizType] = useState(false); // Assuming quizType is boolean
 
   useEffect(() => {
-    if (selectedQuestion) {
+    if (selectedQuestion) 
+    {
       setNewQuestion(selectedQuestion.questionText);
       setUpdatedAnswers(selectedQuestion.answers.map(answer => answer.answer_text));
       setDifficulty(selectedQuestion.difficulty);

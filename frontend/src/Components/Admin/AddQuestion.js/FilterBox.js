@@ -22,7 +22,7 @@ const DataTable = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/questions/listOfQuestions');
+        const response = await axios.get('http://localhost:3000/questions/listOfQuestions');
         setRows(response.data.map((question, index) => ({
           id: question._id,
           tableId: index + 1,
@@ -62,7 +62,7 @@ const DataTable = () => {
   const handleDeleteConfirm = async () => {
     try {
       await Promise.all(selectedRows.map(async (selectedRow) => {
-        await axios.delete(`http://localhost:3001/questions/deleteQuestion/${selectedRow.id}`);
+        await axios.delete(`http://localhost:3000/questions/deleteQuestion/${selectedRow.id}`);
       }));
 
       const remainingRows = rows.filter(row => !selectedRows.some(selected => selected.id === row.id));
@@ -87,7 +87,7 @@ const DataTable = () => {
           }))
         };
   
-        const response = await axios.put(`http://localhost:3001/questions/updateQuestion/${questionId}`, updatedRow);
+        const response = await axios.put(`http://localhost:3000/questions/updateQuestion/${questionId}`, updatedRow);
   
         if (response.status === 200) {
           const updatedRows = rows.map(row =>
