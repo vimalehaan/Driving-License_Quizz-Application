@@ -33,6 +33,8 @@ import { QuizData } from '../Components/UserProfile/ExamTable';
 import { SpecificQuizContext } from '../Components/Utils/Contexts';
 import { useAuth } from '../Components/AuthContext_Handle/Auth_Context';
 
+import NavBarTop from '../Components/Utils/NavBarTop';
+
 
 export const RatioChartContext = createContext();
 export const ChartDataContext = createContext();
@@ -109,16 +111,17 @@ function UserProfilePage() {
     return (
         <ThemeProvider theme={typographyTheme}>
             <ChartDataContext.Provider value={{ attemptsData }}>
+                <NavBarTop />
                 <Container> 
                     {/* <Box sx={{ display: 'flex' }}>
                         {/* <UserSideBar /> */}
 
 
                     <Grid container spacing='30px' sx={{ marginTop: '0px', justifyContent: 'center', padding: '0 50px 0 50px'}}>
-                        <Grid item lg='12' xs='12' sx={{ marginBottom: '5px' }}>
+                        <Grid item lg='12' xs='12' sx={{ marginTop: '60px' }}>
                             <Typography fontSize={'25px'} fontWeight={600} textAlign={'left'}>Profile</Typography>
                         </Grid>
-                        <Grid item lg='12' xs='12' sx={{marginTop:'-20px'}}>
+                        <Grid item lg='12' xs='12' sx={{marginTop:'-40px'}}>
                             <Namecard />
                         </Grid>
                         <Grid item lg='4.5' xs='4.5'>

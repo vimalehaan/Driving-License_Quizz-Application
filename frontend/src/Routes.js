@@ -29,6 +29,9 @@ import TransactionTable from './Components/TransactionLog/transaction-table';
 import Certificate from './Pages/CertificatePage/Certificatepage';
 import InvoiceTemplate from './Components/Invoice/Invoice';
 import Invoice from './Pages/InvoicePage/Invoice';
+import AdminQuizBoard from './Components/Admin/AddQuiz/AdminQuizBoard';
+
+
 
 import DummyPage from './Pages/Dummy';
 import ProtectedRoute from './Components/Utils/ProtectedRoutes';
@@ -60,18 +63,19 @@ function RouteMain() {
                                 <Route path="/quiz/:attemptId" element={<AttemptQuiz />} />
                                 <Route path="/upload" element={<FileUploadSample />} />
                                 <Route path="/premium" element={<PremiumAd />} />
-                                <Route path="/transaction" element={<TransactionTable />} />
                                 <Route path="/invoicetemp" element={<InvoiceTemplate />} />
                                 <Route path="/invoice" element={<Invoice />} />
+                                <Route path="/return" element={<Return />} /> 
 
-                                
+
                             </>
                         ) : userRole === 'admin' ? (
                             <>
+                                <Route path="/quizedit" element={<AdminQuizBoard />} />
                                 <Route path="/addtest" element={<AddTest />} />
-                                <Route path="/return" element={<Return />} />
+                                <Route path="/transaction" element={<TransactionTable />} />
                                 <Route path="/questions" element={<ViewQuestions />} />
-                                <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+                                
                             </>
                         ) : null}
 

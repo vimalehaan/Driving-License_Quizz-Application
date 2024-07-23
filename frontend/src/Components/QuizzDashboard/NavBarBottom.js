@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Button, Box, Stack } from '@mui/material';
 
 // import { Link } from 'react-router-dom';
-import { ToggleContentContext } from '../../Pages/QuizzDashboardPage/CarExamDashboard';
+import { ToggleContentContext } from '../Utils/Contexts';
 
 const NavBarBottom = () => {
   const { isCarOpen, isCommercialOpen, setIsCarOpen, setIsCommercialOpen } = useContext(ToggleContentContext);

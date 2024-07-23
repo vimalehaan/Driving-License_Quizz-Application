@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import { Grid } from "@mui/material";
+import Button from '@mui/material/Button';
 
 import CircleIcon from '@mui/icons-material/Circle';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
@@ -103,7 +104,7 @@ function QuizzDetails() {
                         chased by a bull down a narrow street is quite possibly the worst thing that could happen.
                         Let’s give this another shot.
                     </Typography>
-                    <CusButtonPurp sx={{ fontSize: '15px', borderRadius: '20px', marginTop: '15px', padding: '20px' }}>Retry the quiz</CusButtonPurp>
+                    <Button href={'/carexamdb'} variant='filled' sx={{height: '30px',color: 'white', backgroundColor: '#6070d4', fontSize: '15px', borderRadius: '20px', marginTop: '15px', padding: '20px', ':hover': {color: 'white', backgroundColor: '#6070d4',} }}>Retry the quiz</Button>
                 </Grid>
             </Grid>
         </div>

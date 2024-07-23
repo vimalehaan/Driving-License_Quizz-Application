@@ -137,9 +137,6 @@ function SocialSignIn() {
         <div className='loginPage'>
                 
             <Grid container className={classes.gridContainer} >
-                <Grid item lg={12}>
-                    <Appbar />
-                </Grid>
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
                 </Grid>
@@ -199,7 +196,9 @@ function SocialSignIn() {
                              </Button>
 
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={1}>
+
                                 Already have an account? <Link href="#" underline="none" color='#09BCE0' onClick={handleLogInLinkClick}> {'Login'} </Link>
+
                             </Typography> <br />
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={1.5} width='45vh'>
                                 By signing up to create an account I accept <br />Company’s <Link href="#" underline="none" color={'#09BCE0'}> {'Terms of Use and Privacy Policy'} </Link>

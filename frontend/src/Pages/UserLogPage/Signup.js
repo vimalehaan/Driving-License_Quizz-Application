@@ -144,9 +144,7 @@ function Signup() {
         <div className='SignupPage'>
 
             <Grid container className={classes.gridContainer} >
-                <Grid item lg={12} sx={{ marginTop: '40px' }}>
-                    < Appbar />
-                </Grid>
+                
                 <Grid item lg={6}>
                     <img src="./Images/login.png" alt="Image" className={classes.loginImage} />
                 </Grid>
@@ -230,12 +228,14 @@ function Signup() {
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
+
                                 Already have an account? <Link href="#" underline="none" color='#09BCE0' onClick={handleLoginLinkClick}> {'Login'} </Link>
+
                             </Typography> <br />
                             <Divider className={classes.divider} > or </Divider><br />
                             <Stack direction={'row'} spacing={1.5} marginTop={-1} >
-                                <IconButton variant='outlined' size='large'><GoogleIcon color='primary' fontSize='large' /></IconButton>
-                                <IconButton variant='outlined' size='large'><FacebookRoundedIcon color='primary' fontSize='large' /></IconButton>
+                                <IconButton href='/social-login' variant='outlined' size='large'><GoogleIcon color='primary' fontSize='large' /></IconButton>
+                                <IconButton href='/social-login' variant='outlined' size='large'><FacebookRoundedIcon color='primary' fontSize='large' /></IconButton>
                             </Stack>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={1.5} width='45vh'>
                                 By signing up to create an account I accept <br />Company’s <Link href="#" underline="none" color={'#09BCE0'}> {'Terms of Use and Privacy Policy'} </Link>
