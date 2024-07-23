@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 
 
-const NavBarTop = () => {
+const AdminNavBar = () => {
   return (
     <Box sx={{display: 'flex', justifyContent: 'center'}}>
 
@@ -30,14 +30,17 @@ const NavBarTop = () => {
               <span style={{ color: '#323A6E', fontWeight: 'bold' }}>oBit</span>
             </Typography>
             <div className="links">
-              <Link href="/carexamdb" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b>Home</b>
+              <Link href="/addTest" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b>Questions</b>
               </Link>
-              <Link href="/premium" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b>Premium</b>
+              <Link href="/quizedit" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b>Quizzes</b>
+              </Link>
+              <Link href="/transaction" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
+                <b> Transactions</b>
               </Link>
               <Link href="/profile" color="inherit" underline="none" sx={{ marginRight: 2, color: '#323A6E' }}>
-                <b> Profile</b>
+                <b> UserLog</b>
               </Link>
             </div>
           </Toolbar>
@@ -48,4 +51,4 @@ const NavBarTop = () => {
   );
 };
 
-export default NavBarTop;
+export default AdminNavBar;

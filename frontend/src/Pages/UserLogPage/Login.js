@@ -89,7 +89,7 @@ function Login() {
 
         if (isValid) {
             try {
-                const response = await axios.post('http://localhost:3000/api/auth/password', { email, password });
+                const response = await axios.post('http://localhost:3001/api/auth/password', { email, password });
 
                 if (response.data.data.accessToken) {
                     const token = response.data.data.accessToken;
@@ -120,7 +120,7 @@ function Login() {
 
     const handleForgotPassword = async () => {
         try {
-            await axios.post('http://localhost:3001/api/auth//reset-password', { email });
+            await axios.post('http://localhost:3001/api/auth/reset-password', { email });
             setSuccessOpen(true);
         } catch (error) {
             console.error('Error requesting password reset:', error);
@@ -135,6 +135,11 @@ function Login() {
         setErrorOpen(false);
 
     };
+
+    const handleSignupLinkClick = () => {
+        navigate('/social-login');
+    };
+
 
     return (
 
@@ -185,12 +190,14 @@ function Login() {
                                 </Stack>
                             </form>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={2}>
-                                Don't you have an account? <Link href="#" underline="none" color='#09BCE0'> {'Signup'} </Link>
+
+                                Don't you have an account? <Link href="#" underline="none" color='#09BCE0' onClick={handleSignupLinkClick }> {'Signup'} </Link>
+
                             </Typography> <br />
                             <Divider className={classes.divider} > or </Divider><br />
                             <Stack direction={'row'} spacing={1.5} marginTop={-1} >
-                                <IconButton variant='outlined' size='large'><GoogleIcon color='primary' fontSize='large' /></IconButton>
-                                <IconButton variant='outlined' size='large'><FacebookRoundedIcon color='primary' fontSize='large' /></IconButton>
+                                <IconButton href = {'/social-login'} variant='outlined' size='large'><GoogleIcon color='primary' fontSize='large' /></IconButton>
+                                <IconButton href = {'/social-login'} variant='outlined' size='large'><FacebookRoundedIcon color='primary' fontSize='large' /></IconButton>
                             </Stack>
                             <Typography variant='h9' className={classes.typo} marginBottom={0} marginTop={1.5} width='45vh'>
                                 By signing up to create an account I accept <br />Company’s <Link href="#" underline="none" color={'#09BCE0'}> {'Terms of Use and Privacy Policy'} </Link>

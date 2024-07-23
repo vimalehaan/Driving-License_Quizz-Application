@@ -42,7 +42,9 @@ function UserExamView() {
 
 
     return (
-        <Box>
+        <Grid item xs ={12} lg={12} sx={{display: 'flex'}}>
+            
+        <Box sx={{display: 'flex'}}>
             <WhitePaper
                 sx={{
                     padding: '50px 50px 20px 50px',
@@ -61,6 +63,8 @@ function UserExamView() {
                 </Stack>
             </WhitePaper>
         </Box>
+
+        </Grid>
     );
 }
 

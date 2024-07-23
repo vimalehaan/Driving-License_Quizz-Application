@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import { styled } from '@mui/material/styles';
@@ -46,17 +46,47 @@ export default function ImgMediaCard() {
     const [editOpen, setEditOpen] = useState(false);
     const [passwordOpen, setPasswordOpen] = useState(false);
     const [profilePicture, setProfilePicture] = useState('/Images/avatar-placeholder.png');
-    const [firstName, setFirstName] = useState('Lehaananth');
-    const [lastName, setLastName] = useState('Vimalanathan');
-    const [tempFirstName, setTempFirstName] = useState(firstName);
-    const [tempLastName, setTempLastName] = useState(lastName);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [tempFirstName, setTempFirstName] = useState('');
+    const [tempLastName, setTempLastName] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [newFirstName, setNewFirstName] = useState(firstName);
-    const [newLastName, setNewLastName] = useState(lastName);
+   
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/auth/profile', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    setFirstName(result.data.firstName);
+                    setLastName(result.data.lastName);
+                    setTempFirstName(result.data.firstName);
+                    setTempLastName(result.data.lastName);
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+                alert('An error occurred while fetching the profile. Please try again.');
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
     
 
     const validatePassword = (password) => {
@@ -66,8 +96,8 @@ export default function ImgMediaCard() {
 
 
     const handleEditClickOpen = () => {
-        setNewFirstName(firstName);
-        setNewLastName(lastName);
+        setFirstName(tempFirstName);
+        setLastName(tempLastName);
         setEditOpen(true);
     };
 
@@ -94,29 +124,33 @@ export default function ImgMediaCard() {
     };
 
     const handleSave =async () => {
+        
+        setEditOpen(false);
 
-        if (newFirstName.trim() === '' || newLastName.trim() === '' ) {
+        if (tempFirstName.trim() === '' || tempLastName.trim() === '' ) {
             alert("All fields are required");
             return;
         }
-       
+
         try {
-            const response = await fetch('http://localhost:3000/api/auth/updateProfile', {
+            const response = await fetch('http://localhost:3001/api/auth/profile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+
                 },
                 body: JSON.stringify({
-                    firstName: newFirstName,
-                    lastName: newLastName,
+                    firstName: tempFirstName,
+                    lastName: tempLastName,
                 }),
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                setFirstName(newFirstName);
-                setLastName(newLastName);
+                setFirstName(tempFirstName);
+                setLastName(tempLastName);
                 alert(result.message);
             } else {
                 alert(result.message);
@@ -146,10 +180,11 @@ export default function ImgMediaCard() {
           }
 
           try {
-            const response = await fetch('http://localhost:3000/api/auth/updatePassword', {
+            const response = await fetch('http://localhost:3001/api/auth/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
                     currentPassword,
