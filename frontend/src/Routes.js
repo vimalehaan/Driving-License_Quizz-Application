@@ -38,6 +38,7 @@ import ProtectedRoute from './Components/Utils/ProtectedRoutes';
 
 import { useAuth } from './Components/AuthContext_Handle/Auth_Context'
 import { AuthProvider } from './Components/AuthContext_Handle/Auth_Context';
+import UserActivityLogPage from './Pages/UserActivityLogPage/UserActivityLogPage';
 
 
 
@@ -75,7 +76,10 @@ function RouteMain() {
                                 <Route path="/addtest" element={<AddTest />} />
                                 <Route path="/transaction" element={<TransactionTable />} />
                                 <Route path="/questions" element={<ViewQuestions />} />
-                                
+
+                                <Route path="/quiz-dashboard" element={<Quizdashboard />} />
+                                <Route path="/activitylog" element={<UserActivityLogPage />} />
+
                             </>
                         ) : null}
 

@@ -8,14 +8,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 const columns = [
-  { id: 'userID', label: 'User ID', minWidth: 170 },
-  { id: 'action', label: 'Action', minWidth: 170 },
-  { id: 'timestamp', label: 'Timestamp', minWidth: 170 },
-  { id: 'type', label: 'Type', minWidth: 170 },
+  { id: 'userId', label: 'User ID', minWidth: 190 },
+  { id: 'action', label: 'Action', minWidth: 100 },
+  { id: 'loginTime', label: 'Log In Time', minWidth: 300 },
+  { id: 'logoutTime', label: 'Log Out Time', minWidth: 300 },
 ];
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  width: '100%',
+  width: '80%',
   height: '100%',
   overflow: 'hidden',
   borderRadius: '10px',
@@ -28,7 +28,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  minWidth: 60,
+  minWidth: 50,
   fontWeight: 'bold',
   backgroundColor: '#6070D4',
   color: 'black',
@@ -48,6 +48,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   lineHeight: '1.2',
+  justifyContent: 'space-between',
 }));
 
 const UserActivityLogPage = () => {
@@ -57,13 +58,18 @@ const UserActivityLogPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
     action: '',
-    type: '',
   });
 
-  useEffect(() => {
-    // Initial data load 
-    setLogs([]);
-  }, []);
+  const fetchLogs = () => {
+     fetch('http://localhost:3000/api/activityLogs/logs')
+      .then(response => response.json())
+      .then(data => {
+        setLogs(data);
+      })
+      .catch(error => {
+        console.error('Error fetching logs:', error);
+      });
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -89,12 +95,16 @@ const UserActivityLogPage = () => {
         return log[key].toLowerCase().includes(filters[key].toLowerCase());
       }
     }) && (
-      log.userID.toLowerCase().includes(filter.toLowerCase()) ||
+      log.userId.toLowerCase().includes(filter.toLowerCase()) ||
       log.action.toLowerCase().includes(filter.toLowerCase()) ||
-      log.timestamp.toLowerCase().includes(filter.toLowerCase()) ||
-      log.type.toLowerCase().includes(filter.toLowerCase())
+      log.loginTime?.toLowerCase().includes(filter.toLowerCase()) ||
+      log.logoutTime?.toLowerCase().includes(filter.toLowerCase())
     );
   });
+
+  useEffect(() => {
+    fetchLogs();
+  }, []);
 
   useEffect(() => {
     setPage(0);
@@ -136,25 +146,6 @@ const UserActivityLogPage = () => {
     return Array.from(uniqueValues);
   };
 
-  const getTypeCellStyle = (type) => {
-    let style = {};
-    switch (type.toLowerCase()) {
-      case 'online':
-        style = { color: 'green', fontWeight: 'bold' };
-        break;
-      case 'offline':
-        style = { color: 'red', fontWeight: 'bold' };
-        break;
-      case 'attempting':
-        style = { color: 'blue', fontWeight: 'bold' };
-        break;
-      default:
-        break;
-    }
-    return style;
-  };
-
-  // Custom theme for table and typography
   const theme = createTheme({
     typography: {
       fontFamily: 'Roboto, sans-serif',
@@ -174,7 +165,7 @@ const UserActivityLogPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '90%', padding: '20px', backgroundColor: '#f9f9f9', border: 'none',margin:'0 auto',marginTop:'100px'  }}>
+      <div className="container" style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '90%', padding: '20px', backgroundColor: '#f9f9f9', border: 'none', margin: '0 auto', marginTop: '100px' }}>
         <Typography
           variant="h4"
           align="center"
@@ -219,7 +210,7 @@ const UserActivityLogPage = () => {
                   {columns.map((column) => (
                     <StyledTableCell key={column.id} align={column.align}>
                       {column.label}
-                      {(column.id === 'action' || column.id === 'type') && renderFilterSelect(column.id, column.label)}
+                      {column.id === 'action' && renderFilterSelect(column.id, column.label)}
                     </StyledTableCell>
                   ))}
                 </TableRow>
@@ -241,11 +232,9 @@ const UserActivityLogPage = () => {
                           align={column.align}
                           style={{ borderBottom: '1px solid #e0e0e0', padding: '12px', border: '1px solid black' }} // Black border for table cells
                         >
-                          {column.id === 'type' ? (
-                            <span style={getTypeCellStyle(log[column.id])}>{log[column.id]}</span>
-                          ) : (
-                            log[column.id]
-                          )}
+                          {column.id === 'loginTime' && log.loginTime ? new Date(log.loginTime).toLocaleString() : ''}
+                          {column.id === 'logoutTime' && log.logoutTime ? new Date(log.logoutTime).toLocaleString() : ''}
+                          {column.id !== 'loginTime' && column.id !== 'logoutTime' && log[column.id]}
                         </TableCell>
                       ))}
                     </TableRow>

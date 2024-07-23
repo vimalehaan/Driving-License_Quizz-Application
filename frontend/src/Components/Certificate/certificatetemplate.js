@@ -1,7 +1,7 @@
 import React from 'react';
 import './CertificateTemp.css';
 
-const CertificateTemplate = ({ recipientName, courseName, completionDate }) => {
+const Certificatetemplate = ({ recipientName, courseName, completionDate }) => {
   return (
     <div className="certificate-template">
       <div className="certificate-header">
@@ -41,4 +41,4 @@ const CertificateTemplate = ({ recipientName, courseName, completionDate }) => {
   );
 };
 
-export default CertificateTemplate;
+export default Certificatetemplate;
