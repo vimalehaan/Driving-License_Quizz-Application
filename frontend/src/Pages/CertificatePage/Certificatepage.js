@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import CertificateTemplate from '../../Components/Certificate/Certificatetemplate';
+import CertificateTemplate from '../../Components/Certificate/certificatetemplate';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { Download as DownloadIcon } from '@mui/icons-material';
