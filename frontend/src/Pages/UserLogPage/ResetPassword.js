@@ -82,7 +82,6 @@ function ResetPassword() {
                 console.log("Sending request with password and token:" , newPassword, token);
                 const response = await axios.post('http://localhost:3001/api/auth/new-password', {
                     password: newPassword,
-                    
                     token: token
                 });
 
